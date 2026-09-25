@@ -1,0 +1,27 @@
+---
+/**
+ * The single buying seam. Enquire (form), WhatsApp, and Etsy where a link exists.
+ * A checkout button would be added here and only here.
+ */
+import { whatsappLink, formatINR, formatSize } from '@/lib/format';
+import type { Artwork } from '@/lib/types';
+interface Props { artwork: Artwork; whatsappNumber: string; etsyShop?: string }
+const { artwork: a, whatsappNumber, etsyShop } = Astro.props;
+const msg = `Hi Samridhi, I'm interested in "${a.title}" (${formatSize(a)}, ${formatINR(a.price)}). Is it ${a.status === 'made-to-order' ? 'possible to order one' : 'still available'}?`;
+const etsy = a.etsyUrl ?? etsyShop;
+---
+<div class="grid gap-3" id="buy">
+  {a.status === 'sold' ? (
+    <>
+      <p class="rounded-xl bg-surface px-4 py-3 text-muted">This piece has found its home. I can make something similar for you.</p>
+      <a href={`/commissions?inspired=${encodeURIComponent(a.title)}`} class="btn btn-primary">Commission a similar piece</a>
+    </>
+  ) : (
+    <>
+      <a href={`#enquire`} class="btn btn-primary">{a.status === 'made-to-order' ? 'Order this piece' : 'Enquire about this piece'}</a>
+      {whatsappNumber && <a href={whatsappLink(whatsappNumber, msg)} class="btn btn-secondary" target="_blank" rel="noopener">Ask on WhatsApp</a>}
+      {etsy && <a href={etsy} class="btn btn-ghost" target="_blank" rel="noopener">Buy on Etsy <span class="text-muted">(international)</span></a>}
+    </>
+  )}
+  <p class="text-sm text-muted">Within India: enquire or WhatsApp, pay by UPI or bank transfer. Outside India: Etsy, or enquire for a quote.</p>
+</div>

@@ -1,0 +1,79 @@
+---
+import '@/styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import WhatsAppButton from '@/components/WhatsAppButton.astro';
+import { getSite } from '@/lib/data';
+import { ogImageUrl } from '@/lib/media';
+import type { ImageSource } from '@/lib/types';
+import { pagePath } from '@/lib/format';
+
+interface Props {
+  title: string;
+  description: string;
+  /** OG image; defaults to site settings */
+  image?: ImageSource;
+  imageAlt?: string;
+  /** Path for canonical, defaults to current URL */
+  canonical?: string;
+  type?: 'website' | 'article' | 'product';
+  noindex?: boolean;
+  bodyClass?: string;
+}
+
+const site = await getSite();
+const { settings } = site;
+const siteUrl = (Astro.site ?? new URL('https://samridhiagarwal.com')).toString();
+const { title, description, image, imageAlt, canonical, type = 'website', noindex = false, bodyClass = '' } = Astro.props;
+const fullTitle = title === settings.siteName ? settings.seoTitle : `${title} | ${settings.siteName}`;
+const canonicalObj = new URL(canonical ?? pagePath(Astro.url), siteUrl);
+const canonicalUrl = canonicalObj.pathname === '/' ? `${canonicalObj.origin}/` : canonicalObj.toString().replace(/\/$/, '');
+const og = ogImageUrl(image ?? settings.ogImage, siteUrl);
+---
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    {noindex && <meta name="robots" content="noindex,nofollow" />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#FBF8F3" />
+    <link rel="preload" href="/fonts/fraunces-latin-full.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-latin-opsz.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:site_name" content={settings.siteName} />
+    <meta property="og:type" content={type === 'product' ? 'product' : type} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content="en_IN" />
+    {og && <meta property="og:image" content={og} />}
+    {og && <meta property="og:image:width" content="1200" />}
+    {og && <meta property="og:image:height" content="630" />}
+    {og && <meta property="og:image:alt" content={imageAlt ?? `${settings.siteName} — ${settings.tagline}`} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    {og && <meta name="twitter:image" content={og} />}
+    <ClientRouter />
+    <script is:inline>document.documentElement.classList.remove('no-js')</script>
+  </head>
+  <body class={`flex min-h-dvh flex-col ${bodyClass}`}>
+    <a href="#main" class="sr-only-focusable fixed left-4 top-4 z-[100] rounded-full bg-ink px-4 py-2 text-bg">Skip to content</a>
+    <Header />
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+    <WhatsAppButton />
+    <script src="@/scripts/media.ts"></script>
+    <script src="@/scripts/reveal.ts"></script>
+    <script src="@/scripts/nav.ts"></script>
+    <script src="@/scripts/forms.ts"></script>
+  </body>
+</html>

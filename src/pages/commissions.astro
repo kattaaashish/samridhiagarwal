@@ -1,0 +1,64 @@
+---
+import Base from '@/layouts/Base.astro';
+import Media from '@/components/Media.astro';
+import CommissionForm from '@/components/CommissionForm.astro';
+import TestimonialCard from '@/components/TestimonialCard.astro';
+import { getSite } from '@/lib/data';
+const site = await getSite();
+const { commissions: c, about, occasions, testimonials } = site;
+---
+<Base title="Commissions" description="Commission a custom piece from Samridhi Agarwal: tell her the moment, share your wall size and colours, and receive a handmade painting with gold or silver leaf in 4 to 6 weeks.">
+  <section class="container-x grid gap-8 pt-8 md:grid-cols-2 md:items-center md:pt-14">
+    <div class="reveal">
+      <p class="eyebrow">Commissions</p>
+      <h1 class="mt-3 text-4xl md:text-5xl">{c.heading}</h1>
+      <p class="mt-5 max-w-xl text-lg text-muted">{c.intro}</p>
+      <a href="#commission-form" class="btn btn-primary mt-7">Start your commission</a>
+    </div>
+    <Media media={about.studioMedia[0]} aspect={4 / 5} sizes="(min-width: 768px) 50vw, 100vw" priority class="rounded-xl" />
+  </section>
+
+  <section class="container-x mt-20" aria-labelledby="how-heading">
+    <h2 id="how-heading" class="reveal text-3xl">How it works</h2>
+    <ol class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4" data-stagger>
+      {c.steps.map((s, i) => (
+        <li class="reveal rounded-xl bg-surface p-6">
+          <p class="font-display text-4xl text-leaf">{String(i + 1).padStart(2, '0')}</p>
+          <h3 class="mt-3 text-xl">{s.title}</h3>
+          <p class="mt-2 text-muted">{s.text}</p>
+          {s.duration && <p class="mt-3 text-sm font-medium">{s.duration}</p>}
+        </li>
+      ))}
+    </ol>
+    <div class="mt-8 grid gap-4 md:grid-cols-2">
+      <p class="reveal rounded-xl border border-line p-6"><strong class="font-medium">Timelines.</strong> {c.typicalTimeline}</p>
+      <p class="reveal rounded-xl border border-line p-6"><strong class="font-medium">Prices.</strong> {c.priceGuide}</p>
+    </div>
+  </section>
+
+  <section class="container-x mt-20 grid gap-10 lg:grid-cols-[1fr_1.6fr]" aria-labelledby="form-heading">
+    <div class="reveal lg:sticky lg:top-24 lg:self-start">
+      <h2 id="form-heading" class="text-3xl">Tell me about your moment</h2>
+      <p class="mt-3 text-muted">Whatever you have is enough to start. If it helps, share:</p>
+      <ul class="mt-4 grid gap-2 text-[0.95rem]">
+        {c.whatToShare.map((w) => <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-leaf"></span>{w}</li>)}
+      </ul>
+      <p class="mt-6 hidden rounded-xl bg-surface px-4 py-3 text-sm" data-inspired>You were looking at <strong class="font-medium" data-inspired-title></strong>. Mention it below and I'll work from that palette.</p>
+      <script is:inline>
+        (() => { const t = new URLSearchParams(location.search).get('inspired'); if (!t) return; const p = document.querySelector('[data-inspired]'); p.querySelector('[data-inspired-title]').textContent = t; p.classList.remove('hidden'); const m = document.querySelector('textarea[name=moment]'); if (m && !m.value) m.value = `Inspired by "${t}": `; })();
+      </script>
+    </div>
+    <div>
+      <CommissionForm occasions={occasions} />
+    </div>
+  </section>
+
+  {testimonials.length > 0 && (
+    <section class="container-x mt-24">
+      <p class="eyebrow reveal">From commission clients</p>
+      <div class="mt-6 grid gap-6 sm:grid-cols-2" data-stagger>
+        {testimonials.slice(0, 2).map((t) => <TestimonialCard t={t} />)}
+      </div>
+    </section>
+  )}
+</Base>

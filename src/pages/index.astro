@@ -1,0 +1,166 @@
+---
+import Base from '@/layouts/Base.astro';
+import Media from '@/components/Media.astro';
+import Tile from '@/components/Tile.astro';
+import ArtworkCard from '@/components/ArtworkCard.astro';
+import TestimonialCard from '@/components/TestimonialCard.astro';
+import SignupForm from '@/components/SignupForm.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import JsonLd from '@/components/JsonLd.astro';
+import { getSite } from '@/lib/data';
+import { seasonalOccasions, artworksIn } from '@/lib/normalize';
+import { formatDate } from '@/lib/format';
+import { personJsonLd } from '@/lib/seo';
+
+const site = await getSite();
+const { settings, artworks, testimonials, exhibitions, occasions } = site;
+const siteUrl = Astro.site?.toString() ?? 'https://samridhiagarwal.com';
+const hero = settings.heroVideos;
+const featured = artworks.filter((a) => a.featured && a.status !== 'sold').slice(0, 6);
+const seasonal = seasonalOccasions(site, new Date());
+const upcoming = exhibitions.find((e) => e.upcoming);
+const story = settings.storyPost;
+const statementLines = settings.statement.split('\n').filter(Boolean);
+const tiles = [
+  { href: '/work', title: 'Original artworks', cta: 'Shop now', media: featured[0]?.media[0] ?? artworks[0]?.media[0] },
+  { href: '/gifting', title: 'Gifting', cta: 'Explore', media: occasions[0]?.cover },
+  { href: '/exhibitions', title: 'Exhibitions', cta: 'Explore', media: exhibitions[0]?.gallery[0] },
+  { href: '/commissions', title: 'Commissions', cta: 'Start yours', media: site.about.studioMedia[0] },
+];
+---
+<Base title={settings.siteName} description={settings.seoDescription}>
+  <JsonLd data={personJsonLd(settings, siteUrl)} />
+
+  <!-- Hero -->
+  <section class="relative isolate">
+    <div class="relative h-[78dvh] min-h-[32rem] max-h-[56rem] overflow-hidden">
+      {hero.length > 0 ? (
+        <div class="hero-stack absolute inset-0">
+          {hero.slice(0, 3).map((m, i) => (
+            <Media media={m} aspect="16/9" sizes="100vw" priority={i === 0} class={`hero-clip absolute inset-0 !aspect-auto h-full w-full ${i === 0 ? '' : 'hero-alt'}`} />
+          ))}
+        </div>
+      ) : <div class="absolute inset-0 bg-surface"></div>}
+      <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent"></div>
+      <div class="container-x absolute inset-x-0 bottom-0 pb-10 text-bg md:pb-16">
+        <p class="eyebrow !text-bg/80">{settings.tagline}</p>
+        <h1 class="mt-3 max-w-3xl text-[2.6rem] leading-[1.02] md:text-6xl lg:text-7xl">Ordinary days, hand-painted in gold and silver leaf.</h1>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href="/work" class="btn btn-light">See the originals</a>
+          <a href="/commissions" class="btn btn-secondary !border-bg !text-bg hover:!bg-bg hover:!text-ink">Commission a piece</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- New collection teaser -->
+  {settings.teaser?.enabled && settings.teaser.title && (
+    <section class="container-x mt-6">
+      <div class="reveal grid gap-6 rounded-xl bg-surface p-6 md:grid-cols-[1.2fr_1fr] md:items-center md:p-10" id="teaser">
+        <div>
+          <p class="eyebrow">New collection{settings.teaser.launchDate && ` · launching ${formatDate(settings.teaser.launchDate)}`}</p>
+          <h2 class="mt-2 text-3xl md:text-4xl">{settings.teaser.title}</h2>
+          {settings.teaser.copy && <p class="mt-3 max-w-lg text-muted">{settings.teaser.copy}</p>}
+        </div>
+        <SignupForm topic={`collection:${settings.teaser.title}`} label="Be the first to know" compact />
+      </div>
+    </section>
+  )}
+
+  <!-- Four tiles -->
+  <section class="container-x mt-16 md:mt-24" aria-label="Explore">
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4" data-stagger>
+      {tiles.map((t) => <Tile {...t} class="reveal" />)}
+    </div>
+  </section>
+
+  <!-- Statement -->
+  <section class="container-x mt-24 md:mt-32">
+    <div class="reveal mx-auto max-w-4xl text-center">
+      <span class="hairline mx-auto mb-8 block w-16"></span>
+      <p class="font-display text-3xl leading-tight md:text-5xl">
+        {statementLines.map((line, i) => <>{line}{i < statementLines.length - 1 && <br />}</>)}
+      </p>
+      <a href="/about" class="link mt-6 inline-block">Meet Samridhi</a>
+    </div>
+  </section>
+
+  <!-- Seasonal occasion (auto) -->
+  {seasonal.map((o) => {
+    const pieces = artworksIn(site, 'occasion', o.id).filter((a) => a.status !== 'sold').slice(0, 3);
+    return (
+      <section class="container-x mt-24 md:mt-32" aria-labelledby={`season-${o.slug}`}>
+        <div class="grid gap-8 lg:grid-cols-[1fr_2fr] lg:items-end">
+          <Tile href={`/gifting/${o.slug}`} title={`${o.name} gifting`} cta="See the pieces" media={o.cover} badge="This season" class="reveal" aspect={4 / 5} sizes="(min-width: 1024px) 33vw, 100vw" />
+          <div>
+            <SectionHeading eyebrow="Coming up" title={`Gifts for ${o.name}`} text={o.intro} />
+            {pieces.length > 0 && (
+              <div class="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3" data-stagger>
+                {pieces.map((a) => <ArtworkCard artwork={a} sizes="(min-width: 1024px) 20vw, 45vw" />)}
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+    );
+  })}
+
+  <!-- Featured pieces -->
+  {featured.length > 0 && (
+    <section class="container-x mt-24 md:mt-32">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <SectionHeading eyebrow="Available now" title="Pieces looking for a wall" />
+        <a href="/work" class="link reveal">All originals</a>
+      </div>
+      <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3" data-stagger>
+        {featured.map((a) => <ArtworkCard artwork={a} />)}
+      </div>
+    </section>
+  )}
+
+  <!-- Story behind the piece -->
+  {story && (
+    <section class="container-x mt-24 md:mt-32">
+      <a href={`/journal/${story.slug}`} class="reveal group grid gap-6 overflow-hidden rounded-xl bg-surface md:grid-cols-2 md:items-center">
+        <Media media={story.cover ?? story.artworks[0]?.media[0]} aspect={4 / 3} sizes="(min-width: 768px) 50vw, 100vw" class="transition-transform duration-700 ease-out group-hover:scale-[1.02]" />
+        <div class="p-6 md:p-12">
+          <p class="eyebrow">Story behind the piece</p>
+          <h2 class="mt-3 text-3xl md:text-4xl">{story.title}</h2>
+          <p class="mt-4 text-muted">{story.excerpt}</p>
+          <span class="link mt-6 inline-block">Read the story</span>
+        </div>
+      </a>
+    </section>
+  )}
+
+  <!-- Upcoming exhibition nudge -->
+  {upcoming && (
+    <section class="container-x mt-16">
+      <div class="reveal flex flex-wrap items-center justify-between gap-4 rounded-xl border border-leaf/50 px-6 py-5">
+        <p><span class="eyebrow mr-3">Upcoming</span> <strong class="font-medium">{upcoming.name}</strong> · {upcoming.venue}, {upcoming.city}</p>
+        <a href="/exhibitions" class="link">Details and notify me</a>
+      </div>
+    </section>
+  )}
+
+  <!-- Testimonials -->
+  {testimonials.length > 0 && (
+    <section class="container-x mt-24 md:mt-32">
+      <SectionHeading eyebrow="In their homes" title="Pieces that found their walls" />
+      <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4" data-stagger>
+        {testimonials.map((t) => <TestimonialCard t={t} />)}
+      </div>
+    </section>
+  )}
+</Base>
+
+<style>
+  .hero-stack :global(.media) { aspect-ratio: auto; }
+  /* Gentle crossfade between hero clips (CSS-only; still image when reduced motion). */
+  .hero-alt { opacity: 0; }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-stack:has(.hero-alt) .hero-alt:nth-child(2) { animation: heroFade 24s infinite; animation-delay: 8s; }
+    .hero-stack:has(.hero-alt) .hero-alt:nth-child(3) { animation: heroFade 24s infinite; animation-delay: 16s; }
+  }
+  @keyframes heroFade { 0%, 8% { opacity: 0; } 12%, 30% { opacity: 1; } 34%, 100% { opacity: 0; } }
+</style>

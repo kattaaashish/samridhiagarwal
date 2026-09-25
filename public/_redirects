@@ -1,0 +1,44 @@
+# Redirects from the old site. Cloudflare Workers static assets honour this file.
+# Format: /old-path  /new-path  status
+# TODO: replace the guesses below with the real old-site URL inventory (see README "Redirects").
+/www.samridhiagarwal.com/*  https://samridhiagarwal.com/:splat  301
+/home                /            301
+/index.html          /            301
+/shop                /work        301
+/shop/*              /work        301
+/gallery             /work        301
+/gallery/*           /work        301
+/portfolio           /work        301
+/portfolio/*         /work        301
+/originals           /work        301
+/paintings           /work        301
+/paintings/*         /work        301
+/artworks            /work        301
+/artworks/*          /artwork/:splat  301
+/products/*          /artwork/:splat  301
+/product/*           /artwork/:splat  301
+/collection/*        /collections/:splat  301
+/gifts               /gifting     301
+/gifts/*             /gifting/:splat  301
+/gifting-guide       /gifting     301
+/custom              /commissions 301
+/custom-art          /commissions 301
+/commission          /commissions 301
+/bespoke             /commissions 301
+/about-me            /about       301
+/about-us            /about       301
+/artist              /about       301
+/blog                /journal     301
+/blog/*              /journal/:splat  301
+/news                /journal     301
+/stories             /journal     301
+/stories/*           /journal/:splat  301
+/events              /exhibitions 301
+/shows               /exhibitions 301
+/exhibition          /exhibitions 301
+/contact-us          /contact     301
+/get-in-touch        /contact     301
+/enquire             /contact     301
+/whatsapp            https://wa.me/919999999999  302
+/instagram           https://www.instagram.com/artbysamridhiagarwal  302
+/etsy                https://www.etsy.com/shop/artbysamridhiagarwal  302

@@ -1,0 +1,29 @@
+---
+import Base from '@/layouts/Base.astro';
+import EnquiryForm from '@/components/EnquiryForm.astro';
+import Media from '@/components/Media.astro';
+import { getSite } from '@/lib/data';
+import { whatsappLink } from '@/lib/format';
+const site = await getSite();
+const { settings, about } = site;
+---
+<Base title="Contact" description={`Get in touch with ${settings.siteName} about a piece, a gift or a commission. WhatsApp, email or the enquiry form.`}>
+  <section class="container-x grid gap-10 pt-10 md:pt-16 lg:grid-cols-[1fr_1.4fr]">
+    <div class="reveal">
+      <p class="eyebrow">Contact</p>
+      <h1 class="mt-3 text-4xl md:text-5xl">Say hello</h1>
+      <p class="mt-5 max-w-md text-lg text-muted">For a piece, a gift, a commission, or just to tell me about a moment you think should be painted.</p>
+      <ul class="mt-8 grid gap-3">
+        {settings.whatsappNumber && <li><a href={whatsappLink(settings.whatsappNumber, 'Hi Samridhi, I found your website and would like to ask about a piece.')} class="btn btn-primary w-full sm:w-auto" target="_blank" rel="noopener">WhatsApp me</a></li>}
+        {settings.email && <li><a href={`mailto:${settings.email}`} class="link text-lg">{settings.email}</a></li>}
+        {settings.instagram && <li><a href={settings.instagram} class="link text-lg" rel="noopener" target="_blank">Instagram</a></li>}
+        {settings.etsy && <li><a href={settings.etsy} class="link text-lg" rel="noopener" target="_blank">Etsy shop for international orders</a></li>}
+      </ul>
+      <Media media={about.studioMedia[1]} aspect={4 / 3} sizes="(min-width: 1024px) 35vw, 100vw" class="mt-10 hidden rounded-xl lg:block" />
+    </div>
+    <div id="enquiry-form">
+      <h2 class="text-2xl">Send an enquiry</h2>
+      <div class="mt-6"><EnquiryForm occasions={site.occasions} gifting /></div>
+    </div>
+  </section>
+</Base>

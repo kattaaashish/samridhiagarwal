@@ -1,0 +1,65 @@
+---
+import Base from '@/layouts/Base.astro';
+import Media from '@/components/Media.astro';
+import ArtworkCard from '@/components/ArtworkCard.astro';
+import JsonLd from '@/components/JsonLd.astro';
+import { getSite } from '@/lib/data';
+import { personJsonLd } from '@/lib/seo';
+const site = await getSite();
+const { about, settings } = site;
+const siteUrl = Astro.site?.toString() ?? 'https://samridhiagarwal.com';
+const stages = ['Raw material', 'Building the surface', 'Laying the leaf', 'Finished piece'];
+---
+<Base title="About" description={`${settings.siteName} turns everyday moments, thoughts and feelings into handmade art with gold and silver leaf. How the work happens, from a note on her phone to a finished canvas.`} image={about.portrait?.poster} imageAlt={about.portrait?.alt}>
+  <JsonLd data={personJsonLd(settings, siteUrl)} />
+  <section class="container-x grid gap-8 pt-8 md:grid-cols-[1fr_1.2fr] md:items-center md:pt-14">
+    <Media media={about.portrait} aspect={4 / 5} sizes="(min-width: 768px) 45vw, 100vw" priority class="rounded-xl" />
+    <div class="reveal">
+      <p class="eyebrow">About</p>
+      <h1 class="mt-3 text-4xl md:text-5xl">{about.heading}</h1>
+      <p class="mt-5 max-w-xl text-lg">{about.intro}</p>
+      <div class="mt-7 flex flex-wrap gap-3">
+        <a href="/work" class="btn btn-primary">See the work</a>
+        {settings.instagram && <a href={settings.instagram} class="btn btn-secondary" rel="noopener" target="_blank">Follow along on Instagram</a>}
+      </div>
+    </div>
+  </section>
+
+  <!-- Process: raw material → finished piece, told visually -->
+  <section class="container-x mt-24" aria-labelledby="process-heading">
+    <h2 id="process-heading" class="reveal text-3xl md:text-4xl">From a moment to a canvas</h2>
+    <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" data-stagger>
+      {about.studioMedia.map((m, i) => (
+        <figure class="reveal">
+          <Media media={m} aspect={4 / 5} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" class="rounded-xl" />
+          <figcaption class="mt-3">
+            <p class="eyebrow">{stages[i] ?? `Step ${i + 1}`}</p>
+            {about.process[i] && <><p class="mt-1 text-xl">{about.process[i].title}</p><p class="mt-1 text-muted">{about.process[i].text}</p></>}
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <!-- Worked example -->
+  {about.exampleArtwork && (
+    <section class="container-x mt-24 grid gap-8 rounded-xl bg-surface p-6 md:grid-cols-[1.3fr_1fr] md:items-center md:p-12" aria-labelledby="example-heading">
+      <div class="reveal">
+        <p class="eyebrow">A real moment, and the piece it became</p>
+        <h2 id="example-heading" class="mt-3 text-3xl">One note on my phone</h2>
+        <blockquote class="mt-5 border-l-2 border-leaf pl-5 font-display text-xl leading-snug md:text-2xl">{about.exampleMoment}</blockquote>
+        <p class="mt-5 text-muted">Six weeks later it was a canvas. That is how nearly all of them begin.</p>
+      </div>
+      <ArtworkCard artwork={about.exampleArtwork} sizes="(min-width: 768px) 35vw, 100vw" />
+    </section>
+  )}
+
+  <section class="container-x mt-24">
+    <div class="reveal mx-auto max-w-3xl text-center">
+      <span class="hairline mx-auto mb-8 block w-16"></span>
+      <p class="font-display text-3xl leading-tight md:text-4xl">{settings.statement.split('\n')[0]}</p>
+      <p class="mt-4 text-muted">{settings.shortBio}</p>
+      <a href="/contact" class="btn btn-primary mt-8">Say hello</a>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,62 @@
+---
+import Base from '@/layouts/Base.astro';
+import Media from '@/components/Media.astro';
+import ArtworkCard from '@/components/ArtworkCard.astro';
+import JsonLd from '@/components/JsonLd.astro';
+import { getSite } from '@/lib/data';
+import { formatDate } from '@/lib/format';
+import { renderPortableText } from '@/lib/portable-text';
+import type { Post } from '@/lib/types';
+
+export async function getStaticPaths() {
+  const site = await getSite();
+  return site.posts.map((p) => ({ params: { slug: p.slug }, props: { post: p } }));
+}
+const { post } = Astro.props as { post: Post };
+const site = await getSite();
+const siteUrl = Astro.site?.toString() ?? 'https://samridhiagarwal.com';
+const cover = post.cover ?? post.artworks[0]?.media[0];
+const html = renderPortableText(post.body);
+const more = site.posts.filter((p) => p.id !== post.id).slice(0, 2);
+const jsonLd = {
+  '@context': 'https://schema.org', '@type': 'BlogPosting', headline: post.title, description: post.excerpt, datePublished: post.publishedAt,
+  image: cover ? new URL(cover.poster.src, siteUrl).toString() : undefined,
+  author: { '@type': 'Person', name: site.settings.siteName, url: siteUrl },
+  mainEntityOfPage: new URL(`/journal/${post.slug}`, siteUrl).toString(),
+  about: post.artworks.map((a) => ({ '@type': 'VisualArtwork', name: a.title, url: new URL(`/artwork/${a.slug}`, siteUrl).toString() })),
+};
+---
+<Base title={post.title} description={post.excerpt} image={cover?.poster} imageAlt={cover?.alt} type="article">
+  <JsonLd data={jsonLd} />
+  <article class="container-x pt-8 md:pt-14">
+    <header class="mx-auto max-w-3xl text-center">
+      <p class="eyebrow"><a href="/journal" class="hover:text-ink">Journal</a> · {formatDate(post.publishedAt)}</p>
+      <h1 class="mt-3 text-4xl md:text-5xl">{post.title}</h1>
+      <p class="mt-4 text-lg text-muted">{post.excerpt}</p>
+    </header>
+    <Media media={cover} aspect={16 / 9} sizes="(min-width: 1024px) 64rem, 100vw" priority class="mx-auto mt-10 max-w-5xl rounded-xl" />
+    <div class="prose-warm mx-auto mt-10 text-lg" set:html={html} />
+
+    {post.artworks.length > 0 && (
+      <section class="mx-auto mt-16 max-w-3xl" aria-labelledby="piece-heading">
+        <h2 id="piece-heading" class="text-2xl">The piece{post.artworks.length > 1 && 's'} this became</h2>
+        <div class={`mt-6 grid gap-6 ${post.artworks.length > 1 ? 'sm:grid-cols-2' : 'sm:grid-cols-[minmax(0,22rem)]'}`}>
+          {post.artworks.map((a) => <ArtworkCard artwork={a} sizes="(min-width: 640px) 22rem, 100vw" />)}
+        </div>
+      </section>
+    )}
+  </article>
+  {more.length > 0 && (
+    <section class="container-x mt-24">
+      <p class="eyebrow">More stories</p>
+      <div class="mt-4 grid gap-6 md:grid-cols-2">
+        {more.map((p) => (
+          <a href={`/journal/${p.slug}`} class="group flex gap-4 rounded-xl bg-surface p-4">
+            <Media media={p.cover ?? p.artworks[0]?.media[0]} aspect={1} sizes="7rem" class="w-28 shrink-0 rounded-lg" />
+            <span><span class="block text-sm text-muted">{formatDate(p.publishedAt)}</span><span class="mt-1 block text-xl group-hover:text-accent-ink">{p.title}</span></span>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+</Base>

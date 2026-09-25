@@ -1,0 +1,112 @@
+---
+import Base from '@/layouts/Base.astro';
+import Gallery from '@/components/Gallery.astro';
+import Lightbox from '@/components/Lightbox.astro';
+import WallPreview from '@/components/WallPreview.astro';
+import BuyActions from '@/components/BuyActions.astro';
+import EnquiryForm from '@/components/EnquiryForm.astro';
+import ArtworkCard from '@/components/ArtworkCard.astro';
+import JsonLd from '@/components/JsonLd.astro';
+import { getSite } from '@/lib/data';
+import { relatedArtworks } from '@/lib/normalize';
+import { formatINR, formatSize, statusLabel, excerpt } from '@/lib/format';
+import { artworkJsonLd } from '@/lib/seo';
+import type { Artwork } from '@/lib/types';
+
+export async function getStaticPaths() {
+  const site = await getSite();
+  return site.artworks.map((a) => ({ params: { slug: a.slug }, props: { artwork: a } }));
+}
+const { artwork: a } = Astro.props as { artwork: Artwork };
+const site = await getSite();
+const related = relatedArtworks(site, a);
+const siteUrl = Astro.site?.toString() ?? 'https://samridhiagarwal.com';
+const description = a.seoDescription ?? excerpt(`${a.title}, ${formatSize(a)}, ${a.materials}. ${a.note}`);
+const posts = site.posts.filter((p) => p.artworks.some((x) => x.id === a.id));
+---
+<Base title={a.title} description={description} image={a.media[0]?.poster} imageAlt={a.media[0]?.alt} type="product">
+  <JsonLd data={artworkJsonLd(a, site.settings, siteUrl)} />
+  <article class="container-x pt-6 md:pt-12">
+    <nav aria-label="Breadcrumb" class="mb-4 text-sm text-muted">
+      <a href="/work" class="hover:text-ink">Originals</a>
+      {a.collections[0] && <> <span aria-hidden="true">/</span> <a href={`/collections/${a.collections[0].slug}`} class="hover:text-ink">{a.collections[0].name}</a></>}
+    </nav>
+
+    <div class="grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:gap-14">
+      <div>
+        <Gallery items={a.media} groupId={`art-${a.slug}`} mainAspect={a.media[0]?.aspect} />
+      </div>
+
+      <div class="lg:sticky lg:top-24 lg:self-start">
+        <div class="flex flex-wrap items-center gap-3">
+          {a.status !== 'available' && <span class={`badge ${a.status === 'sold' ? 'badge-sold' : 'badge-mto'}`}>{statusLabel[a.status]}</span>}
+          {a.status === 'available' && <span class="badge bg-surface text-muted">Available</span>}
+        </div>
+        <h1 class="mt-3 text-4xl md:text-5xl">{a.title}</h1>
+
+        <!-- The personal note: the moment behind the piece, right beside the images -->
+        <blockquote class="mt-6 border-l-2 border-leaf pl-5 font-display text-xl leading-snug md:text-2xl">
+          {a.note}
+          <footer class="mt-3 font-body text-sm not-italic text-muted">The moment behind the piece</footer>
+        </blockquote>
+
+        <dl class="mt-8 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-[0.95rem]">
+          <dt class="text-muted">Size</dt><dd>{formatSize(a)}</dd>
+          <dt class="text-muted">Materials</dt><dd>{a.materials}</dd>
+          <dt class="text-muted">Price</dt><dd class="font-medium">{a.status === 'sold' ? 'Sold' : formatINR(a.price)}{a.status === 'made-to-order' && <span class="text-muted"> · made to order, 4 to 6 weeks</span>}</dd>
+          {(a.collections.length > 0 || a.occasions.length > 0) && (
+            <>
+              <dt class="text-muted">Part of</dt>
+              <dd class="flex flex-wrap gap-2">
+                {a.collections.map((c) => <a href={`/collections/${c.slug}`} class="chip min-h-8 py-1 text-sm">{c.name}</a>)}
+                {a.occasions.map((o) => <a href={`/gifting/${o.slug}`} class="chip min-h-8 py-1 text-sm">{o.name}</a>)}
+              </dd>
+            </>
+          )}
+        </dl>
+
+        <div class="mt-8">
+          <BuyActions artwork={a} whatsappNumber={site.settings.whatsappNumber} etsyShop={site.settings.etsy} />
+        </div>
+      </div>
+    </div>
+
+    <section class="mt-20 grid gap-10 lg:grid-cols-2 lg:items-start" aria-labelledby="wall-heading">
+      <div class="reveal">
+        <p class="eyebrow">See it on a wall</p>
+        <h2 id="wall-heading" class="mt-2 text-3xl">Scaled from its real size</h2>
+        <p class="mt-3 max-w-md text-muted">A rough sense of presence in a room. Every piece arrives ready to hang, with painted edges and hanging hardware fitted.</p>
+        <p class="mt-3 max-w-md text-sm text-muted">Send me a photo of your wall and I'll mock it up properly.</p>
+      </div>
+      <WallPreview artwork={a} />
+    </section>
+
+    {posts.length > 0 && (
+      <section class="mt-16 rounded-xl bg-surface p-6 md:p-8">
+        <p class="eyebrow">Story behind the piece</p>
+        {posts.map((p) => <p class="mt-2 text-xl"><a href={`/journal/${p.slug}`} class="link">{p.title}</a></p>)}
+      </section>
+    )}
+
+    {a.status !== 'sold' && (
+      <section class="mt-20 grid gap-8 lg:grid-cols-[1fr_1.4fr]" id="enquire" aria-labelledby="enquire-heading">
+        <div class="reveal">
+          <p class="eyebrow">Enquire</p>
+          <h2 id="enquire-heading" class="mt-2 text-3xl">Ask about {a.title}</h2>
+          <p class="mt-3 text-muted">Questions about colours, framing, delivery to your city, or making it a gift. I reply within two working days.</p>
+        </div>
+        <div id="enquiry-form"><EnquiryForm artworkTitle={a.title} occasions={site.occasions} gifting /></div>
+      </section>
+    )}
+
+    {related.length > 0 && (
+      <section class="mt-24" aria-labelledby="related-heading">
+        <h2 id="related-heading" class="text-3xl">You might also like</h2>
+        <div class="mt-8 grid grid-cols-2 gap-x-4 gap-y-8 lg:grid-cols-4" data-stagger>
+          {related.map((r) => <ArtworkCard artwork={r} sizes="(min-width: 1024px) 22vw, 45vw" />)}
+        </div>
+      </section>
+    )}
+  </article>
+  <Lightbox />
+</Base>

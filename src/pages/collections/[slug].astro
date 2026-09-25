@@ -1,0 +1,39 @@
+---
+import Base from '@/layouts/Base.astro';
+import Media from '@/components/Media.astro';
+import ArtworkGrid from '@/components/ArtworkGrid.astro';
+import { getSite } from '@/lib/data';
+import { artworksIn } from '@/lib/normalize';
+import type { Collection } from '@/lib/types';
+
+export async function getStaticPaths() {
+  const site = await getSite();
+  return site.collections.map((c) => ({ params: { slug: c.slug }, props: { collection: c } }));
+}
+const { collection } = Astro.props as { collection: Collection };
+const site = await getSite();
+const pieces = artworksIn(site, 'collection', collection.id);
+const others = site.collections.filter((c) => c.id !== collection.id);
+---
+<Base title={collection.name} description={collection.intro ?? `${collection.name}: original artworks by ${site.settings.siteName}.`} image={collection.cover?.poster} imageAlt={collection.cover?.alt}>
+  <section class="container-x grid gap-8 pt-8 md:grid-cols-[1fr_1.4fr] md:items-end md:pt-14">
+    <Media media={collection.cover} aspect={4 / 5} sizes="(min-width: 768px) 40vw, 100vw" priority class="rounded-xl" />
+    <div class="reveal">
+      <p class="eyebrow"><a href="/work" class="hover:text-ink">Originals</a> · Collection</p>
+      <h1 class="mt-3 text-4xl md:text-5xl">{collection.name}</h1>
+      {collection.intro && <p class="mt-5 max-w-xl text-lg text-muted">{collection.intro}</p>}
+      <p class="mt-4 text-sm text-muted">{pieces.length} {pieces.length === 1 ? 'piece' : 'pieces'}</p>
+    </div>
+  </section>
+  <section class="container-x mt-14">
+    <ArtworkGrid artworks={pieces} filters collections={site.collections} occasions={site.occasions} hide={['collection']} emptyText="This collection is between pieces right now. Have a look at the other collections below." />
+  </section>
+  {others.length > 0 && (
+    <section class="container-x mt-20">
+      <p class="eyebrow mb-4">Other collections</p>
+      <div class="flex flex-wrap gap-2">
+        {others.map((c) => <a href={`/collections/${c.slug}`} class="chip">{c.name}</a>)}
+      </div>
+    </section>
+  )}
+</Base>

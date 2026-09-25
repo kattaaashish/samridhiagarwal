@@ -1,0 +1,58 @@
+# Cloudflare Workers config for samridhiagarwal.com
+# Static pages are served from ./dist as assets; API routes run in the Worker.
+name = "samridhiagarwal-com"
+main = "./dist/_worker.js/index.js"
+compatibility_date = "2026-09-01"
+compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
+workers_dev = true
+preview_urls = true
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+# Serve the prerendered 404 page for unknown paths that aren't handled by the Worker.
+not_found_handling = "404-page"
+# API routes and the /sent page must always reach the Worker, even for browser navigations (form posts).
+run_worker_first = ["/api/*", "/sent"]
+
+[observability]
+enabled = true
+
+# --- Plain-text variables (non-secret). Secrets are set with `wrangler secret put`. ---
+[vars]
+PUBLIC_SITE_URL = "https://samridhiagarwal.com"
+NOTIFY_EMAIL = "hello@samridhiagarwal.com"
+FROM_EMAIL = "Samridhi Agarwal Studio <studio@samridhiagarwal.com>"
+# Public base URL of the R2 bucket (custom domain or r2.dev) so attachment links in emails open.
+UPLOADS_PUBLIC_URL = "https://uploads.samridhiagarwal.com"
+
+# --- Bindings. Create with:
+#   wrangler kv namespace create RATE_LIMIT
+#   wrangler kv namespace create SUBSCRIBERS
+#   wrangler r2 bucket create samridhiagarwal-uploads
+# then paste the KV ids below. ---
+[[kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "REPLACE_WITH_KV_ID"
+
+[[kv_namespaces]]
+binding = "SUBSCRIBERS"
+id = "REPLACE_WITH_KV_ID"
+
+[[r2_buckets]]
+binding = "UPLOADS"
+bucket_name = "samridhiagarwal-uploads"
+
+# --- Production custom domain (DNS is managed automatically when the zone is on Cloudflare) ---
+[[routes]]
+pattern = "samridhiagarwal.com"
+custom_domain = true
+
+[[routes]]
+pattern = "www.samridhiagarwal.com"
+custom_domain = true
+
+# Secrets to set (wrangler secret put NAME):
+#   TURNSTILE_SECRET_KEY   Turnstile widget secret
+#   RESEND_API_KEY         Resend API key (domain verified for FROM_EMAIL)
+#   SANITY_READ_TOKEN      only if the Sanity dataset is private

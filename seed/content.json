@@ -1,0 +1,2407 @@
+[
+  {
+    "_id": "siteSettings",
+    "_type": "siteSettings",
+    "siteName": "Samridhi Agarwal",
+    "tagline": "Everyday moments, turned into art",
+    "statement": "I turn everyday moments, thoughts and feelings into art.\nOrdinary life, hand-painted, finished in gold and silver leaf.",
+    "shortBio": "Contemporary artist working from a small, bright studio. Handmade pieces with expressive strokes and gold and silver leaf, each one drawn from a real moment.",
+    "heroVideos": [
+      {
+        "_type": "media",
+        "_key": "h1",
+        "alt": "Light moving across gold leaf on a freshly finished canvas",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/hero/hero-1",
+          "width": 1600,
+          "height": 900
+        },
+        "localVideo": "/media/hero/hero-1.mp4",
+        "_gen": {
+          "w": 1600,
+          "h": 900,
+          "palette": [
+            "#B8925A",
+            "#FBF8F3",
+            "#E8A33D",
+            "#7A5A2B"
+          ],
+          "type": "linear",
+          "seed": 11
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "h2",
+        "alt": "Hands laying silver leaf onto a terracotta background",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/hero/hero-2",
+          "width": 1600,
+          "height": 900
+        },
+        "localVideo": "/media/hero/hero-2.mp4",
+        "_gen": {
+          "w": 1600,
+          "h": 900,
+          "palette": [
+            "#C75B39",
+            "#D9D6D2",
+            "#8C8C8C",
+            "#FBF8F3"
+          ],
+          "type": "radial",
+          "seed": 12
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "h3",
+        "alt": "Morning light on the studio table, brushes and a cup of chai",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/hero/hero-3",
+          "width": 1600,
+          "height": 900
+        },
+        "localVideo": "/media/hero/hero-3.mp4",
+        "_gen": {
+          "w": 1600,
+          "h": 900,
+          "palette": [
+            "#FBF8F3",
+            "#E8A33D",
+            "#C75B39",
+            "#F2E4D0"
+          ],
+          "type": "spiral",
+          "seed": 13
+        }
+      }
+    ],
+    "teaser": {
+      "title": "Small Hours",
+      "launchDate": "2026-11-01",
+      "copy": "Twelve new pieces about the quiet part of the day, before everyone else is awake. Gold leaf, soft greys, first light.",
+      "enabled": true
+    },
+    "storyPost": {
+      "_type": "reference",
+      "_ref": "post.chai-at-six",
+      "_weak": true
+    },
+    "whatsappNumber": "919999999999",
+    "email": "hello@samridhiagarwal.com",
+    "instagram": "https://www.instagram.com/artbysamridhiagarwal",
+    "etsy": "https://www.etsy.com/shop/artbysamridhiagarwal",
+    "seoTitle": "Samridhi Agarwal | Contemporary artist, everyday moments in gold and silver leaf",
+    "seoDescription": "Handmade contemporary art drawn from everyday moments, thoughts and feelings. Original pieces, gifting for Diwali, weddings and new homes, and commissions. Ships across India and worldwide.",
+    "ogImage": {
+      "_type": "image",
+      "localSrc": "/media/og/default",
+      "width": 1200,
+      "height": 630,
+      "_gen": {
+        "w": 1200,
+        "h": 630,
+        "palette": [
+          "#FBF8F3",
+          "#B8925A",
+          "#E8A33D",
+          "#F2E4D0"
+        ],
+        "type": "linear",
+        "seed": 99,
+        "still": true
+      }
+    },
+    "footerFaqs": [
+      {
+        "_key": "f1",
+        "q": "How do I care for a piece with gold or silver leaf?",
+        "a": "Keep it out of direct sunlight and away from damp walls. Dust gently with a dry, soft cloth. Never use water or spray cleaners on the surface."
+      },
+      {
+        "_key": "f2",
+        "q": "Do the pieces come framed?",
+        "a": "Canvases arrive with finished, painted edges and can hang as they are. If you would like a float frame in oak, walnut or black, ask when you enquire and I will quote it."
+      },
+      {
+        "_key": "f3",
+        "q": "How is shipping handled?",
+        "a": "Within India, pieces are packed in a custom box and shipped insured, usually within 5 to 7 working days. International orders go via Etsy or DHL; allow 2 to 3 weeks and note that import duties are the buyer's responsibility."
+      },
+      {
+        "_key": "f4",
+        "q": "What is your returns policy?",
+        "a": "If a piece arrives damaged, send photos within 48 hours and I will replace or refund it. Because each piece is handmade, I don't otherwise accept returns, so please ask any questions before you buy."
+      }
+    ]
+  },
+  {
+    "_id": "collection.everyday-moments",
+    "_type": "collection",
+    "name": "Everyday Moments",
+    "slug": {
+      "current": "everyday-moments"
+    },
+    "intro": "The small things that happen every day and are gone before you notice. A cup left on the sill. Someone humming in the next room. I paint them so they stay.",
+    "visible": true,
+    "orderRank": "0|a00000:",
+    "cover": {
+      "_type": "media",
+      "alt": "Warm terracotta and cream strokes with gold leaf catching light",
+      "image": {
+        "_type": "image",
+        "localSrc": "/media/collections/everyday-moments",
+        "width": 1200,
+        "height": 1500
+      },
+      "localVideo": "/media/collections/everyday-moments.mp4",
+      "_gen": {
+        "w": 1200,
+        "h": 1500,
+        "palette": [
+          "#C75B39",
+          "#FBF8F3",
+          "#E8A33D",
+          "#B8925A"
+        ],
+        "type": "radial",
+        "seed": 21
+      }
+    }
+  },
+  {
+    "_id": "collection.quiet-thoughts",
+    "_type": "collection",
+    "name": "Quiet Thoughts",
+    "slug": {
+      "current": "quiet-thoughts"
+    },
+    "intro": "The thoughts that arrive when the house is finally silent. Softer palettes, more silver than gold, a lot of breathing room.",
+    "visible": true,
+    "orderRank": "0|a00001:",
+    "cover": {
+      "_type": "media",
+      "alt": "Soft grey and silver leaf textures",
+      "image": {
+        "_type": "image",
+        "localSrc": "/media/collections/quiet-thoughts",
+        "width": 1200,
+        "height": 1500
+      },
+      "localVideo": "/media/collections/quiet-thoughts.mp4",
+      "_gen": {
+        "w": 1200,
+        "h": 1500,
+        "palette": [
+          "#D9D6D2",
+          "#FBF8F3",
+          "#8C8C8C",
+          "#B8925A"
+        ],
+        "type": "linear",
+        "seed": 22
+      }
+    }
+  },
+  {
+    "_id": "collection.big-feelings",
+    "_type": "collection",
+    "name": "Big Feelings",
+    "slug": {
+      "current": "big-feelings"
+    },
+    "intro": "Joy that doesn't fit in the room. Grief that arrives at the wrong time. The pieces here are louder, with bolder strokes and a lot of gold.",
+    "visible": true,
+    "orderRank": "0|a00002:",
+    "cover": {
+      "_type": "media",
+      "alt": "Bold marigold and terracotta strokes over gold",
+      "image": {
+        "_type": "image",
+        "localSrc": "/media/collections/big-feelings",
+        "width": 1200,
+        "height": 1500
+      },
+      "localVideo": "/media/collections/big-feelings.mp4",
+      "_gen": {
+        "w": 1200,
+        "h": 1500,
+        "palette": [
+          "#E8A33D",
+          "#C75B39",
+          "#7A2E1C",
+          "#B8925A"
+        ],
+        "type": "spiral",
+        "seed": 23
+      }
+    }
+  },
+  {
+    "_id": "collection.home-and-belonging",
+    "_type": "collection",
+    "name": "Home and Belonging",
+    "slug": {
+      "current": "home-and-belonging"
+    },
+    "intro": "For first homes, family homes, and the homes we carry with us when we move far away. Made with new-home and NRI families in mind.",
+    "visible": true,
+    "orderRank": "0|a00003:",
+    "cover": {
+      "_type": "media",
+      "alt": "Earthy ochre and cream layers with silver leaf",
+      "image": {
+        "_type": "image",
+        "localSrc": "/media/collections/home-and-belonging",
+        "width": 1200,
+        "height": 1500
+      },
+      "localVideo": "/media/collections/home-and-belonging.mp4",
+      "_gen": {
+        "w": 1200,
+        "h": 1500,
+        "palette": [
+          "#B8925A",
+          "#FBF8F3",
+          "#8B6B3E",
+          "#D9D6D2"
+        ],
+        "type": "circular",
+        "seed": 24
+      }
+    }
+  },
+  {
+    "_id": "collection.celebrations",
+    "_type": "collection",
+    "name": "Celebrations",
+    "slug": {
+      "current": "celebrations"
+    },
+    "intro": "Diyas, marigolds, wedding mornings and birthday candles. Pieces made to be given, and to be remembered by.",
+    "visible": true,
+    "orderRank": "0|a00004:",
+    "cover": {
+      "_type": "media",
+      "alt": "Bright marigold and terracotta with gold leaf sparkle",
+      "image": {
+        "_type": "image",
+        "localSrc": "/media/collections/celebrations",
+        "width": 1200,
+        "height": 1500
+      },
+      "localVideo": "/media/collections/celebrations.mp4",
+      "_gen": {
+        "w": 1200,
+        "h": 1500,
+        "palette": [
+          "#E8A33D",
+          "#FBF8F3",
+          "#C75B39",
+          "#B8925A"
+        ],
+        "type": "radial",
+        "seed": 25
+      }
+    }
+  },
+  {
+    "_id": "occasion.diwali",
+    "_type": "occasion",
+    "name": "Diwali",
+    "slug": {
+      "current": "diwali"
+    },
+    "intro": "Light, warmth and gold. Pieces that glow next to the diyas and stay up long after the festival is over.",
+    "visible": true,
+    "orderRank": "0|a00000:",
+    "seasonStart": "2026-10-10",
+    "seasonEnd": "2026-11-12",
+    "cover": {
+      "_type": "media",
+      "alt": "Gold leaf and deep terracotta, like diya light on a wall",
+      "image": {
+        "_type": "image",
+        "localSrc": "/media/occasions/diwali",
+        "width": 1200,
+        "height": 1500
+      },
+      "localVideo": "/media/occasions/diwali.mp4",
+      "_gen": {
+        "w": 1200,
+        "h": 1500,
+        "palette": [
+          "#B8925A",
+          "#7A2E1C",
+          "#E8A33D",
+          "#FBF8F3"
+        ],
+        "type": "radial",
+        "seed": 31
+      }
+    }
+  },
+  {
+    "_id": "occasion.weddings",
+    "_type": "occasion",
+    "name": "Weddings",
+    "slug": {
+      "current": "weddings"
+    },
+    "intro": "For two people starting a home. I often paint the couple's own moment into a piece, so ask about personalising it.",
+    "visible": true,
+    "orderRank": "0|a00001:",
+    "seasonStart": "2026-11-15",
+    "seasonEnd": "2027-02-20",
+    "cover": {
+      "_type": "media",
+      "alt": "Blush, cream and gold leaf strokes",
+      "image": {
+        "_type": "image",
+        "localSrc": "/media/occasions/weddings",
+        "width": 1200,
+        "height": 1500
+      },
+      "localVideo": "/media/occasions/weddings.mp4",
+      "_gen": {
+        "w": 1200,
+        "h": 1500,
+        "palette": [
+          "#F2C4B4",
+          "#FBF8F3",
+          "#B8925A",
+          "#C75B39"
+        ],
+        "type": "linear",
+        "seed": 32
+      }
+    }
+  },
+  {
+    "_id": "occasion.griha-pravesh",
+    "_type": "occasion",
+    "name": "Griha Pravesh",
+    "slug": {
+      "current": "griha-pravesh"
+    },
+    "intro": "The first piece on a new wall. Earthy, grounding colours for a house that is about to become a home.",
+    "visible": true,
+    "orderRank": "0|a00002:",
+    "cover": {
+      "_type": "media",
+      "alt": "Ochre and warm white with a thread of silver leaf",
+      "image": {
+        "_type": "image",
+        "localSrc": "/media/occasions/griha-pravesh",
+        "width": 1200,
+        "height": 1500
+      },
+      "localVideo": "/media/occasions/griha-pravesh.mp4",
+      "_gen": {
+        "w": 1200,
+        "h": 1500,
+        "palette": [
+          "#B8925A",
+          "#FBF8F3",
+          "#8B6B3E",
+          "#E8A33D"
+        ],
+        "type": "circular",
+        "seed": 33
+      }
+    }
+  },
+  {
+    "_id": "occasion.raksha-bandhan",
+    "_type": "occasion",
+    "name": "Raksha Bandhan",
+    "slug": {
+      "current": "raksha-bandhan"
+    },
+    "intro": "Small pieces for siblings, especially the ones who now live in different time zones.",
+    "visible": true,
+    "orderRank": "0|a00003:",
+    "seasonStart": "2027-08-01",
+    "seasonEnd": "2027-08-20",
+    "cover": {
+      "_type": "media",
+      "alt": "Two threads of gold and terracotta crossing",
+      "image": {
+        "_type": "image",
+        "localSrc": "/media/occasions/raksha-bandhan",
+        "width": 1200,
+        "height": 1500
+      },
+      "localVideo": "/media/occasions/raksha-bandhan.mp4",
+      "_gen": {
+        "w": 1200,
+        "h": 1500,
+        "palette": [
+          "#C75B39",
+          "#E8A33D",
+          "#FBF8F3",
+          "#B8925A"
+        ],
+        "type": "spiral",
+        "seed": 34
+      }
+    }
+  },
+  {
+    "_id": "occasion.anniversaries",
+    "_type": "occasion",
+    "name": "Anniversaries",
+    "slug": {
+      "current": "anniversaries"
+    },
+    "intro": "For the years that add up quietly. I can work a date or a shared memory into the piece.",
+    "visible": true,
+    "orderRank": "0|a00004:",
+    "cover": {
+      "_type": "media",
+      "alt": "Deep terracotta with soft silver leaf highlights",
+      "image": {
+        "_type": "image",
+        "localSrc": "/media/occasions/anniversaries",
+        "width": 1200,
+        "height": 1500
+      },
+      "localVideo": "/media/occasions/anniversaries.mp4",
+      "_gen": {
+        "w": 1200,
+        "h": 1500,
+        "palette": [
+          "#7A2E1C",
+          "#C75B39",
+          "#D9D6D2",
+          "#FBF8F3"
+        ],
+        "type": "radial",
+        "seed": 35
+      }
+    }
+  },
+  {
+    "_id": "occasion.birthdays",
+    "_type": "occasion",
+    "name": "Birthdays",
+    "slug": {
+      "current": "birthdays"
+    },
+    "intro": "Joyful, bright and personal. Popular for kids leaving for college, so they take a piece of home with them.",
+    "visible": true,
+    "orderRank": "0|a00005:",
+    "cover": {
+      "_type": "media",
+      "alt": "Marigold, cream and flecks of gold leaf",
+      "image": {
+        "_type": "image",
+        "localSrc": "/media/occasions/birthdays",
+        "width": 1200,
+        "height": 1500
+      },
+      "localVideo": "/media/occasions/birthdays.mp4",
+      "_gen": {
+        "w": 1200,
+        "h": 1500,
+        "palette": [
+          "#E8A33D",
+          "#FBF8F3",
+          "#F2C4B4",
+          "#B8925A"
+        ],
+        "type": "linear",
+        "seed": 36
+      }
+    }
+  },
+  {
+    "_id": "artwork.chai-at-six",
+    "_type": "artwork",
+    "title": "Chai at Six",
+    "slug": {
+      "current": "chai-at-six"
+    },
+    "note": "Every morning my mother makes chai before anyone is awake. The kitchen is dark except for the flame and the steam. I painted the steam in silver leaf so it moves when the light does.",
+    "width": 60,
+    "height": 75,
+    "depth": 3.5,
+    "materials": "Acrylic, gesso and silver leaf on stretched cotton canvas",
+    "price": 42000,
+    "status": "available",
+    "featured": true,
+    "etsyUrl": "https://www.etsy.com/shop/artbysamridhiagarwal",
+    "collections": [
+      {
+        "_type": "reference",
+        "_ref": "collection.everyday-moments",
+        "_weak": true,
+        "_key": "c1"
+      },
+      {
+        "_type": "reference",
+        "_ref": "collection.quiet-thoughts",
+        "_weak": true,
+        "_key": "c2"
+      }
+    ],
+    "occasions": [
+      {
+        "_type": "reference",
+        "_ref": "occasion.griha-pravesh",
+        "_weak": true,
+        "_key": "o1"
+      },
+      {
+        "_type": "reference",
+        "_ref": "occasion.birthdays",
+        "_weak": true,
+        "_key": "o2"
+      }
+    ],
+    "media": [
+      {
+        "_type": "media",
+        "_key": "m1",
+        "alt": "Chai at Six, full view: cream and grey strokes with a rising silver leaf line",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/chai-at-six-1",
+          "width": 1200,
+          "height": 1500
+        },
+        "localVideo": "/media/artworks/chai-at-six-1.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1500,
+          "palette": [
+            "#D9D6D2",
+            "#FBF8F3",
+            "#8C8C8C",
+            "#B8925A"
+          ],
+          "type": "linear",
+          "seed": 101
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "m2",
+        "alt": "Close-up of the silver leaf steam texture on Chai at Six",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/chai-at-six-2",
+          "width": 1200,
+          "height": 1500
+        },
+        "localVideo": "/media/artworks/chai-at-six-2.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1500,
+          "palette": [
+            "#8C8C8C",
+            "#D9D6D2",
+            "#FBF8F3",
+            "#6B625B"
+          ],
+          "type": "spiral",
+          "seed": 102
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "m3",
+        "alt": "Chai at Six hanging above a wooden console in a bright hallway",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/chai-at-six-3",
+          "width": 1500,
+          "height": 1200
+        },
+        "localVideo": "/media/artworks/chai-at-six-3.mp4",
+        "_gen": {
+          "w": 1500,
+          "h": 1200,
+          "palette": [
+            "#FBF8F3",
+            "#E8DCCB",
+            "#B8925A",
+            "#D9D6D2"
+          ],
+          "type": "radial",
+          "seed": 103
+        }
+      }
+    ],
+    "seoDescription": "Chai at Six, an original 60 x 75 cm acrylic and silver leaf painting by Samridhi Agarwal about the quiet ritual of morning chai."
+  },
+  {
+    "_id": "artwork.the-doorbell-at-nine",
+    "_type": "artwork",
+    "title": "The Doorbell at Nine",
+    "slug": {
+      "current": "the-doorbell-at-nine"
+    },
+    "note": "Our neighbour's grandson rings the bell at nine every night to return a steel dabba. The gold circle is the bell, the marigold is the dabba, the rest is the noise of a happy house.",
+    "width": 90,
+    "height": 90,
+    "depth": 3.5,
+    "materials": "Acrylic, modelling paste and gold leaf on canvas",
+    "price": 68000,
+    "status": "available",
+    "featured": true,
+    "etsyUrl": "https://www.etsy.com/shop/artbysamridhiagarwal",
+    "collections": [
+      {
+        "_type": "reference",
+        "_ref": "collection.everyday-moments",
+        "_weak": true,
+        "_key": "c1"
+      },
+      {
+        "_type": "reference",
+        "_ref": "collection.home-and-belonging",
+        "_weak": true,
+        "_key": "c2"
+      }
+    ],
+    "occasions": [
+      {
+        "_type": "reference",
+        "_ref": "occasion.griha-pravesh",
+        "_weak": true,
+        "_key": "o1"
+      },
+      {
+        "_type": "reference",
+        "_ref": "occasion.diwali",
+        "_weak": true,
+        "_key": "o2"
+      }
+    ],
+    "media": [
+      {
+        "_type": "media",
+        "_key": "m1",
+        "alt": "The Doorbell at Nine, a square canvas with a gold leaf circle over marigold strokes",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/doorbell-1",
+          "width": 1200,
+          "height": 1200
+        },
+        "localVideo": "/media/artworks/doorbell-1.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1200,
+          "palette": [
+            "#E8A33D",
+            "#B8925A",
+            "#FBF8F3",
+            "#C75B39"
+          ],
+          "type": "circular",
+          "seed": 111
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "m2",
+        "alt": "Texture detail of raised paste under gold leaf",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/doorbell-2",
+          "width": 1200,
+          "height": 1200
+        },
+        "localVideo": "/media/artworks/doorbell-2.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1200,
+          "palette": [
+            "#B8925A",
+            "#7A5A2B",
+            "#E8A33D",
+            "#FBF8F3"
+          ],
+          "type": "radial",
+          "seed": 112
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "m3",
+        "alt": "The Doorbell at Nine above a sofa in a living room",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/doorbell-3",
+          "width": 1500,
+          "height": 1200
+        },
+        "localVideo": "/media/artworks/doorbell-3.mp4",
+        "_gen": {
+          "w": 1500,
+          "h": 1200,
+          "palette": [
+            "#FBF8F3",
+            "#E8DCCB",
+            "#E8A33D",
+            "#B8925A"
+          ],
+          "type": "linear",
+          "seed": 113
+        }
+      }
+    ]
+  },
+  {
+    "_id": "artwork.the-long-way-home",
+    "_type": "artwork",
+    "title": "The Long Way Home",
+    "slug": {
+      "current": "the-long-way-home"
+    },
+    "note": "My brother moved to Toronto and calls while walking home from the subway. This is that walk: cold blue-grey, a warm window at the end.",
+    "width": 76,
+    "height": 101,
+    "depth": 3.5,
+    "materials": "Acrylic, ink and gold leaf on canvas",
+    "price": 74000,
+    "status": "sold",
+    "featured": false,
+    "collections": [
+      {
+        "_type": "reference",
+        "_ref": "collection.home-and-belonging",
+        "_weak": true,
+        "_key": "c1"
+      },
+      {
+        "_type": "reference",
+        "_ref": "collection.big-feelings",
+        "_weak": true,
+        "_key": "c2"
+      }
+    ],
+    "occasions": [
+      {
+        "_type": "reference",
+        "_ref": "occasion.raksha-bandhan",
+        "_weak": true,
+        "_key": "o1"
+      }
+    ],
+    "media": [
+      {
+        "_type": "media",
+        "_key": "m1",
+        "alt": "The Long Way Home, tall canvas in blue greys with a single gold leaf window",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/long-way-home-1",
+          "width": 1200,
+          "height": 1500
+        },
+        "localVideo": "/media/artworks/long-way-home-1.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1500,
+          "palette": [
+            "#6B7280",
+            "#D9D6D2",
+            "#B8925A",
+            "#3B4252"
+          ],
+          "type": "linear",
+          "seed": 121
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "m2",
+        "alt": "Detail of ink strokes and gold leaf on The Long Way Home",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/long-way-home-2",
+          "width": 1200,
+          "height": 1500
+        },
+        "localVideo": "/media/artworks/long-way-home-2.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1500,
+          "palette": [
+            "#3B4252",
+            "#B8925A",
+            "#6B7280",
+            "#FBF8F3"
+          ],
+          "type": "spiral",
+          "seed": 122
+        }
+      }
+    ]
+  },
+  {
+    "_id": "artwork.marigold-morning",
+    "_type": "artwork",
+    "title": "Marigold Morning",
+    "slug": {
+      "current": "marigold-morning"
+    },
+    "note": "The morning of my cousin's wedding, someone dropped a whole basket of marigolds on the stairs and nobody minded. That colour, everywhere, is this piece.",
+    "width": 90,
+    "height": 120,
+    "depth": 3.5,
+    "materials": "Acrylic and gold leaf on canvas",
+    "price": 96000,
+    "status": "available",
+    "featured": true,
+    "etsyUrl": "https://www.etsy.com/shop/artbysamridhiagarwal",
+    "collections": [
+      {
+        "_type": "reference",
+        "_ref": "collection.celebrations",
+        "_weak": true,
+        "_key": "c1"
+      },
+      {
+        "_type": "reference",
+        "_ref": "collection.big-feelings",
+        "_weak": true,
+        "_key": "c2"
+      }
+    ],
+    "occasions": [
+      {
+        "_type": "reference",
+        "_ref": "occasion.weddings",
+        "_weak": true,
+        "_key": "o1"
+      },
+      {
+        "_type": "reference",
+        "_ref": "occasion.diwali",
+        "_weak": true,
+        "_key": "o2"
+      },
+      {
+        "_type": "reference",
+        "_ref": "occasion.anniversaries",
+        "_weak": true,
+        "_key": "o3"
+      }
+    ],
+    "media": [
+      {
+        "_type": "media",
+        "_key": "m1",
+        "alt": "Marigold Morning, large canvas of layered marigold and orange strokes with gold leaf",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/marigold-1",
+          "width": 1200,
+          "height": 1500
+        },
+        "localVideo": "/media/artworks/marigold-1.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1500,
+          "palette": [
+            "#E8A33D",
+            "#F6C453",
+            "#C75B39",
+            "#B8925A"
+          ],
+          "type": "radial",
+          "seed": 131
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "m2",
+        "alt": "Close-up of thick marigold strokes and gold leaf",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/marigold-2",
+          "width": 1200,
+          "height": 1500
+        },
+        "localVideo": "/media/artworks/marigold-2.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1500,
+          "palette": [
+            "#F6C453",
+            "#E8A33D",
+            "#B8925A",
+            "#FBF8F3"
+          ],
+          "type": "spiral",
+          "seed": 132
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "m3",
+        "alt": "Marigold Morning on a white wall behind a dining table",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/marigold-3",
+          "width": 1500,
+          "height": 1200
+        },
+        "localVideo": "/media/artworks/marigold-3.mp4",
+        "_gen": {
+          "w": 1500,
+          "h": 1200,
+          "palette": [
+            "#FBF8F3",
+            "#E8DCCB",
+            "#E8A33D",
+            "#D9D6D2"
+          ],
+          "type": "linear",
+          "seed": 133
+        }
+      }
+    ]
+  },
+  {
+    "_id": "artwork.after-the-rain-balcony",
+    "_type": "artwork",
+    "title": "After the Rain, Balcony",
+    "slug": {
+      "current": "after-the-rain-balcony"
+    },
+    "note": "First monsoon rain in Bangalore and the whole street smells like wet earth. I stood on the balcony until my chai went cold. Silver leaf for the drops still on the railing.",
+    "width": 45,
+    "height": 60,
+    "depth": 3.5,
+    "materials": "Acrylic and silver leaf on canvas",
+    "price": 28000,
+    "status": "available",
+    "featured": false,
+    "etsyUrl": "https://www.etsy.com/shop/artbysamridhiagarwal",
+    "collections": [
+      {
+        "_type": "reference",
+        "_ref": "collection.everyday-moments",
+        "_weak": true,
+        "_key": "c1"
+      },
+      {
+        "_type": "reference",
+        "_ref": "collection.quiet-thoughts",
+        "_weak": true,
+        "_key": "c2"
+      }
+    ],
+    "occasions": [
+      {
+        "_type": "reference",
+        "_ref": "occasion.birthdays",
+        "_weak": true,
+        "_key": "o1"
+      }
+    ],
+    "media": [
+      {
+        "_type": "media",
+        "_key": "m1",
+        "alt": "After the Rain, Balcony: green greys and cream with silver leaf drops",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/after-rain-1",
+          "width": 1200,
+          "height": 1500
+        },
+        "localVideo": "/media/artworks/after-rain-1.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1500,
+          "palette": [
+            "#7C8A7A",
+            "#D9D6D2",
+            "#FBF8F3",
+            "#8C8C8C"
+          ],
+          "type": "linear",
+          "seed": 141
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "m2",
+        "alt": "Detail of silver leaf drops on After the Rain, Balcony",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/after-rain-2",
+          "width": 1200,
+          "height": 1500
+        },
+        "localVideo": "/media/artworks/after-rain-2.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1500,
+          "palette": [
+            "#D9D6D2",
+            "#8C8C8C",
+            "#7C8A7A",
+            "#FBF8F3"
+          ],
+          "type": "circular",
+          "seed": 142
+        }
+      }
+    ]
+  },
+  {
+    "_id": "artwork.diya-count",
+    "_type": "artwork",
+    "title": "Diya Count",
+    "slug": {
+      "current": "diya-count"
+    },
+    "note": "We line up the diyas on the parapet and my father counts them twice, every year, as if one might have escaped. Forty-one gold leaf marks. There are always forty-one.",
+    "width": 120,
+    "height": 60,
+    "depth": 3.5,
+    "materials": "Acrylic, gold leaf and copper leaf on canvas",
+    "price": 88000,
+    "status": "available",
+    "featured": true,
+    "etsyUrl": "https://www.etsy.com/shop/artbysamridhiagarwal",
+    "collections": [
+      {
+        "_type": "reference",
+        "_ref": "collection.celebrations",
+        "_weak": true,
+        "_key": "c1"
+      },
+      {
+        "_type": "reference",
+        "_ref": "collection.everyday-moments",
+        "_weak": true,
+        "_key": "c2"
+      }
+    ],
+    "occasions": [
+      {
+        "_type": "reference",
+        "_ref": "occasion.diwali",
+        "_weak": true,
+        "_key": "o1"
+      },
+      {
+        "_type": "reference",
+        "_ref": "occasion.griha-pravesh",
+        "_weak": true,
+        "_key": "o2"
+      }
+    ],
+    "media": [
+      {
+        "_type": "media",
+        "_key": "m1",
+        "alt": "Diya Count, a wide canvas with a row of gold leaf marks on deep terracotta",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/diya-count-1",
+          "width": 1500,
+          "height": 750
+        },
+        "localVideo": "/media/artworks/diya-count-1.mp4",
+        "_gen": {
+          "w": 1500,
+          "h": 750,
+          "palette": [
+            "#7A2E1C",
+            "#B8925A",
+            "#E8A33D",
+            "#C75B39"
+          ],
+          "type": "linear",
+          "seed": 151
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "m2",
+        "alt": "Gold and copper leaf detail on Diya Count",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/diya-count-2",
+          "width": 1200,
+          "height": 1500
+        },
+        "localVideo": "/media/artworks/diya-count-2.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1500,
+          "palette": [
+            "#B8925A",
+            "#A8642F",
+            "#E8A33D",
+            "#7A2E1C"
+          ],
+          "type": "radial",
+          "seed": 152
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "m3",
+        "alt": "Diya Count above a low console with brass diyas",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/diya-count-3",
+          "width": 1500,
+          "height": 1200
+        },
+        "localVideo": "/media/artworks/diya-count-3.mp4",
+        "_gen": {
+          "w": 1500,
+          "h": 1200,
+          "palette": [
+            "#FBF8F3",
+            "#E8DCCB",
+            "#7A2E1C",
+            "#B8925A"
+          ],
+          "type": "spiral",
+          "seed": 153
+        }
+      }
+    ]
+  },
+  {
+    "_id": "artwork.first-night-new-house",
+    "_type": "artwork",
+    "title": "First Night, New House",
+    "slug": {
+      "current": "first-night-new-house"
+    },
+    "note": "Boxes everywhere, one mattress on the floor, and the strange sound of a new ceiling fan. I painted the fan's shadow in silver leaf so it turns when you walk past.",
+    "width": 75,
+    "height": 100,
+    "depth": 3.5,
+    "materials": "Acrylic, gesso and silver leaf on canvas",
+    "price": 64000,
+    "status": "made-to-order",
+    "featured": false,
+    "collections": [
+      {
+        "_type": "reference",
+        "_ref": "collection.home-and-belonging",
+        "_weak": true,
+        "_key": "c1"
+      }
+    ],
+    "occasions": [
+      {
+        "_type": "reference",
+        "_ref": "occasion.griha-pravesh",
+        "_weak": true,
+        "_key": "o1"
+      },
+      {
+        "_type": "reference",
+        "_ref": "occasion.weddings",
+        "_weak": true,
+        "_key": "o2"
+      }
+    ],
+    "media": [
+      {
+        "_type": "media",
+        "_key": "m1",
+        "alt": "First Night, New House: warm ochre wall tones with a silver leaf fan shadow",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/first-night-1",
+          "width": 1200,
+          "height": 1500
+        },
+        "localVideo": "/media/artworks/first-night-1.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1500,
+          "palette": [
+            "#B8925A",
+            "#FBF8F3",
+            "#D9D6D2",
+            "#8B6B3E"
+          ],
+          "type": "circular",
+          "seed": 161
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "m2",
+        "alt": "Silver leaf detail of the fan shadow",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/first-night-2",
+          "width": 1200,
+          "height": 1500
+        },
+        "localVideo": "/media/artworks/first-night-2.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1500,
+          "palette": [
+            "#D9D6D2",
+            "#8C8C8C",
+            "#B8925A",
+            "#FBF8F3"
+          ],
+          "type": "spiral",
+          "seed": 162
+        }
+      }
+    ]
+  },
+  {
+    "_id": "artwork.two-threads",
+    "_type": "artwork",
+    "title": "Two Threads",
+    "slug": {
+      "current": "two-threads"
+    },
+    "note": "My sister ties my rakhi over a video call now, hers on her wrist, mine on mine, both of us pretending it is the same thread. Gold on one side, terracotta on the other, crossing in the middle.",
+    "width": 40,
+    "height": 50,
+    "depth": 3.5,
+    "materials": "Acrylic and gold leaf on canvas",
+    "price": 22000,
+    "status": "available",
+    "featured": false,
+    "etsyUrl": "https://www.etsy.com/shop/artbysamridhiagarwal",
+    "collections": [
+      {
+        "_type": "reference",
+        "_ref": "collection.big-feelings",
+        "_weak": true,
+        "_key": "c1"
+      },
+      {
+        "_type": "reference",
+        "_ref": "collection.celebrations",
+        "_weak": true,
+        "_key": "c2"
+      }
+    ],
+    "occasions": [
+      {
+        "_type": "reference",
+        "_ref": "occasion.raksha-bandhan",
+        "_weak": true,
+        "_key": "o1"
+      },
+      {
+        "_type": "reference",
+        "_ref": "occasion.birthdays",
+        "_weak": true,
+        "_key": "o2"
+      }
+    ],
+    "media": [
+      {
+        "_type": "media",
+        "_key": "m1",
+        "alt": "Two Threads, a small canvas with a gold and a terracotta line crossing",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/two-threads-1",
+          "width": 1200,
+          "height": 1500
+        },
+        "localVideo": "/media/artworks/two-threads-1.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1500,
+          "palette": [
+            "#C75B39",
+            "#B8925A",
+            "#FBF8F3",
+            "#E8A33D"
+          ],
+          "type": "spiral",
+          "seed": 171
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "m2",
+        "alt": "Two Threads on a bedroom wall beside a window",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/two-threads-2",
+          "width": 1500,
+          "height": 1200
+        },
+        "localVideo": "/media/artworks/two-threads-2.mp4",
+        "_gen": {
+          "w": 1500,
+          "h": 1200,
+          "palette": [
+            "#FBF8F3",
+            "#E8DCCB",
+            "#C75B39",
+            "#D9D6D2"
+          ],
+          "type": "linear",
+          "seed": 172
+        }
+      }
+    ]
+  },
+  {
+    "_id": "artwork.the-list-on-the-fridge",
+    "_type": "artwork",
+    "title": "The List on the Fridge",
+    "slug": {
+      "current": "the-list-on-the-fridge"
+    },
+    "note": "Milk, coriander, call Nani, fix the tap. The handwriting changes as the week goes on. I love how a list holds a whole family. Silver leaf for the magnet.",
+    "width": 50,
+    "height": 70,
+    "depth": 3.5,
+    "materials": "Acrylic, pencil and silver leaf on canvas",
+    "price": 34000,
+    "status": "available",
+    "featured": false,
+    "etsyUrl": "https://www.etsy.com/shop/artbysamridhiagarwal",
+    "collections": [
+      {
+        "_type": "reference",
+        "_ref": "collection.everyday-moments",
+        "_weak": true,
+        "_key": "c1"
+      },
+      {
+        "_type": "reference",
+        "_ref": "collection.home-and-belonging",
+        "_weak": true,
+        "_key": "c2"
+      }
+    ],
+    "occasions": [
+      {
+        "_type": "reference",
+        "_ref": "occasion.griha-pravesh",
+        "_weak": true,
+        "_key": "o1"
+      },
+      {
+        "_type": "reference",
+        "_ref": "occasion.anniversaries",
+        "_weak": true,
+        "_key": "o2"
+      }
+    ],
+    "media": [
+      {
+        "_type": "media",
+        "_key": "m1",
+        "alt": "The List on the Fridge, cream canvas with pencil marks and a silver leaf square",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/fridge-list-1",
+          "width": 1200,
+          "height": 1500
+        },
+        "localVideo": "/media/artworks/fridge-list-1.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1500,
+          "palette": [
+            "#FBF8F3",
+            "#E8DCCB",
+            "#D9D6D2",
+            "#6B625B"
+          ],
+          "type": "linear",
+          "seed": 181
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "m2",
+        "alt": "Pencil and silver leaf detail",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/fridge-list-2",
+          "width": 1200,
+          "height": 1500
+        },
+        "localVideo": "/media/artworks/fridge-list-2.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1500,
+          "palette": [
+            "#D9D6D2",
+            "#FBF8F3",
+            "#8C8C8C",
+            "#B8925A"
+          ],
+          "type": "radial",
+          "seed": 182
+        }
+      }
+    ]
+  },
+  {
+    "_id": "artwork.twenty-five-years",
+    "_type": "artwork",
+    "title": "Twenty-Five Years",
+    "slug": {
+      "current": "twenty-five-years"
+    },
+    "note": "Commissioned for my parents' anniversary and then I couldn't part with the study for it. Twenty-five gold leaf squares, some brighter, some worn, all still there.",
+    "width": 60,
+    "height": 60,
+    "depth": 3.5,
+    "materials": "Acrylic and gold leaf on canvas",
+    "price": 48000,
+    "status": "available",
+    "featured": false,
+    "etsyUrl": "https://www.etsy.com/shop/artbysamridhiagarwal",
+    "collections": [
+      {
+        "_type": "reference",
+        "_ref": "collection.big-feelings",
+        "_weak": true,
+        "_key": "c1"
+      },
+      {
+        "_type": "reference",
+        "_ref": "collection.celebrations",
+        "_weak": true,
+        "_key": "c2"
+      }
+    ],
+    "occasions": [
+      {
+        "_type": "reference",
+        "_ref": "occasion.anniversaries",
+        "_weak": true,
+        "_key": "o1"
+      },
+      {
+        "_type": "reference",
+        "_ref": "occasion.weddings",
+        "_weak": true,
+        "_key": "o2"
+      }
+    ],
+    "media": [
+      {
+        "_type": "media",
+        "_key": "m1",
+        "alt": "Twenty-Five Years, a square grid of gold leaf on warm white",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/twenty-five-1",
+          "width": 1200,
+          "height": 1200
+        },
+        "localVideo": "/media/artworks/twenty-five-1.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1200,
+          "palette": [
+            "#B8925A",
+            "#FBF8F3",
+            "#E8A33D",
+            "#D9D6D2"
+          ],
+          "type": "circular",
+          "seed": 191
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "m2",
+        "alt": "Detail of worn and bright gold leaf squares",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/twenty-five-2",
+          "width": 1200,
+          "height": 1200
+        },
+        "localVideo": "/media/artworks/twenty-five-2.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1200,
+          "palette": [
+            "#B8925A",
+            "#7A5A2B",
+            "#FBF8F3",
+            "#E8A33D"
+          ],
+          "type": "radial",
+          "seed": 192
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "m3",
+        "alt": "Twenty-Five Years above a bed with linen sheets",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/twenty-five-3",
+          "width": 1500,
+          "height": 1200
+        },
+        "localVideo": "/media/artworks/twenty-five-3.mp4",
+        "_gen": {
+          "w": 1500,
+          "h": 1200,
+          "palette": [
+            "#FBF8F3",
+            "#E8DCCB",
+            "#B8925A",
+            "#D9D6D2"
+          ],
+          "type": "linear",
+          "seed": 193
+        }
+      }
+    ]
+  },
+  {
+    "_id": "artwork.leaving-for-college",
+    "_type": "artwork",
+    "title": "Leaving for College",
+    "slug": {
+      "current": "leaving-for-college"
+    },
+    "note": "A friend asked for something small enough to fit in a suitcase and big enough to feel like home. Terracotta for the kitchen, a strip of silver leaf for the airport window.",
+    "width": 30,
+    "height": 40,
+    "depth": 3.5,
+    "materials": "Acrylic and silver leaf on canvas",
+    "price": 16000,
+    "status": "made-to-order",
+    "featured": false,
+    "etsyUrl": "https://www.etsy.com/shop/artbysamridhiagarwal",
+    "collections": [
+      {
+        "_type": "reference",
+        "_ref": "collection.home-and-belonging",
+        "_weak": true,
+        "_key": "c1"
+      },
+      {
+        "_type": "reference",
+        "_ref": "collection.quiet-thoughts",
+        "_weak": true,
+        "_key": "c2"
+      }
+    ],
+    "occasions": [
+      {
+        "_type": "reference",
+        "_ref": "occasion.birthdays",
+        "_weak": true,
+        "_key": "o1"
+      }
+    ],
+    "media": [
+      {
+        "_type": "media",
+        "_key": "m1",
+        "alt": "Leaving for College, a small terracotta canvas with a silver leaf strip",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/college-1",
+          "width": 1200,
+          "height": 1500
+        },
+        "localVideo": "/media/artworks/college-1.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1500,
+          "palette": [
+            "#C75B39",
+            "#D9D6D2",
+            "#FBF8F3",
+            "#7A2E1C"
+          ],
+          "type": "linear",
+          "seed": 201
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "m2",
+        "alt": "Leaving for College on a dorm room shelf",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/artworks/college-2",
+          "width": 1500,
+          "height": 1200
+        },
+        "localVideo": "/media/artworks/college-2.mp4",
+        "_gen": {
+          "w": 1500,
+          "h": 1200,
+          "palette": [
+            "#FBF8F3",
+            "#E8DCCB",
+            "#C75B39",
+            "#D9D6D2"
+          ],
+          "type": "radial",
+          "seed": 202
+        }
+      }
+    ]
+  },
+  {
+    "_id": "exhibition.gold-in-the-ordinary",
+    "_type": "exhibition",
+    "name": "Gold in the Ordinary",
+    "slug": {
+      "current": "gold-in-the-ordinary"
+    },
+    "venue": "Bikaner House",
+    "city": "New Delhi",
+    "startDate": "2026-11-12",
+    "endDate": "2026-11-16",
+    "description": "Twenty new pieces about the small rituals of an Indian home, shown together for the first time. Opening evening on 12 November, 6 pm onwards. Everyone welcome.",
+    "gallery": [
+      {
+        "_type": "media",
+        "_key": "g1",
+        "alt": "Render of the main wall at Bikaner House with the Small Hours pieces",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/exhibitions/gold-ordinary-1",
+          "width": 1500,
+          "height": 1000
+        },
+        "localVideo": "/media/exhibitions/gold-ordinary-1.mp4",
+        "_gen": {
+          "w": 1500,
+          "h": 1000,
+          "palette": [
+            "#B8925A",
+            "#E8DCCB",
+            "#7A5A2B",
+            "#D9D6D2"
+          ],
+          "type": "linear",
+          "seed": 301
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "g2",
+        "alt": "Studio table with pieces being packed for the show",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/exhibitions/gold-ordinary-2",
+          "width": 1500,
+          "height": 1000
+        },
+        "localVideo": "/media/exhibitions/gold-ordinary-2.mp4",
+        "_gen": {
+          "w": 1500,
+          "h": 1000,
+          "palette": [
+            "#E8DCCB",
+            "#B8925A",
+            "#C75B39",
+            "#FBF8F3"
+          ],
+          "type": "radial",
+          "seed": 302
+        }
+      }
+    ]
+  },
+  {
+    "_id": "exhibition.small-stories",
+    "_type": "exhibition",
+    "name": "Small Stories",
+    "slug": {
+      "current": "small-stories"
+    },
+    "venue": "Method Kala Ghoda",
+    "city": "Mumbai",
+    "startDate": "2026-02-06",
+    "endDate": "2026-02-15",
+    "description": "My first solo show. Fourteen pieces from Everyday Moments and Quiet Thoughts, hung low so you could get close to the leaf. Thank you to everyone who came on opening night and stayed until we were asked to leave.",
+    "gallery": [
+      {
+        "_type": "media",
+        "_key": "g1",
+        "alt": "Installation view of Small Stories at Method Kala Ghoda",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/exhibitions/small-stories-1",
+          "width": 1500,
+          "height": 1000
+        },
+        "localVideo": "/media/exhibitions/small-stories-1.mp4",
+        "_gen": {
+          "w": 1500,
+          "h": 1000,
+          "palette": [
+            "#FBF8F3",
+            "#D9D6D2",
+            "#C75B39",
+            "#B8925A"
+          ],
+          "type": "linear",
+          "seed": 311
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "g2",
+        "alt": "Visitors looking closely at Chai at Six on opening night",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/exhibitions/small-stories-2",
+          "width": 1500,
+          "height": 1000
+        },
+        "localVideo": "/media/exhibitions/small-stories-2.mp4",
+        "_gen": {
+          "w": 1500,
+          "h": 1000,
+          "palette": [
+            "#6B625B",
+            "#D9D6D2",
+            "#B8925A",
+            "#FBF8F3"
+          ],
+          "type": "radial",
+          "seed": 312
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "g3",
+        "alt": "The Long Way Home on display with its red sold dot",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/exhibitions/small-stories-3",
+          "width": 1000,
+          "height": 1500
+        },
+        "localVideo": "/media/exhibitions/small-stories-3.mp4",
+        "_gen": {
+          "w": 1000,
+          "h": 1500,
+          "palette": [
+            "#6B7280",
+            "#FBF8F3",
+            "#B8925A",
+            "#3B4252"
+          ],
+          "type": "spiral",
+          "seed": 313
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "g4",
+        "alt": "Opening night, marigold garlands at the gallery entrance",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/exhibitions/small-stories-4",
+          "width": 1500,
+          "height": 1000
+        },
+        "localVideo": "/media/exhibitions/small-stories-4.mp4",
+        "_gen": {
+          "w": 1500,
+          "h": 1000,
+          "palette": [
+            "#E8A33D",
+            "#FBF8F3",
+            "#C75B39",
+            "#B8925A"
+          ],
+          "type": "circular",
+          "seed": 314
+        }
+      }
+    ]
+  },
+  {
+    "_id": "post.chai-at-six",
+    "_type": "post",
+    "title": "The story behind Chai at Six",
+    "slug": {
+      "current": "chai-at-six"
+    },
+    "publishedAt": "2026-08-14",
+    "excerpt": "A dark kitchen, one flame, and the steam that I chased with silver leaf for two weeks.",
+    "cover": {
+      "_type": "media",
+      "alt": "Steam rising from a chai pan in a dark kitchen",
+      "image": {
+        "_type": "image",
+        "localSrc": "/media/journal/chai",
+        "width": 1500,
+        "height": 1000
+      },
+      "localVideo": "/media/journal/chai.mp4",
+      "_gen": {
+        "w": 1500,
+        "h": 1000,
+        "palette": [
+          "#3B3632",
+          "#D9D6D2",
+          "#B8925A",
+          "#6B625B"
+        ],
+        "type": "radial",
+        "seed": 401
+      }
+    },
+    "artworks": [
+      {
+        "_type": "reference",
+        "_ref": "artwork.chai-at-six",
+        "_weak": true,
+        "_key": "a1"
+      }
+    ],
+    "body": [
+      {
+        "_type": "block",
+        "_key": "b1",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "s1",
+            "text": "My mother wakes up at half past five. By six the chai is on and the kitchen is dark except for the blue flame and the steam. For years I walked past this. Then one morning I sat on the counter and watched.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "b2",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "s2",
+            "text": "The steam was the hard part. Paint made it look solid. Ink made it look like smoke. Silver leaf, torn into thin strips and pressed on almost dry, finally did it: it disappears and reappears as you move around the room, exactly like the real thing did when the light came in.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "b3",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "s3",
+            "text": "What I kept, what I left out",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "b4",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "s4",
+            "text": "There is no pan, no cup, no stove in the painting. Just the grey of the room and the line of silver rising. If you know the moment you will see it. If you don't, I hope it still feels like the start of a day.",
+            "marks": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "post.forty-one-diyas",
+    "_type": "post",
+    "title": "Forty-one diyas, counted twice",
+    "slug": {
+      "current": "forty-one-diyas"
+    },
+    "publishedAt": "2026-09-02",
+    "excerpt": "Why Diya Count is exactly 120 cm wide, and why there are always forty-one marks.",
+    "cover": {
+      "_type": "media",
+      "alt": "A row of brass diyas on a parapet at dusk",
+      "image": {
+        "_type": "image",
+        "localSrc": "/media/journal/diyas",
+        "width": 1500,
+        "height": 1000
+      },
+      "localVideo": "/media/journal/diyas.mp4",
+      "_gen": {
+        "w": 1500,
+        "h": 1000,
+        "palette": [
+          "#7A2E1C",
+          "#E8A33D",
+          "#B8925A",
+          "#3B3632"
+        ],
+        "type": "linear",
+        "seed": 402
+      }
+    },
+    "artworks": [
+      {
+        "_type": "reference",
+        "_ref": "artwork.diya-count",
+        "_weak": true,
+        "_key": "a1"
+      }
+    ],
+    "body": [
+      {
+        "_type": "block",
+        "_key": "b1",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "s1",
+            "text": "Our parapet is a little over a metre long. Every Diwali the diyas go along it in one row, and every year my father counts them twice. It is forty-one. It has been forty-one since I was ten.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "b2",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "s2",
+            "text": "So the canvas is 120 cm wide, roughly the parapet, and the marks are gold leaf pressed on with my thumb. A few are copper leaf, for the ones that always go out first. This was the first piece where I let the surface stay rough, and I think that is why people want to touch it.",
+            "marks": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "post.two-threads-two-cities",
+    "_type": "post",
+    "title": "Two threads, two cities",
+    "slug": {
+      "current": "two-threads-two-cities"
+    },
+    "publishedAt": "2026-08-28",
+    "excerpt": "Tying a rakhi over a video call, and the small painting that came out of it.",
+    "cover": {
+      "_type": "media",
+      "alt": "A rakhi thread on a wooden table beside a phone",
+      "image": {
+        "_type": "image",
+        "localSrc": "/media/journal/threads",
+        "width": 1500,
+        "height": 1000
+      },
+      "localVideo": "/media/journal/threads.mp4",
+      "_gen": {
+        "w": 1500,
+        "h": 1000,
+        "palette": [
+          "#C75B39",
+          "#FBF8F3",
+          "#B8925A",
+          "#E8DCCB"
+        ],
+        "type": "spiral",
+        "seed": 403
+      }
+    },
+    "artworks": [
+      {
+        "_type": "reference",
+        "_ref": "artwork.two-threads",
+        "_weak": true,
+        "_key": "a1"
+      },
+      {
+        "_type": "reference",
+        "_ref": "artwork.the-long-way-home",
+        "_weak": true,
+        "_key": "a2"
+      }
+    ],
+    "body": [
+      {
+        "_type": "block",
+        "_key": "b1",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "s1",
+            "text": "My sister is in Dubai now. On Raksha Bandhan she ties a rakhi on her own wrist while I tie one on mine, both of us on a video call, both of us pretending it is the same thread.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "b2",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "s2",
+            "text": "Two Threads is small on purpose. It had to fit in the hand luggage when I flew to see her. Gold on her side, terracotta on mine, and they cross in the middle where the call connects.",
+            "marks": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "testimonial.priya-bangalore",
+    "_type": "testimonial",
+    "name": "Priya and Arjun",
+    "city": "Bengaluru",
+    "quote": "We bought Chai at Six for our first home and it is the first thing everyone asks about. Samridhi sent us a voice note about the story behind it that we still have.",
+    "photo": {
+      "_type": "media",
+      "alt": "Chai at Six hanging in Priya and Arjun's living room",
+      "image": {
+        "_type": "image",
+        "localSrc": "/media/testimonials/priya",
+        "width": 1200,
+        "height": 900
+      },
+      "localVideo": "/media/testimonials/priya.mp4",
+      "_gen": {
+        "w": 1200,
+        "h": 900,
+        "palette": [
+          "#FBF8F3",
+          "#E8DCCB",
+          "#D9D6D2",
+          "#B8925A"
+        ],
+        "type": "linear",
+        "seed": 501
+      }
+    }
+  },
+  {
+    "_id": "testimonial.meera-london",
+    "_type": "testimonial",
+    "name": "Meera S.",
+    "city": "London",
+    "quote": "I wanted something from home for my flat that wasn't a cliché. Marigold Morning arrived beautifully packed and the gold leaf catches the little English light we get.",
+    "photo": {
+      "_type": "media",
+      "alt": "Marigold Morning above a grey sofa in a London flat",
+      "image": {
+        "_type": "image",
+        "localSrc": "/media/testimonials/meera",
+        "width": 1200,
+        "height": 900
+      },
+      "localVideo": "/media/testimonials/meera.mp4",
+      "_gen": {
+        "w": 1200,
+        "h": 900,
+        "palette": [
+          "#D9D6D2",
+          "#FBF8F3",
+          "#E8A33D",
+          "#8C8C8C"
+        ],
+        "type": "radial",
+        "seed": 502
+      }
+    }
+  },
+  {
+    "_id": "testimonial.rohan-pune",
+    "_type": "testimonial",
+    "name": "Rohan and Neha",
+    "city": "Pune",
+    "quote": "We commissioned a piece for my parents' 25th anniversary. Samridhi asked about their story, not just the colours. My mother cried. In a good way.",
+    "photo": {
+      "_type": "media",
+      "alt": "A commissioned gold leaf piece above a dining table in Pune",
+      "image": {
+        "_type": "image",
+        "localSrc": "/media/testimonials/rohan",
+        "width": 1200,
+        "height": 900
+      },
+      "localVideo": "/media/testimonials/rohan.mp4",
+      "_gen": {
+        "w": 1200,
+        "h": 900,
+        "palette": [
+          "#FBF8F3",
+          "#B8925A",
+          "#E8DCCB",
+          "#C75B39"
+        ],
+        "type": "spiral",
+        "seed": 503
+      }
+    }
+  },
+  {
+    "_id": "testimonial.anita-toronto",
+    "_type": "testimonial",
+    "name": "Anita K.",
+    "city": "Toronto",
+    "quote": "My son left for university with Leaving for College in his suitcase. He sends me a photo of it on his shelf every Sunday. That's the whole review.",
+    "photo": {
+      "_type": "media",
+      "alt": "Leaving for College on a bookshelf in a student room",
+      "image": {
+        "_type": "image",
+        "localSrc": "/media/testimonials/anita",
+        "width": 1200,
+        "height": 900
+      },
+      "localVideo": "/media/testimonials/anita.mp4",
+      "_gen": {
+        "w": 1200,
+        "h": 900,
+        "palette": [
+          "#E8DCCB",
+          "#FBF8F3",
+          "#C75B39",
+          "#D9D6D2"
+        ],
+        "type": "circular",
+        "seed": 504
+      }
+    }
+  },
+  {
+    "_id": "aboutPage",
+    "_type": "aboutPage",
+    "heading": "Ordinary days, gold and silver leaf",
+    "intro": "I am Samridhi. I paint the moments most people walk past: chai at six, a doorbell at nine, a list on the fridge. Each piece starts as a note on my phone and ends as a canvas with real gold or silver leaf, so the light in your home finishes it.",
+    "process": [
+      {
+        "_key": "p1",
+        "title": "Notice",
+        "text": "A moment catches me. I write one line about it, usually on my phone, before it fades."
+      },
+      {
+        "_key": "p2",
+        "title": "Sit with it",
+        "text": "Some notes wait months. When one keeps coming back, I know it wants to be painted."
+      },
+      {
+        "_key": "p3",
+        "title": "Build the surface",
+        "text": "Gesso, modelling paste, layers of acrylic. I work on the floor and let the strokes stay visible."
+      },
+      {
+        "_key": "p4",
+        "title": "Leaf",
+        "text": "Gold or silver leaf is laid on last, by hand, then sealed. It is the part that changes with your light."
+      }
+    ],
+    "exampleMoment": "The morning of my cousin's wedding, someone dropped a whole basket of marigolds on the stairs and nobody minded. The stairs, the shoes, the sari hems, everything went orange. I wrote 'marigolds on the stairs, nobody minded' and six weeks later it became Marigold Morning.",
+    "exampleArtwork": {
+      "_type": "reference",
+      "_ref": "artwork.marigold-morning",
+      "_weak": true
+    },
+    "studioMedia": [
+      {
+        "_type": "media",
+        "_key": "s1",
+        "alt": "Hands pressing gold leaf onto a canvas",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/about/hands",
+          "width": 1200,
+          "height": 1500
+        },
+        "localVideo": "/media/about/hands.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1500,
+          "palette": [
+            "#B8925A",
+            "#E8DCCB",
+            "#FBF8F3",
+            "#7A5A2B"
+          ],
+          "type": "radial",
+          "seed": 601
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "s2",
+        "alt": "Brushes, palette knives and a jar of gesso on the studio table",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/about/tools",
+          "width": 1200,
+          "height": 1500
+        },
+        "localVideo": "/media/about/tools.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1500,
+          "palette": [
+            "#D9D6D2",
+            "#FBF8F3",
+            "#C75B39",
+            "#6B625B"
+          ],
+          "type": "linear",
+          "seed": 602
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "s3",
+        "alt": "Raw canvas, gesso and a book of loose gold leaf",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/about/raw",
+          "width": 1200,
+          "height": 1500
+        },
+        "localVideo": "/media/about/raw.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1500,
+          "palette": [
+            "#FBF8F3",
+            "#E8DCCB",
+            "#D9D6D2",
+            "#B8925A"
+          ],
+          "type": "circular",
+          "seed": 603
+        }
+      },
+      {
+        "_type": "media",
+        "_key": "s4",
+        "alt": "A finished piece drying against the studio wall in afternoon light",
+        "image": {
+          "_type": "image",
+          "localSrc": "/media/about/finished",
+          "width": 1200,
+          "height": 1500
+        },
+        "localVideo": "/media/about/finished.mp4",
+        "_gen": {
+          "w": 1200,
+          "h": 1500,
+          "palette": [
+            "#E8A33D",
+            "#C75B39",
+            "#B8925A",
+            "#FBF8F3"
+          ],
+          "type": "spiral",
+          "seed": 604
+        }
+      }
+    ],
+    "portrait": {
+      "_type": "media",
+      "alt": "Samridhi in the studio, holding a small canvas",
+      "image": {
+        "_type": "image",
+        "localSrc": "/media/about/portrait",
+        "width": 1200,
+        "height": 1500
+      },
+      "localVideo": "/media/about/portrait.mp4",
+      "_gen": {
+        "w": 1200,
+        "h": 1500,
+        "palette": [
+          "#E8DCCB",
+          "#FBF8F3",
+          "#C75B39",
+          "#6B625B"
+        ],
+        "type": "radial",
+        "seed": 605
+      }
+    }
+  },
+  {
+    "_id": "commissionsPage",
+    "_type": "commissionsPage",
+    "heading": "A piece about your moment",
+    "intro": "Most of my commissions start with a sentence: the day we got the keys, our first monsoon in this flat, my father's chair. Tell me the moment and I will paint it.",
+    "steps": [
+      {
+        "_key": "s1",
+        "title": "Tell me the moment",
+        "text": "Fill in the form below. The more ordinary the moment, the better it usually paints.",
+        "duration": "Day 1"
+      },
+      {
+        "_key": "s2",
+        "title": "We talk",
+        "text": "A short call or WhatsApp chat about size, colours, budget and where the piece will hang. I send a written quote and a mood sketch.",
+        "duration": "Within a week"
+      },
+      {
+        "_key": "s3",
+        "title": "Deposit and start",
+        "text": "A 50% deposit books your slot. I share two or three progress photos so you see it grow.",
+        "duration": "Weeks 1 to 4"
+      },
+      {
+        "_key": "s4",
+        "title": "Leaf, seal, ship",
+        "text": "Gold or silver leaf goes on last. Once it is sealed and dry I pack it in a custom box and send tracking.",
+        "duration": "Weeks 4 to 6"
+      }
+    ],
+    "whatToShare": [
+      "Wall size, or the size you are imagining",
+      "A photo or two of the space",
+      "Colours you love and colours you do not",
+      "The moment, thought or feeling to capture",
+      "The occasion, if there is one",
+      "Your budget range",
+      "Any deadline, like a wedding or a housewarming"
+    ],
+    "typicalTimeline": "Most commissions take 4 to 6 weeks from deposit to delivery. For festival or wedding dates, please get in touch at least 8 weeks ahead.",
+    "priceGuide": "Commissioned pieces start at ₹18,000 for a 30 x 40 cm canvas and ₹60,000 for 75 x 100 cm. Gold leaf adds roughly 10 to 15 per cent."
+  }
+]

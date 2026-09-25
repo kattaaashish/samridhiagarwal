@@ -1,0 +1,33 @@
+---
+import Media from './Media.astro';
+import { formatINR, formatSize } from '@/lib/format';
+import type { Artwork } from '@/lib/types';
+import { SIZE_BUCKETS, PRICE_BUCKETS } from '@/lib/normalize';
+interface Props { artwork: Artwork; sizes?: string; priority?: boolean; class?: string }
+const { artwork: a, sizes = '(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw', priority = false, class: className = '' } = Astro.props;
+const size = SIZE_BUCKETS.find((b) => b.test(a))?.id ?? '';
+const price = PRICE_BUCKETS.find((b) => b.test(a))?.id ?? '';
+---
+<article
+  class={`group reveal ${className}`}
+  data-artwork
+  data-collections={a.collections.map((c) => c.id).join(' ')}
+  data-occasions={a.occasions.map((o) => o.id).join(' ')}
+  data-size={size}
+  data-price={price}
+  data-status={a.status}
+>
+  <a href={`/artwork/${a.slug}`} class="block">
+    <div class="relative overflow-hidden rounded-xl shimmer">
+      <Media media={a.media[0]} aspect={4 / 5} sizes={sizes} priority={priority} class="transition-transform duration-700 ease-out group-hover:scale-[1.03]" />
+      {a.status !== 'available' && (
+        <span class={`badge absolute left-3 top-3 ${a.status === 'sold' ? 'badge-sold' : 'badge-mto'}`}>{a.status === 'sold' ? 'Sold' : 'Made to order'}</span>
+      )}
+    </div>
+    <div class="mt-3 flex items-baseline justify-between gap-3">
+      <h3 class="text-xl leading-snug">{a.title}</h3>
+      <p class="shrink-0 text-sm text-muted">{a.status === 'sold' ? 'Sold' : formatINR(a.price)}</p>
+    </div>
+    <p class="mt-1 text-sm text-muted">{formatSize(a)}</p>
+  </a>
+</article>

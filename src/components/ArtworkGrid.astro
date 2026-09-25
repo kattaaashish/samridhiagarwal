@@ -1,0 +1,58 @@
+---
+/** Grid of artwork cards with optional generated filters. Handles 0…N taxonomy options. */
+import ArtworkCard from './ArtworkCard.astro';
+import type { Artwork, Collection, Occasion } from '@/lib/types';
+import { SIZE_BUCKETS, PRICE_BUCKETS } from '@/lib/normalize';
+interface Props {
+  artworks: Artwork[];
+  filters?: boolean;
+  collections?: Collection[];
+  occasions?: Occasion[];
+  /** Hide a group because the page already implies it (e.g. a collection page) */
+  hide?: Array<'collection' | 'occasion'>;
+  emptyText?: string;
+}
+const { artworks, filters = false, collections = [], occasions = [], hide = [], emptyText = 'Nothing here just yet. New pieces are on the way.' } = Astro.props;
+
+const groups = filters
+  ? [
+      !hide.includes('collection') && collections.length > 0 && { key: 'collections', label: 'Collection', options: collections.map((c) => ({ value: c.id, label: c.name })) },
+      !hide.includes('occasion') && occasions.length > 0 && { key: 'occasions', label: 'Occasion', options: occasions.map((o) => ({ value: o.id, label: o.name })) },
+      { key: 'size', label: 'Size', options: SIZE_BUCKETS.filter((b) => artworks.some(b.test)).map((b) => ({ value: b.id, label: b.label })) },
+      { key: 'price', label: 'Price', options: PRICE_BUCKETS.filter((b) => artworks.some(b.test)).map((b) => ({ value: b.id, label: b.label })) },
+    ].filter((g): g is { key: string; label: string; options: { value: string; label: string }[] } => !!g && g.options.length > 0)
+  : [];
+---
+<div data-grid>
+  {filters && groups.length > 0 && (
+    <form class="mb-8 grid gap-4" data-filters aria-label="Filter artworks" method="get">
+      {groups.map((g) => (
+        <fieldset class="grid gap-2">
+          <legend class="eyebrow mb-1">{g.label}</legend>
+          <div class="scroll-x -mx-1 px-1">
+            {g.options.map((o) => (
+              <label class="chip relative">
+                <input type="checkbox" name={g.key} value={o.value} />
+                {o.label}
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      ))}
+      <div class="flex flex-wrap items-center gap-3 text-sm text-muted">
+        <output data-count aria-live="polite">{artworks.length} pieces</output>
+        <button type="reset" class="link hidden" data-clear>Clear filters</button>
+        <noscript><button type="submit" class="btn btn-ghost min-h-9 px-3 py-1 text-sm">Apply</button></noscript>
+      </div>
+    </form>
+  )}
+  {artworks.length === 0 ? (
+    <p class="rounded-xl bg-surface px-6 py-10 text-center text-muted">{emptyText}</p>
+  ) : (
+    <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3" data-stagger data-grid-items>
+      {artworks.map((a, i) => <ArtworkCard artwork={a} priority={i < 2} />)}
+    </div>
+  )}
+  <p class="hidden rounded-xl bg-surface px-6 py-10 text-center text-muted" data-empty>No pieces match those filters. Try clearing one.</p>
+</div>
+{filters && <script src="@/scripts/filters.ts"></script>}

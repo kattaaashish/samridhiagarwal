@@ -1,0 +1,46 @@
+---
+/** General enquiry / artwork enquiry form → /api/enquiry */
+import Turnstile from './Turnstile.astro';
+import FormStatus from './FormStatus.astro';
+import { pagePath } from '@/lib/format';
+import type { Occasion } from '@/lib/types';
+interface Props { artworkTitle?: string; occasions?: Occasion[]; gifting?: boolean; class?: string }
+const { artworkTitle, occasions = [], gifting = false, class: className = '' } = Astro.props;
+const prefill = artworkTitle;
+---
+<form method="post" action="/api/enquiry" class={`grid gap-4 ${className}`} data-enhanced-form novalidate>
+  <input type="hidden" name="_redirect" value={pagePath(Astro.url)} />
+  <input type="text" name="website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+  <div class="grid gap-4 sm:grid-cols-2">
+    <label class="field"><span>Your name</span><input class="input" name="name" required autocomplete="name" maxlength="120" /></label>
+    <label class="field"><span>Email</span><input class="input" type="email" name="email" required autocomplete="email" maxlength="200" /></label>
+  </div>
+  <div class="grid gap-4 sm:grid-cols-2">
+    <label class="field"><span>Phone or WhatsApp <span class="text-muted">(optional)</span></span><input class="input" type="tel" name="phone" autocomplete="tel" maxlength="40" /></label>
+    <label class="field"><span>City and country</span><input class="input" name="location" autocomplete="address-level2" maxlength="120" /></label>
+  </div>
+  <label class="field"><span>Which piece, if any?</span><input class="input" name="artwork" value={prefill ?? ''} maxlength="200" placeholder="e.g. Chai at Six" /></label>
+  {gifting && (
+    <fieldset class="grid gap-3 rounded-xl border border-line p-4">
+      <legend class="px-1 font-medium">Gifting</legend>
+      {occasions.length > 0 && (
+        <label class="field"><span>Occasion</span>
+          <select class="input" name="occasion">
+            <option value="">Choose one (optional)</option>
+            {occasions.map((o) => <option value={o.name}>{o.name}</option>)}
+            <option value="Other">Other</option>
+          </select>
+        </label>
+      )}
+      <label class="flex items-center gap-3"><input type="checkbox" name="giftWrap" value="yes" class="h-5 w-5 accent-accent" /> Please gift-wrap it</label>
+      <label class="field"><span>Personal note to include <span class="text-muted">(optional)</span></span><textarea class="input" name="giftNote" maxlength="500" rows="3" placeholder="A handwritten card goes in the box"></textarea></label>
+    </fieldset>
+  )}
+  <label class="field"><span>Your message</span><textarea class="input" name="message" required minlength="10" maxlength="3000" placeholder="Tell me what you have in mind."></textarea></label>
+  <Turnstile />
+  <div class="flex flex-wrap items-center gap-4">
+    <button class="btn btn-primary" type="submit">Send enquiry</button>
+    <p class="text-sm text-muted">I reply within two working days.</p>
+  </div>
+  <FormStatus successText="Thank you, your enquiry is on its way. I'll reply within two working days." />
+</form>

@@ -1,0 +1,7 @@
+---
+/** Inline status region filled by src/scripts/forms.ts. No-JS posts land on /sent instead. */
+interface Props { successText: string }
+const { successText } = Astro.props;
+---
+<div class="form-status mt-4 min-h-6 text-base" role="status" aria-live="polite" data-form-status data-success-text={successText}>
+</div>

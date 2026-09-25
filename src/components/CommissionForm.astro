@@ -1,0 +1,55 @@
+---
+/** Commission enquiry with photo upload → /api/commission (photos stored in R2) */
+import Turnstile from './Turnstile.astro';
+import FormStatus from './FormStatus.astro';
+import type { Occasion } from '@/lib/types';
+interface Props { occasions: Occasion[] }
+const { occasions } = Astro.props;
+---
+<form method="post" action="/api/commission" enctype="multipart/form-data" class="grid gap-5" data-enhanced-form novalidate id="commission-form">
+  <input type="hidden" name="_redirect" value="/commissions" />
+  <input type="text" name="website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+  <div class="grid gap-4 sm:grid-cols-2">
+    <label class="field"><span>Your name</span><input class="input" name="name" required autocomplete="name" maxlength="120" /></label>
+    <label class="field"><span>Email</span><input class="input" type="email" name="email" required autocomplete="email" maxlength="200" /></label>
+    <label class="field"><span>Phone or WhatsApp <span class="text-muted">(optional)</span></span><input class="input" type="tel" name="phone" autocomplete="tel" maxlength="40" /></label>
+    <label class="field"><span>City and country</span><input class="input" name="location" maxlength="120" /></label>
+  </div>
+
+  <label class="field"><span>The moment, thought or feeling to capture</span>
+    <textarea class="input" name="moment" required minlength="10" maxlength="3000" rows="5" placeholder="e.g. The evening we got the keys and ate pizza on the floor."></textarea></label>
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    <label class="field"><span>Wall or piece size</span><input class="input" name="size" maxlength="120" placeholder="e.g. about 90 × 120 cm, above a 2 m sofa" /></label>
+    <label class="field"><span>Colours you love or want to avoid</span><input class="input" name="colours" maxlength="200" placeholder="e.g. warm neutrals, no bright red" /></label>
+    <label class="field"><span>Occasion</span>
+      <select class="input" name="occasion">
+        <option value="">None in particular</option>
+        {occasions.map((o) => <option value={o.name}>{o.name}</option>)}
+        <option value="Other">Other</option>
+      </select>
+    </label>
+    <label class="field"><span>Budget range</span>
+      <select class="input" name="budget" required>
+        <option value="">Choose a range</option>
+        <option>Under ₹25,000</option>
+        <option>₹25,000 to ₹50,000</option>
+        <option>₹50,000 to ₹1,00,000</option>
+        <option>Over ₹1,00,000</option>
+      </select>
+    </label>
+    <label class="field"><span>Deadline <span class="text-muted">(optional)</span></span><input class="input" type="date" name="deadline" /></label>
+  </div>
+
+  <label class="field">
+    <span>Photos of the space <span class="text-muted">(optional, up to 5 images, 8 MB each)</span></span>
+    <input class="input file:mr-3 file:rounded-full file:border-0 file:bg-ink file:px-4 file:py-1.5 file:text-bg" type="file" name="photos" accept="image/*" multiple data-max-files="5" data-max-size="8388608" />
+  </label>
+
+  <Turnstile />
+  <div class="flex flex-wrap items-center gap-4">
+    <button class="btn btn-primary" type="submit">Send commission enquiry</button>
+    <p class="text-sm text-muted">No commitment. I'll come back with a quote and a sketch.</p>
+  </div>
+  <FormStatus successText="Thank you! Your commission enquiry has arrived. I'll be in touch within two working days with a quote and a mood sketch." />
+</form>

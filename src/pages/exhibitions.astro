@@ -1,0 +1,72 @@
+---
+import Base from '@/layouts/Base.astro';
+import Gallery from '@/components/Gallery.astro';
+import Lightbox from '@/components/Lightbox.astro';
+import SignupForm from '@/components/SignupForm.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import JsonLd from '@/components/JsonLd.astro';
+import { getSite } from '@/lib/data';
+import { formatDateRange } from '@/lib/format';
+import { exhibitionJsonLd } from '@/lib/seo';
+const site = await getSite();
+const { exhibitions, settings } = site;
+const upcoming = exhibitions.filter((e) => e.upcoming);
+const past = exhibitions.filter((e) => !e.upcoming);
+const siteUrl = Astro.site?.toString() ?? 'https://samridhiagarwal.com';
+---
+<Base title="Exhibitions" description={`Upcoming and past exhibitions by ${settings.siteName}: dates, venues and installation photographs.`}>
+  {exhibitions.map((e) => <JsonLd data={exhibitionJsonLd(e, settings, siteUrl)} />)}
+  <section class="container-x pt-10 md:pt-16">
+    <SectionHeading eyebrow="Exhibitions" title="Come and see the leaf in real light" text="Photos never quite catch it. If you're in town for a show, come say hello." />
+  </section>
+
+  <section class="container-x mt-12" id="upcoming" aria-labelledby="upcoming-heading">
+    <h2 id="upcoming-heading" class="eyebrow">Upcoming</h2>
+    {upcoming.length === 0 ? (
+      <div class="mt-4 grid gap-6 rounded-xl bg-surface p-6 md:grid-cols-2 md:items-center md:p-10">
+        <div>
+          <p class="text-2xl">Nothing on the calendar right now.</p>
+          <p class="mt-2 text-muted">Leave your email and I'll tell you first when the next show is confirmed.</p>
+        </div>
+        <SignupForm topic="exhibitions" label="Notify me about exhibitions" compact />
+      </div>
+    ) : (
+      <div class="mt-4 grid gap-8">
+        {upcoming.map((e) => (
+          <article class="reveal grid gap-6 rounded-xl bg-surface p-6 md:grid-cols-2 md:p-10" id={e.slug}>
+            <div>
+              <p class="text-sm font-medium text-accent-ink">{formatDateRange(e.startDate, e.endDate)}</p>
+              <h3 class="mt-2 text-3xl md:text-4xl">{e.name}</h3>
+              <p class="mt-1 text-lg text-muted">{e.venue}, {e.city}</p>
+              <p class="mt-4 max-w-prose">{e.description}</p>
+              <div class="mt-6">
+                <SignupForm topic={`exhibition:${e.slug}`} label="Notify me about this show" />
+              </div>
+            </div>
+            {e.gallery.length > 0 && <Gallery items={e.gallery} groupId={`ex-${e.slug}`} layout="grid" />}
+          </article>
+        ))}
+      </div>
+    )}
+  </section>
+
+  {past.length > 0 && (
+    <section class="container-x mt-20" aria-labelledby="past-heading">
+      <h2 id="past-heading" class="eyebrow">Past</h2>
+      <div class="mt-4 grid gap-14">
+        {past.map((e) => (
+          <article class="reveal grid gap-6 md:grid-cols-[1fr_1.6fr]" id={e.slug}>
+            <div>
+              <p class="text-sm text-muted">{formatDateRange(e.startDate, e.endDate)}</p>
+              <h3 class="mt-2 text-3xl">{e.name}</h3>
+              <p class="mt-1 text-muted">{e.venue}, {e.city}</p>
+              <p class="mt-4 max-w-prose">{e.description}</p>
+            </div>
+            {e.gallery.length > 0 && <Gallery items={e.gallery} groupId={`ex-${e.slug}`} layout="grid" />}
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+  <Lightbox />
+</Base>

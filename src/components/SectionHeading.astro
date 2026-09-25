@@ -1,0 +1,9 @@
+---
+interface Props { eyebrow?: string; title: string; text?: string; class?: string; align?: 'left' | 'center' }
+const { eyebrow, title, text, class: className = '', align = 'left' } = Astro.props;
+---
+<div class={`reveal max-w-2xl ${align === 'center' ? 'mx-auto text-center' : ''} ${className}`}>
+  {eyebrow && <p class="eyebrow mb-3">{eyebrow}</p>}
+  <h2 class="text-3xl md:text-4xl">{title}</h2>
+  {text && <p class="mt-4 text-lg text-muted">{text}</p>}
+</div>

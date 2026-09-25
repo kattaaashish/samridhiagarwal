@@ -1,0 +1,16 @@
+---
+import Base from '@/layouts/Base.astro';
+import ArtworkCard from '@/components/ArtworkCard.astro';
+import { getSite } from '@/lib/data';
+const { artworks } = await getSite();
+const picks = artworks.filter((a) => a.status !== 'sold').slice(0, 3);
+---
+<Base title="Page not found" description="That page has moved or never existed." noindex>
+  <section class="container-x pt-16 text-center">
+    <p class="eyebrow">404</p>
+    <h1 class="mt-3 text-4xl md:text-5xl">This wall is empty</h1>
+    <p class="mt-4 text-muted">The page you were after has moved or never existed. Here are a few pieces instead.</p>
+    <div class="mt-6 flex justify-center gap-3"><a href="/" class="btn btn-primary">Home</a><a href="/work" class="btn btn-secondary">Originals</a></div>
+  </section>
+  {picks.length > 0 && <section class="container-x mt-14 grid grid-cols-1 gap-8 sm:grid-cols-3">{picks.map((a) => <ArtworkCard artwork={a} />)}</section>}
+</Base>

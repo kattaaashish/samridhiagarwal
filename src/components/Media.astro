@@ -1,0 +1,67 @@
+---
+/**
+ * The one media component. Renders a poster <picture> always, plus a silent looping
+ * <video> when a video source exists. Aspect-ratio box is reserved so nothing shifts.
+ * Behaviour (lazy play, pause off-screen, ≤2 concurrent, reduced-motion / save-data /
+ * slow-connection fallback) lives in src/scripts/media.ts, loaded once by Base.astro.
+ */
+import type { MediaRef } from '@/lib/types';
+
+interface Props {
+  media: MediaRef | undefined | null;
+  /** CSS sizes attribute for the poster srcset */
+  sizes?: string;
+  /** Override the reserved aspect ratio (w/h). Defaults to the poster's own. */
+  aspect?: number | string;
+  class?: string;
+  /** Above-the-fold: eager poster, real video src, autoplay without JS. */
+  priority?: boolean;
+  fit?: 'cover' | 'contain';
+  /** Render as a plain still (no video), e.g. inside the zoom lightbox */
+  still?: boolean;
+  id?: string;
+}
+
+const { media, sizes = '100vw', aspect, class: className = '', priority = false, fit = 'cover', still = false, id } = Astro.props;
+const ratio = aspect ?? media?.aspect ?? 4 / 5;
+const style = `aspect-ratio:${typeof ratio === 'number' ? ratio.toFixed(4) : ratio}`;
+const video = !still && media?.video;
+---
+{media ? (
+  <figure class={`media ${className}`} style={style} data-media data-fit={fit} data-priority={priority ? '' : undefined} id={id}>
+    <picture>
+      {media.poster.modernSrcset && <source type={media.poster.modernType} srcset={media.poster.modernSrcset} sizes={sizes} />}
+      <img
+        src={media.poster.src}
+        srcset={media.poster.srcset}
+        sizes={media.poster.srcset ? sizes : undefined}
+        width={media.poster.width}
+        height={media.poster.height}
+        alt={media.alt}
+        loading={priority ? 'eager' : 'lazy'}
+        fetchpriority={priority ? 'high' : undefined}
+        decoding="async"
+      />
+    </picture>
+    {video && (
+      <video
+        muted
+        loop
+        playsinline
+        autoplay={priority}
+        preload={priority ? 'metadata' : 'none'}
+        poster={media.poster.small ?? media.poster.src}
+        aria-hidden="true"
+        tabindex="-1"
+        disablepictureinpicture
+        {...{ disableremoteplayback: '' }}
+        data-video
+      >
+        {video.hls && <source {...(priority ? { src: video.hls } : { 'data-src': video.hls })} type="application/vnd.apple.mpegurl" />}
+        {video.mp4 && <source {...(priority ? { src: video.mp4 } : { 'data-src': video.mp4 })} type="video/mp4" />}
+      </video>
+    )}
+  </figure>
+) : (
+  <div class={`media ${className}`} style={style} aria-hidden="true"></div>
+)}

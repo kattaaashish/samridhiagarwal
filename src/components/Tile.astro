@@ -1,0 +1,16 @@
+---
+/** Large clickable tile with looping media, title and CTA label. */
+import Media from './Media.astro';
+import type { MediaRef } from '@/lib/types';
+interface Props { href: string; title: string; cta: string; media?: MediaRef; aspect?: number; sizes?: string; badge?: string; class?: string; eyebrow?: string }
+const { href, title, cta, media, aspect = 4 / 5, sizes = '(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw', badge, class: className = '', eyebrow } = Astro.props;
+---
+<a href={href} class={`group relative block overflow-hidden rounded-xl shimmer ${className}`}>
+  <Media media={media} aspect={aspect} sizes={sizes} class="transition-transform duration-700 ease-out group-hover:scale-[1.03]" />
+  <div class="tile-overlay">
+    {badge && <span class="badge badge-season mb-3 self-start">{badge}</span>}
+    {eyebrow && <span class="mb-1 text-xs uppercase tracking-widest text-bg/80">{eyebrow}</span>}
+    <span class="font-display text-2xl leading-tight md:text-3xl">{title}</span>
+    <span class="mt-2 inline-flex items-center gap-2 text-sm font-medium underline-offset-4 group-hover:underline">{cta} <span aria-hidden="true">→</span></span>
+  </div>
+</a>

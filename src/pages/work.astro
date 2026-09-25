@@ -1,0 +1,29 @@
+---
+import Base from '@/layouts/Base.astro';
+import ArtworkGrid from '@/components/ArtworkGrid.astro';
+import Tile from '@/components/Tile.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import { getSite } from '@/lib/data';
+const site = await getSite();
+const { artworks, collections, occasions, settings } = site;
+---
+<Base title="Original artworks" description={`Every available original by ${settings.siteName}: hand-painted pieces with gold and silver leaf, drawn from everyday moments. Filter by collection, occasion, size and price.`}>
+  <section class="container-x pt-10 md:pt-16">
+    <SectionHeading eyebrow="Originals" title="Every piece, one of a kind" text="Handmade, signed, and shipped insured across India and worldwide. Filter to find the one that fits your wall." />
+  </section>
+
+  {collections.length > 0 && (
+    <section class="container-x mt-12" id="collections" aria-labelledby="collections-heading">
+      <h2 id="collections-heading" class="eyebrow mb-4">Browse by collection</h2>
+      <div class="scroll-x -mx-1 gap-4 px-1">
+        {collections.map((c) => (
+          <Tile href={`/collections/${c.slug}`} title={c.name} cta="View" media={c.cover} aspect={4 / 5} class="w-[68vw] max-w-xs sm:w-64" sizes="(min-width: 640px) 16rem, 68vw" />
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="container-x mt-14" id="all">
+    <ArtworkGrid artworks={artworks} filters collections={collections} occasions={occasions} />
+  </section>
+</Base>

@@ -1,0 +1,46 @@
+---
+/**
+ * "See it on a wall": CSS-drawn room with the piece scaled from its real dimensions.
+ * The wall is WALL_CM wide; the artwork's width in cm maps to a percentage of it.
+ */
+import Media from './Media.astro';
+import type { Artwork } from '@/lib/types';
+interface Props { artwork: Artwork }
+const { artwork: a } = Astro.props;
+const WALL_CM = 360;
+const widthPct = Math.min(90, Math.max(6, (a.width / WALL_CM) * 100));
+// Hang centre at ~150 cm from floor; wall shown is 270 cm tall → position from top.
+const WALL_H_CM = 270;
+const centreFromTopCm = WALL_H_CM - 150;
+const topPct = ((centreFromTopCm - a.height / 2) / WALL_H_CM) * 100;
+const sofaWidthPct = (200 / WALL_CM) * 100; // 2 m sofa for scale
+---
+<figure class="wall" aria-label={`${a.title} shown to scale on a 3.6 metre wall above a 2 metre sofa`}>
+  <div class="wall-room" style={`aspect-ratio:${WALL_CM}/${WALL_H_CM}`}>
+    <div class="wall-piece shimmer" style={`width:${widthPct.toFixed(2)}%; top:${Math.max(4, topPct).toFixed(2)}%`}>
+      <Media media={a.media[0]} aspect={a.width / a.height} sizes="(min-width: 1024px) 30vw, 60vw" still />
+    </div>
+    <div class="wall-sofa" style={`width:${sofaWidthPct.toFixed(2)}%`}>
+      <span class="sofa-back"></span><span class="sofa-seat"></span><span class="sofa-leg l"></span><span class="sofa-leg r"></span>
+    </div>
+    <div class="wall-plant" aria-hidden="true"><span class="pot"></span><span class="leaf a"></span><span class="leaf b"></span><span class="leaf c"></span></div>
+    <div class="wall-floor"></div>
+  </div>
+  <figcaption class="mt-2 text-sm text-muted">To scale: {a.width} cm wide on a 3.6 m wall, above a 2 m sofa.</figcaption>
+</figure>
+
+<style>
+  .wall-room { position: relative; overflow: hidden; border-radius: var(--radius); background: linear-gradient(180deg, #f7f1e8 0%, #efe6d8 100%); }
+  .wall-floor { position: absolute; left: 0; right: 0; bottom: 0; height: 14%; background: linear-gradient(180deg, #d9c7a8, #c9b28f); }
+  .wall-piece { position: absolute; left: 50%; transform: translateX(-50%); box-shadow: 0 18px 40px -18px rgb(31 27 24 / .55), 0 2px 4px rgb(31 27 24 / .15); border-radius: 2px; overflow: hidden; }
+  .wall-piece :global(.media) { border-radius: 0; }
+  .wall-sofa { position: absolute; left: 50%; bottom: 14%; transform: translateX(-50%); height: 26%; }
+  .sofa-back { position: absolute; left: 0; right: 0; top: 0; height: 55%; background: #b9a58c; border-radius: 10px 10px 0 0; }
+  .sofa-seat { position: absolute; left: -4%; right: -4%; top: 48%; height: 36%; background: #a08b71; border-radius: 8px; }
+  .sofa-leg { position: absolute; bottom: 0; width: 3%; height: 18%; background: #6b5a45; }
+  .sofa-leg.l { left: 0; } .sofa-leg.r { right: 0; }
+  .wall-plant { position: absolute; right: 8%; bottom: 14%; width: 6%; height: 34%; }
+  .pot { position: absolute; bottom: 0; left: 15%; width: 70%; height: 32%; background: var(--accent); border-radius: 0 0 8px 8px; }
+  .leaf { position: absolute; bottom: 28%; left: 40%; width: 20%; height: 70%; background: #6f8b5e; border-radius: 50% 50% 50% 50% / 80% 80% 20% 20%; transform-origin: bottom center; }
+  .leaf.a { transform: rotate(-30deg); } .leaf.b { transform: rotate(6deg); height: 78%; } .leaf.c { transform: rotate(38deg); }
+</style>

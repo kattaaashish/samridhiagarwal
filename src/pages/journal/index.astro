@@ -1,0 +1,29 @@
+---
+import Base from '@/layouts/Base.astro';
+import Media from '@/components/Media.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import { getSite } from '@/lib/data';
+import { formatDate } from '@/lib/format';
+const { posts, settings } = await getSite();
+---
+<Base title="Journal" description={`The story behind each piece: short reflections by ${settings.siteName} pairing a moment from life with the artwork it became.`}>
+  <section class="container-x pt-10 md:pt-16">
+    <SectionHeading eyebrow="Journal" title="The story behind the piece" text="Short notes pairing a moment from life with the artwork it became." />
+  </section>
+  <section class="container-x mt-12">
+    {posts.length === 0 ? (
+      <p class="rounded-xl bg-surface px-6 py-10 text-center text-muted">First stories coming soon.</p>
+    ) : (
+      <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3" data-stagger>
+        {posts.map((p, i) => (
+          <a href={`/journal/${p.slug}`} class="reveal group block">
+            <Media media={p.cover ?? p.artworks[0]?.media[0]} aspect={3 / 2} sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" priority={i === 0} class="rounded-xl transition-transform duration-700 ease-out group-hover:scale-[1.02]" />
+            <p class="mt-4 text-sm text-muted">{formatDate(p.publishedAt)}{p.artworks[0] && ` · ${p.artworks[0].title}`}</p>
+            <h2 class="mt-1 text-2xl group-hover:text-accent-ink">{p.title}</h2>
+            <p class="mt-2 text-muted">{p.excerpt}</p>
+          </a>
+        ))}
+      </div>
+    )}
+  </section>
+</Base>
