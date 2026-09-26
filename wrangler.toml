@@ -33,24 +33,27 @@ UPLOADS_PUBLIC_URL = "https://uploads.samridhiagarwal.com"
 # then paste the KV ids below. ---
 [[kv_namespaces]]
 binding = "RATE_LIMIT"
-id = "REPLACE_WITH_KV_ID"
+id = "0202fe8547df42debdbe41eca2792666"
 
 [[kv_namespaces]]
 binding = "SUBSCRIBERS"
-id = "REPLACE_WITH_KV_ID"
+id = "1e77844c5c1a48d69c4a6bae8311f2b7"
 
 [[r2_buckets]]
 binding = "UPLOADS"
 bucket_name = "samridhiagarwal-uploads"
 
 # --- Production custom domain (DNS is managed automatically when the zone is on Cloudflare) ---
-[[routes]]
-pattern = "samridhiagarwal.com"
-custom_domain = true
-
-[[routes]]
-pattern = "www.samridhiagarwal.com"
-custom_domain = true
+# Uncomment once samridhiagarwal.com is added as a zone on this Cloudflare account
+# (nameservers pointed at Cloudflare at the registrar). Until then the site is served
+# from the workers.dev subdomain and `wrangler deploy` would fail on these routes.
+# [[routes]]
+# pattern = "samridhiagarwal.com"
+# custom_domain = true
+#
+# [[routes]]
+# pattern = "www.samridhiagarwal.com"
+# custom_domain = true
 
 # Secrets to set (wrangler secret put NAME):
 #   TURNSTILE_SECRET_KEY   Turnstile widget secret
