@@ -1,10 +1,9 @@
-# Builds and deploys to Cloudflare Workers on every push to main, and whenever Sanity
-# publishes content (Sanity webhook → GitHub repository_dispatch, event type "sanity-publish").
+# Builds and deploys to Cloudflare Workers whenever Sanity publishes content (Sanity webhook →
+# GitHub repository_dispatch, event type "sanity-publish") or when run manually.
+# Not triggered on push: code changes are deployed locally with `wrangler`.
 name: Deploy
 
 on:
-  push:
-    branches: [main]
   repository_dispatch:
     types: [sanity-publish]
   workflow_dispatch:
