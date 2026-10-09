@@ -1,0 +1,93 @@
+---
+/**
+ * Scrolling strip of short phrases (Site settings → Home page → Scrolling strip).
+ * CSS-only marquee: two identical groups slide left by 50% and loop. Reduced motion shows
+ * a still, wrapped list. A pause button (left end, clear of the floating WhatsApp button)
+ * covers WCAG 2.2.2 for touch users.
+ */
+interface Props { items: string[]; class?: string }
+const { items, class: className = '' } = Astro.props;
+// Repeat short lists so one group is wider than the screen and the loop has no gap.
+const chars = items.join('').length || 1;
+const group = Array.from({ length: Math.max(1, Math.ceil(140 / chars)) }, () => items).flat();
+const duration = Math.round(group.join('').length * 0.2);
+---
+{items.length > 0 && (
+  <section class={`ticker ${className}`} aria-label="Studio news" data-ticker data-paused="false">
+    <button type="button" class="ticker-toggle" data-ticker-toggle aria-pressed="false">
+      <span class="sr-only">Pause scrolling text</span>
+      <svg class="icon-pause" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4 2.5v9M10 2.5v9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <svg class="icon-play" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4.5 2.5l7 4.5-7 4.5z" fill="currentColor"/></svg>
+    </button>
+    <div class="ticker-viewport">
+      <div class="ticker-track" style={`--ticker-duration:${duration}s`}>
+        {[0, 1].map((copy) => (
+          <ul class="ticker-group" aria-hidden={copy === 1 ? 'true' : undefined}>
+            {group.map((text, i) => {
+              // Only the first run of the real phrases is read out; repeats are visual filler.
+              const extra = copy === 0 && i >= items.length;
+              return (
+                <li class={extra ? 'ticker-extra' : undefined} aria-hidden={extra ? 'true' : undefined}>
+                  <span>{text}</span><span class="ticker-mark" aria-hidden="true">✦</span>
+                </li>
+              );
+            })}
+          </ul>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<script>
+  function init() {
+    document.querySelectorAll<HTMLElement>('[data-ticker]').forEach((ticker) => {
+      if (ticker.dataset.ready) return;
+      ticker.dataset.ready = '1';
+      const btn = ticker.querySelector<HTMLButtonElement>('[data-ticker-toggle]');
+      btn?.addEventListener('click', () => {
+        const paused = ticker.dataset.paused !== 'true';
+        ticker.dataset.paused = String(paused);
+        btn.setAttribute('aria-pressed', String(paused));
+        btn.querySelector('.sr-only')!.textContent = paused ? 'Play scrolling text' : 'Pause scrolling text';
+      });
+    });
+  }
+  init();
+  document.addEventListener('astro:page-load', init);
+</script>
+
+<style>
+  .ticker { display: flex; align-items: stretch; border-block: 1px solid var(--line); }
+  .ticker-viewport {
+    flex: 1; min-width: 0; overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, #000 4rem, #000 calc(100% - 4rem), transparent);
+  }
+  .ticker-track { display: flex; width: max-content; }
+  .ticker-group { display: flex; flex-shrink: 0; align-items: center; padding-block: 1.1rem; }
+  .ticker-group li { display: flex; align-items: center; white-space: nowrap; font-family: var(--font-display); font-size: 1.25rem; line-height: 1.2; }
+  .ticker-mark { margin-inline: 1.5rem; color: var(--accent); font-size: .8em; }
+  .ticker-toggle {
+    display: grid; place-items: center; width: 3rem; flex-shrink: 0; border: 0; border-right: 1px solid var(--line);
+    background: none; color: var(--muted); cursor: pointer;
+  }
+  .ticker-toggle:hover { color: var(--ink); }
+  .ticker .icon-play, .ticker[data-paused='true'] .icon-pause { display: none; }
+  .ticker[data-paused='true'] .icon-play { display: block; }
+  @media (min-width: 768px) { .ticker-group li { font-size: 1.5rem; } .ticker-mark { margin-inline: 2rem; } }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ticker-track { animation: ticker var(--ticker-duration, 40s) linear infinite; }
+    .ticker:hover .ticker-track, .ticker[data-paused='true'] .ticker-track { animation-play-state: paused; }
+  }
+  /* Reduced motion: a still, centred, wrapped list of the real phrases only. */
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-toggle, .ticker-group[aria-hidden], .ticker-extra { display: none; }
+    .ticker-viewport { mask-image: none; }
+    .ticker-track { display: block; width: auto; }
+    .ticker-group { flex-wrap: wrap; flex-shrink: 1; justify-content: center; gap: .6rem 2.5rem; padding-inline: 1rem; }
+    .ticker-group li { white-space: normal; text-align: center; }
+    .ticker-mark { display: none; }
+  }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+</style>

@@ -5,6 +5,7 @@ import Tile from '@/components/Tile.astro';
 import ArtworkCard from '@/components/ArtworkCard.astro';
 import TestimonialCard from '@/components/TestimonialCard.astro';
 import SignupForm from '@/components/SignupForm.astro';
+import Ticker from '@/components/Ticker.astro';
 import SectionHeading from '@/components/SectionHeading.astro';
 import JsonLd from '@/components/JsonLd.astro';
 import { getSite } from '@/lib/data';
@@ -31,9 +32,9 @@ const tiles = [
 <Base title={settings.siteName} description={settings.seoDescription}>
   <JsonLd data={personJsonLd(settings, siteUrl)} />
 
-  <!-- Hero -->
-  <section class="relative isolate">
-    <div class="relative h-[78dvh] min-h-[32rem] max-h-[56rem] overflow-hidden">
+  <!-- Hero: full screen; pulled up under the header, which overlays it transparently (see Header.astro). -->
+  <section class="relative isolate -mt-16 lg:-mt-20" data-hero>
+    <div class="relative h-svh min-h-[32rem] overflow-hidden">
       {hero.length > 0 ? (
         <div class="hero-stack absolute inset-0">
           {hero.slice(0, 3).map((m, i) => (
@@ -42,7 +43,8 @@ const tiles = [
         </div>
       ) : <div class="absolute inset-0 bg-surface"></div>}
       <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent"></div>
-      <div class="container-x absolute inset-x-0 bottom-0 pb-10 text-bg md:pb-16">
+      <div class="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ink/45 to-transparent lg:h-40"></div>
+      <div class="container-x absolute inset-x-0 bottom-0 pb-10 text-bg md:pb-16" data-hero-text>
         <p class="eyebrow !text-bg/80">{settings.tagline}</p>
         <h1 class="mt-3 max-w-3xl text-[2.6rem] leading-[1.02] md:text-6xl lg:text-7xl">Ordinary days, hand-painted in gold and silver leaf.</h1>
         <div class="mt-7 flex flex-wrap gap-3">
@@ -55,17 +57,18 @@ const tiles = [
 
   <!-- New collection teaser -->
   {settings.teaser?.enabled && settings.teaser.title && (
-    <section class="container-x mt-6">
-      <div class="reveal grid gap-6 rounded-xl bg-surface p-6 md:grid-cols-[1.2fr_1fr] md:items-center md:p-10" id="teaser">
-        <div>
-          <p class="eyebrow">New collection{settings.teaser.launchDate && ` · launching ${formatDate(settings.teaser.launchDate)}`}</p>
-          <h2 class="mt-2 text-3xl md:text-4xl">{settings.teaser.title}</h2>
-          {settings.teaser.copy && <p class="mt-3 max-w-lg text-muted">{settings.teaser.copy}</p>}
-        </div>
-        <SignupForm topic={`collection:${settings.teaser.title}`} label="Be the first to know" compact />
+    <section class="container-x mt-16 md:mt-24">
+      <div class="reveal mx-auto max-w-2xl text-center" id="teaser">
+        <p class="eyebrow">New collection{settings.teaser.launchDate && ` · launching ${formatDate(settings.teaser.launchDate)}`}</p>
+        <h2 class="mt-3 text-4xl md:text-5xl">{settings.teaser.title}</h2>
+        {settings.teaser.copy && <p class="mx-auto mt-4 max-w-lg text-muted">{settings.teaser.copy}</p>}
+        <SignupForm topic={`collection:${settings.teaser.title}`} label="Be the first to know" compact class="mx-auto mt-8 w-full max-w-md" />
       </div>
     </section>
   )}
+
+  <!-- Scrolling strip (Site settings → Scrolling strip) -->
+  <Ticker items={settings.ticker} class="mt-14 md:mt-20" />
 
   <!-- Four tiles -->
   <section class="container-x mt-16 md:mt-24" aria-label="Explore">

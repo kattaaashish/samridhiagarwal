@@ -24,7 +24,7 @@ interface Props {
 
 const { media, sizes = '100vw', aspect, class: className = '', priority = false, fit = 'cover', still = false, id } = Astro.props;
 const ratio = aspect ?? media?.aspect ?? 4 / 5;
-const style = `aspect-ratio:${typeof ratio === 'number' ? ratio.toFixed(4) : ratio}`;
+const style = `aspect-ratio:${typeof ratio === 'number' ? ratio.toFixed(4) : ratio}${media?.focus ? `;--focus:${media.focus}` : ''}`;
 const video = !still && media?.video;
 ---
 {media ? (

@@ -27,6 +27,8 @@ export interface MediaRef {
   alt: string;
   /** width / height */
   aspect: number;
+  /** CSS object-position for cover crops, from the Sanity hotspot, e.g. "50% 30%" */
+  focus?: string;
 }
 
 export interface Taxon {
@@ -107,6 +109,8 @@ export interface SiteSettings {
   shortBio: string;
   heroVideos: MediaRef[];
   teaser?: { title: string; launchDate?: string; copy?: string; enabled: boolean };
+  /** Phrases in the scrolling strip under the home teaser; empty hides it */
+  ticker: string[];
   storyPost?: Post;
   whatsappNumber: string;
   email: string;

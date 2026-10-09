@@ -118,6 +118,7 @@ export function normalize(docs: Doc[], opts: { today?: Date } = {}): Site {
     shortBio: s.shortBio ?? '',
     heroVideos: mediaList(s.heroVideos),
     teaser: s.teaser ? { title: s.teaser.title ?? '', launchDate: s.teaser.launchDate, copy: s.teaser.copy, enabled: s.teaser.enabled !== false } : undefined,
+    ticker: list(s.ticker).map((t: any) => String(t ?? '').trim()).filter(Boolean),
     storyPost: s.storyPost?._ref ? postById.get(s.storyPost._ref) : posts[0],
     whatsappNumber: String(s.whatsappNumber ?? '').replace(/\D/g, ''),
     email: s.email ?? '',

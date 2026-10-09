@@ -3,6 +3,8 @@ import { getSite } from '@/lib/data';
 import { pagePath } from '@/lib/format';
 const { collections, occasions, settings } = await getSite();
 const path = pagePath(Astro.url);
+// Home: the header floats transparently over the full-screen hero until you scroll past it.
+const overlay = path === '/';
 const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
 
 // Submenus are generated from content — zero code changes when collections/occasions change.
@@ -19,7 +21,7 @@ const topLevel = [
   { label: 'Contact', href: '/contact' },
 ];
 ---
-<header class="header sticky top-0 z-50 bg-bg/90 backdrop-blur-md transition-shadow" data-header data-open="false">
+<header class="header sticky top-0 z-50 bg-bg/90 backdrop-blur-md" data-header data-open="false" data-overlay={overlay ? '' : undefined}>
   <div class="container-x flex h-16 items-center justify-between gap-4 lg:h-20">
     <a href="/" class="font-display text-[1.35rem] leading-none tracking-tight lg:text-2xl" aria-label={`${settings.siteName}, home`}>
       {settings.siteName}
@@ -66,7 +68,13 @@ const topLevel = [
 </header>
 
 <style>
+  .header { transition: background-color .3s, color .3s, box-shadow .3s, backdrop-filter .3s; }
   .header.is-scrolled { box-shadow: 0 1px 0 var(--line); }
+  .header[data-overlay]:not(.is-scrolled):not([data-open='true']) { background: transparent; backdrop-filter: none; color: var(--bg); }
+  .header[data-overlay]:not(.is-scrolled):not([data-open='true']) [data-menu-toggle] {
+    background: rgb(251 248 243 / .14); color: var(--bg); border-color: rgb(251 248 243 / .45);
+  }
+  .submenu { color: var(--ink); }
   .menu-panel { display: none; }
   .header[data-open='true'] .menu-panel {
     display: block; position: fixed; inset: 4rem 0 0 0; overflow-y: auto; background: var(--bg); padding: 1rem clamp(1rem, 4vw, 3rem) 3rem;
@@ -90,12 +98,14 @@ const topLevel = [
   @media (min-width: 1024px) {
     .menu-panel { display: block; position: static; }
     .header[data-open='true'] .menu-panel { position: static; inset: auto; padding: 0; }
-    .menu-list { display: flex; gap: 1.75rem; align-items: center; }
+    /* The dropdown is anchored to the whole menu bar (not the Work item) so it never runs off-screen. */
+    .menu-list { display: flex; gap: 1.75rem; align-items: center; position: relative; }
+    .menu-item { position: static; }
     .menu-link { font-size: 1rem; font-family: var(--font-body); padding: .5rem 0; width: auto; position: relative; }
     .menu-link::after { content: ''; position: absolute; left: 0; right: 100%; bottom: .15rem; height: 1px; background: currentColor; transition: right .3s var(--ease-out); }
     .menu-link:hover::after, .menu-link[aria-current='page']::after { right: 0; }
     .submenu {
-      position: absolute; top: 100%; left: -1.5rem; min-width: 44rem; padding: 1.5rem; margin-top: .5rem;
+      position: absolute; top: 100%; right: -1.5rem; min-width: 44rem; padding: 1.5rem; margin-top: .5rem;
       background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 20px 50px -20px rgb(31 27 24 / .3);
     }
     .submenu-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem; }

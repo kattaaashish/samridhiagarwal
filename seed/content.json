@@ -86,6 +86,13 @@
       "copy": "Twelve new pieces about the quiet part of the day, before everyone else is awake. Gold leaf, soft greys, first light.",
       "enabled": true
     },
+    "ticker": [
+      "Original paintings in gold and silver leaf",
+      "New collection: Small Hours, launching 1 November",
+      "Commissions open",
+      "Gifts for Diwali, weddings and new homes",
+      "Every piece starts with an ordinary moment"
+    ],
     "storyPost": {
       "_type": "reference",
       "_ref": "post.chai-at-six",

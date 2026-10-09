@@ -148,3 +148,18 @@ describe('robustness', () => {
     expect(broken.status).toBe('available');
   });
 });
+
+describe('home ticker', () => {
+  it('reads phrases from site settings, dropping blanks', () => {
+    const docs = clone();
+    const s = docs.find((d) => d._type === 'siteSettings');
+    s.ticker = ['  Commissions open ', '', null, 'New work'];
+    expect(normalize(docs, { today: TODAY }).settings.ticker).toEqual(['Commissions open', 'New work']);
+  });
+
+  it('is empty (strip hidden) when unset', () => {
+    const docs = clone();
+    delete docs.find((d) => d._type === 'siteSettings').ticker;
+    expect(normalize(docs, { today: TODAY }).settings.ticker).toEqual([]);
+  });
+});

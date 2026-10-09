@@ -85,7 +85,9 @@ export function toMediaRef(m: any): MediaRef | undefined {
     }
   }
   if (!poster) return undefined;
-  return { poster, video, alt: m.alt ?? '', aspect: poster.width / poster.height };
+  const hs = m.image?.hotspot;
+  const focus = hs && typeof hs.x === 'number' && typeof hs.y === 'number' ? `${Math.round(hs.x * 100)}% ${Math.round(hs.y * 100)}%` : undefined;
+  return { poster, video, alt: m.alt ?? '', aspect: poster.width / poster.height, focus };
 }
 
 /** Absolute URL for a 1200x630 OG crop of an image. */

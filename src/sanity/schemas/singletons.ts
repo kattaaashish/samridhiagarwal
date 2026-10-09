@@ -15,7 +15,7 @@ export const siteSettings = defineType({
     defineField({ name: 'tagline', title: 'Tagline', type: 'string', group: 'home' }),
     defineField({ name: 'statement', title: 'Artist statement (two lines)', type: 'text', rows: 2, group: 'home', description: 'Press Enter once for the line break.' }),
     defineField({ name: 'shortBio', title: 'Short bio (footer, SEO)', type: 'text', rows: 3, group: 'seo' }),
-    defineField({ name: 'heroVideos', title: 'Hero videos', type: 'array', of: [{ type: 'media' }], group: 'home', description: 'Up to 3 looping studio clips. The first plays immediately; the others crossfade in.', validation: (r) => r.max(3) }),
+    defineField({ name: 'heroVideos', title: 'Hero videos', type: 'array', of: [{ type: 'media' }], group: 'home', description: 'Up to 3 looping studio clips, shown full screen. The first plays immediately; the others crossfade in. Use the crop/hotspot tool on each image to mark the part of the artwork that must always stay visible.', validation: (r) => r.max(3) }),
     defineField({
       name: 'teaser', title: 'New collection teaser', type: 'object', group: 'home',
       fields: [
@@ -25,6 +25,7 @@ export const siteSettings = defineType({
         defineField({ name: 'copy', title: 'Copy', type: 'text', rows: 3 }),
       ],
     }),
+    defineField({ name: 'ticker', title: 'Scrolling strip (ticker)', type: 'array', of: [{ type: 'string' }], group: 'home', description: 'Short phrases that scroll across the home page, under the new collection teaser. Drag to reorder. Remove them all to hide the strip.' }),
     defineField({ name: 'storyPost', title: '"Story behind the piece" post on home', type: 'reference', to: [{ type: 'post' }], weak: true, group: 'home', description: 'Defaults to the newest post.' }),
     defineField({ name: 'whatsappNumber', title: 'WhatsApp number', type: 'string', group: 'contact', description: 'Country code + number, digits only, e.g. 919876543210' }),
     defineField({ name: 'email', title: 'Email', type: 'string', group: 'contact' }),

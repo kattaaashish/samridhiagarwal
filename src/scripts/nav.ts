@@ -30,8 +30,12 @@ function init() {
     if (!header.contains(e.target as Node)) header.querySelectorAll<HTMLButtonElement>('[data-submenu-toggle]').forEach((b) => b.setAttribute('aria-expanded', 'false'));
   });
   document.addEventListener('astro:before-swap', () => setOpen(false), { once: true });
-  // Shadow on scroll
-  const onScroll = () => header.classList.toggle('is-scrolled', scrollY > 8);
+  // Solid + shadow on scroll. Over the home hero, stay transparent until the hero text would slide under the menu.
+  const threshold = () => {
+    const text = header.hasAttribute('data-overlay') && document.querySelector<HTMLElement>('[data-hero-text]');
+    return text ? Math.max(8, text.getBoundingClientRect().top + scrollY - header.offsetHeight - 16) : 8;
+  };
+  const onScroll = () => header.classList.toggle('is-scrolled', scrollY > threshold());
   onScroll();
   addEventListener('scroll', onScroll, { passive: true });
 }
