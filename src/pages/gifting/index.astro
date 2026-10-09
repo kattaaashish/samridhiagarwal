@@ -5,7 +5,7 @@ import SectionHeading from '@/components/SectionHeading.astro';
 import ArtworkCard from '@/components/ArtworkCard.astro';
 import { getSite } from '@/lib/data';
 import { artworksIn, seasonalOccasions } from '@/lib/normalize';
-const site = await getSite();
+const site = await getSite(Astro.locals);
 const { occasions, settings } = site;
 const seasonal = new Set(seasonalOccasions(site).map((o) => o.id));
 ---

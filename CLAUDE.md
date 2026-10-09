@@ -1,49 +1,70 @@
 # CLAUDE.md — samridhiagarwal.com
 
 Locked decisions for this repo. Read before changing anything. The original brief is in
-`PROJECT_BRIEF.md`; editor instructions for Samridhi are in `HOW_TO_UPDATE.md`.
+`PROJECT_BRIEF.md` (it predates the move off Sanity); editor instructions for Samridhi are in
+`HOW_TO_UPDATE.md`.
 
 ## Stack (pinned, don't re-litigate)
 
-- **Astro 5** (`astro@^5.18`), `output: 'static'` with on-demand API routes
-  (`export const prerender = false`) served by **`@astrojs/cloudflare@^12`** (Workers +
-  static assets). React is only used for the embedded Sanity Studio island.
+- **Astro 5** (`astro@^5.18`), `output: 'server'`: every page renders on request in the Worker
+  (**`@astrojs/cloudflare@^12`**) from content in D1, so a Publish in `/admin` is live at once.
+  Built assets (CSS/JS/fonts/placeholder media) are served by Workers static assets. React is
+  only used for the `/admin` dashboard.
 - **Tailwind CSS v4** via `@tailwindcss/vite`. Tokens live in `src/styles/global.css` as
   CSS custom properties and are mapped into Tailwind with `@theme inline`. Components use
   utilities/tokens only — **no hex in components**.
-- **Sanity v6** Studio embedded at `/studio` (`@sanity/astro`). Schemas in `src/sanity/schemas`.
-  Drag ordering via `@sanity/orderable-document-list` (`orderRank` field on collection and
-  gifting occasion). Images via `@sanity/image-url` with `auto=format` (AVIF/WebP) and
-  responsive `srcset`.
-- **Cloudflare**: Workers hosting, **Stream** for video, **Turnstile** for forms, **R2** for
-  commission photos, **KV** for per-IP rate limiting. **Resend** for email.
+- **Own admin dashboard** at `/admin` (no third-party CMS; Sanity was removed on 2026-10-09).
+  Content types are defined once in `src/admin/schema.ts`; the dashboard builds its forms from
+  them. Drag ordering via `@dnd-kit` (`orderRank` on collection and gifting occasion).
+- **Cloudflare**: Workers hosting, **D1** for content, **R2** `samridhiagarwal-media` for
+  uploaded images/videos and `samridhiagarwal-uploads` for commission photos, **KV** for per-IP
+  rate limiting (forms and admin login) and newsletter sign-ups, **Turnstile** for forms.
+  **Resend** for email.
 - Package manager: **pnpm**. Node 22+.
 
-## Data layer — one code path, two sources
+## Data layer — documents in D1
 
-`src/lib/data.ts` → `getSite()` returns one normalised `Site` object used by every page.
+`src/lib/data.ts` → `getSite(Astro.locals)` returns one normalised `Site` object, loaded once per
+request (memoised on `locals`). Always pass `Astro.locals`.
 
-- If `PUBLIC_SANITY_PROJECT_ID` is set: fetch **all** documents in one GROQ query.
-- Otherwise: load `seed/content.json` (an array of Sanity-shaped documents). This is how the
-  site is fully populated on first run with no accounts, and the same file is converted by
-  `pnpm seed:ndjson` into `seed/out/seed.ndjson` for `sanity dataset import`.
-- `src/lib/normalize.ts` resolves references **by id in JS**, so a dangling/weak reference
-  (deleted collection or occasion) is simply dropped. Hidden (`visible: false`) collections
-  and occasions are removed everywhere (nav, filters, grids, artwork chips). This is unit
-  tested in `tests/normalize.test.ts`. Never resolve `->` references in GROQ for
-  collections/occasions; keep it in `normalize.ts`.
+- D1 table `documents` (`migrations/0001_documents.sql`): one row per document with `published`
+  JSON (what the site shows) and `draft` JSON (unpublished edits). Documents keep the original
+  shape: `{ _id, _type, ...fields }`, references `{ _ref }`, slugs `{ current }`.
+- No `DB` binding (unit tests) → `seed/content.json`. `pnpm db:seed:local|remote` loads the seed
+  into D1 with `INSERT OR IGNORE` (never overwrites edits).
+- `src/lib/normalize.ts` resolves references **by id in JS**, so a dangling reference (deleted
+  collection or occasion) is simply dropped and its artworks stay live. Hidden
+  (`visible: false`) collections and occasions are removed everywhere (nav, filters, grids,
+  artwork chips). Unit tested in `tests/normalize.test.ts`. Never delete or rewrite references
+  on the server when a collection is deleted; keep this in `normalize.ts`.
 - Nothing may assume a fixed count or fixed names of collections or occasions.
+
+## Admin (`/admin`)
+
+- Login: one password (`ADMIN_PASSWORD` secret) → HMAC-signed HttpOnly `SameSite=Strict` cookie
+  (`SESSION_SECRET`), 30 days. Login attempts rate-limited in KV. `src/lib/admin/auth.ts`.
+- API `src/pages/api/admin/*`, all wrapped by `adminRoute()` (session + same-origin check):
+  docs list/create/get/save-draft/delete, `publish|unpublish|discard`, `reorder`, and
+  `PUT /api/admin/files/site/<uuid>-<w>.<ext>` uploads (never overwrites; key pattern enforced).
+- Publish validates required fields (`missingRequired` in `src/admin/schema.ts`) and assigns a
+  unique slug per type. Reorder writes `orderRank` into draft and published (live at once).
+- Bulk: dropping files or a folder on the Artworks list creates **one artwork draft per file**.
+- Settings pages (`siteSettings`, `aboutPage`, `commissionsPage`) are singletons: id = type.
 
 ## Media model
 
-Sanity object type `media` = `{ image (poster still, required), streamId? (Cloudflare Stream
-UID), alt }`. Seed documents use `image.localSrc` and `localVideo` instead of Sanity assets.
-`src/lib/media.ts` turns either into a `MediaRef` `{ poster: { src, srcset, width, height },
-video?: { hls?, mp4? }, alt, aspect }`.
+`media` = `{ image (poster still, required), video?: { r2 }, alt }`. Uploaded images are
+`{ r2: 'site/<uuid>', ext: 'webp'|'jpg', widths: [...], width, height, hotspot?: { x, y } }`;
+every width in `widths` exists as `site/<uuid>-<w>.<ext>`. Seed documents use `image.localSrc`
+and `localVideo` instead. `src/lib/media.ts` turns either into a `MediaRef`
+`{ poster: { src, srcset, width, height }, video?: { mp4 }, alt, aspect, focus? }`.
 
-- Stream URLs: HLS `https://customer-{CODE}.cloudflarestream.com/{uid}/manifest/video.m3u8`,
-  MP4 `…/{uid}/downloads/default.mp4` (enable "MP4 downloads" on each Stream video),
-  thumbnail poster `…/{uid}/thumbnails/thumbnail.jpg`. `CODE` = `PUBLIC_STREAM_CUSTOMER_CODE`.
+- Resizing/compression happens **in the browser** at upload (`src/admin/media.ts`): widths
+  480/960/1440/2048 below the original plus the original capped at 2048; WebP 0.82, or JPEG 0.85
+  where the browser can't encode WebP (Safari). No server-side image service. Videos are stored
+  as uploaded (≤95 MB) with a poster frame taken in the browser.
+- `/files/[...key]` streams R2 objects with `immutable` caching and Range support (Safari video).
+- `hotspot` (the "focus point" set in the dashboard) becomes `object-position` via `--focus`.
 - **`src/components/Media.astro` is the only place a `<video>` or `<img>` for content is
   rendered.** It reserves the aspect-ratio box, always sets a poster, renders
   `muted loop playsinline preload="metadata"`, and `src/scripts/media.ts` (loaded once in the
@@ -78,17 +99,14 @@ Motion: CSS only. `<ClientRouter />` view transitions; `.reveal` elements animat
 
 `/` · `/work` · `/collections/[slug]` · `/artwork/[slug]` · `/gifting` · `/gifting/[slug]` ·
 `/commissions` · `/exhibitions` · `/about` · `/journal` · `/journal/[slug]` · `/contact` ·
-`/studio` · `/404` · `/sitemap-index.xml` · `/robots.txt`
-On-demand (Worker): `POST /api/enquiry` · `POST /api/commission` · `POST /api/subscribe` ·
-`GET /sent` (no-JS form confirmation).
+`/admin` · `/404` · `/sitemap-index.xml` (built from live content) · `/robots.txt`
+API: `POST /api/enquiry` · `POST /api/commission` · `POST /api/subscribe` · `/api/admin/*` ·
+`GET /files/*` · `GET /sent` (no-JS form confirmation).
 
-`build.format: 'file'` + `trailingSlash: 'never'`: pages build to `work.html` etc. so Cloudflare
-assets serve `/work` with no redirect. **Never use `Astro.url.pathname` directly** for links,
-canonicals or hidden form fields; use `pagePath(Astro.url)` from `src/lib/format.ts`, which strips
-the `.html`. Static pages cannot read query strings at build time; anything that depends on
-`?param=` must be client-side (see the `inspired` note on `/commissions`) or on-demand (`/sent`).
-`wrangler.toml` sets `run_worker_first = ["/api/*", "/sent"]` because the assets layer otherwise
-answers navigation POSTs with 405.
+Slug pages look the item up in `getSite()` and `return Astro.rewrite('/404')` when missing.
+`trailingSlash: 'never'`. Use `pagePath(Astro.url)` from `src/lib/format.ts` for links,
+canonicals and hidden form fields. `src/middleware.ts` adds the security headers that
+`public/_headers` only applies to static assets.
 
 Nav and footer submenus for Collections and Gifting are generated from the data layer.
 
@@ -118,17 +136,14 @@ A checkout would be added there and only there. No payment code anywhere.
 - Every page passes `title`, `description`, `image` to `Base.astro` for SEO/OG; JSON-LD via
   `<JsonLd>`.
 - Run `pnpm check && pnpm test && pnpm build` before committing.
+- Deploys are manual with Wrangler (`wrangler versions upload` → preview URL → `wrangler versions
+  deploy`). There is no CI deploy.
 
 ## Decisions log
 
 - 2026-09-25: Astro pinned to 5.x even though 7.x exists, per brief; adapter 12.6.x matches.
-- 2026-09-25: Videos are stored in Cloudflare Stream, not Sanity, to avoid Sanity CDN video
-  bandwidth costs. Sanity only stores the Stream UID + poster image.
-- 2026-09-25: Seed JSON fallback chosen so the site builds and previews without a Sanity
-  project; Sanity project creation is a manual step (needs the owner's account).
-- 2026-09-25: Rebuild-on-publish uses a GitHub Actions workflow (`.github/workflows/deploy.yml`)
-  triggered by push and by `repository_dispatch` from a Sanity webhook. Workers Builds
-  deploy hooks are an alternative if the repo is connected in the Cloudflare dashboard.
+- 2026-09-25: (superseded) Sanity CMS + Cloudflare Stream video.
+- 2026-09-25: (superseded 2026-10-09) GitHub Actions rebuild-on-publish from a Sanity webhook.
 - 2026-09-25: Newsletter sign-ups are stored in KV (`SUBSCRIBERS`) and emailed to Samridhi;
   no third-party list provider yet.
 - 2026-09-25: Wall preview assumes a 3.6 m wide wall in a CSS-drawn room; artwork width in
@@ -137,5 +152,10 @@ A checkout would be added there and only there. No payment code anywhere.
   shown by the `<picture>` underneath. Avoids downloading two large stills per slot.
 - 2026-09-25: Smooth scrolling is scoped to `html:focus-within` (keyboard/anchor use) rather
   than always on.
-- 2026-09-25: Local placeholder posters are JPG + WebP only; AVIF comes from Sanity's
-  `auto=format` once real images are in the CMS.
+- 2026-09-25: Local placeholder posters are JPG + WebP only.
+- 2026-10-09: Sanity removed at the owner's request ("we need to build our own"). Replaced by
+  `/admin` on D1 + R2; pages render on request so publishing is instant. Admin login is a single
+  password (chosen over Cloudflare Access). Images are resized in the browser so nothing needs
+  a paid image service. Push-to-deploy CI removed; deploys are run with Wrangler.
+- 2026-10-09: Home hero is full screen with the header overlaid (transparent until the hero
+  text would pass under it); ticker phrases come from Site settings → Scrolling strip.

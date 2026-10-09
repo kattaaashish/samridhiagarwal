@@ -8,6 +8,6 @@
     "paths": { "@/*": ["src/*"] },
     "strictNullChecks": true
   },
-  "include": [".astro/types.d.ts", "src/**/*", "sanity.config.ts", "tests/**/*"],
+  "include": [".astro/types.d.ts", "src/**/*", "tests/**/*"],
   "exclude": ["dist", "node_modules"]
 }

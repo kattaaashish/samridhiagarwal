@@ -4,7 +4,7 @@ import Media from '@/components/Media.astro';
 import CommissionForm from '@/components/CommissionForm.astro';
 import TestimonialCard from '@/components/TestimonialCard.astro';
 import { getSite } from '@/lib/data';
-const site = await getSite();
+const site = await getSite(Astro.locals);
 const { commissions: c, about, occasions, testimonials } = site;
 ---
 <Base title="Commissions" description="Commission a custom piece from Samridhi Agarwal: tell her the moment, share your wall size and colours, and receive a handmade painting with gold or silver leaf in 4 to 6 weeks.">

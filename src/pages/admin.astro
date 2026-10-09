@@ -1,0 +1,61 @@
+---
+/** Admin dashboard. Logged out → password form; logged in → the React app (src/admin/App.tsx). */
+import '@/styles/global.css';
+import '@/admin/admin.css';
+import App from '@/admin/App';
+import { isAdmin, adminEnv } from '@/lib/admin/auth';
+
+export const prerender = false;
+const loggedIn = await isAdmin(Astro.locals, Astro.cookies);
+const configured = !!(adminEnv(Astro.locals).ADMIN_PASSWORD && adminEnv(Astro.locals).SESSION_SECRET);
+Astro.response.headers.set('Cache-Control', 'no-store');
+Astro.response.headers.set('X-Robots-Tag', 'noindex, nofollow');
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Studio admin</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    {loggedIn ? (
+      <App client:only="react" />
+    ) : (
+      <main class="grid min-h-dvh place-items-center px-4">
+        <form class="w-full max-w-sm rounded-xl bg-surface p-8" data-login>
+          <h1 class="text-3xl">Studio admin</h1>
+          <p class="mt-2 text-muted">Log in to edit the website.</p>
+          {configured ? (
+            <>
+              <label class="field mt-6">
+                <span>Password</span>
+                <input class="input" type="password" name="password" autocomplete="current-password" required autofocus />
+              </label>
+              <button class="btn btn-primary mt-5 w-full" type="submit">Log in</button>
+              <p class="mt-3 min-h-6 text-sm text-accent-ink" role="alert" data-error></p>
+            </>
+          ) : (
+            <p class="mt-6 text-accent-ink" role="alert">The admin password has not been set up yet.</p>
+          )}
+        </form>
+      </main>
+    )}
+    <script>
+      const form = document.querySelector<HTMLFormElement>('[data-login]');
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const error = form.querySelector<HTMLElement>('[data-error]')!;
+        const button = form.querySelector('button')!;
+        button.disabled = true;
+        error.textContent = '';
+        const res = await fetch('/api/admin/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: new FormData(form).get('password') }) }).catch(() => null);
+        if (res?.ok) return location.reload();
+        error.textContent = (await res?.json().catch(() => null))?.error ?? 'Could not reach the server. Please try again.';
+        button.disabled = false;
+      });
+    </script>
+  </body>
+</html>

@@ -4,7 +4,7 @@ import ArtworkGrid from '@/components/ArtworkGrid.astro';
 import Tile from '@/components/Tile.astro';
 import SectionHeading from '@/components/SectionHeading.astro';
 import { getSite } from '@/lib/data';
-const site = await getSite();
+const site = await getSite(Astro.locals);
 const { artworks, collections, occasions, settings } = site;
 ---
 <Base title="Original artworks" description={`Every available original by ${settings.siteName}: hand-painted pieces with gold and silver leaf, drawn from everyday moments. Filter by collection, occasion, size and price.`}>

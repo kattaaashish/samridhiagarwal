@@ -1,4 +1,4 @@
-/** Normalised content model consumed by pages. Produced by normalize.ts from Sanity or seed docs. */
+/** Normalised content model consumed by pages. Produced by normalize.ts from D1 or seed docs. */
 
 export interface ImageSource {
   /** Default src (largest reasonable) */
@@ -12,8 +12,6 @@ export interface ImageSource {
   small?: string;
   width: number;
   height: number;
-  /** For Sanity images: raw source to build custom crops (OG etc.) */
-  sanity?: unknown;
 }
 
 export interface VideoSource {
@@ -27,7 +25,7 @@ export interface MediaRef {
   alt: string;
   /** width / height */
   aspect: number;
-  /** CSS object-position for cover crops, from the Sanity hotspot, e.g. "50% 30%" */
+  /** CSS object-position for cover crops, from the focal point set in /admin, e.g. "50% 30%" */
   focus?: string;
 }
 

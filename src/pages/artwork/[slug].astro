@@ -11,14 +11,10 @@ import { getSite } from '@/lib/data';
 import { relatedArtworks } from '@/lib/normalize';
 import { formatINR, formatSize, statusLabel, excerpt } from '@/lib/format';
 import { artworkJsonLd } from '@/lib/seo';
-import type { Artwork } from '@/lib/types';
 
-export async function getStaticPaths() {
-  const site = await getSite();
-  return site.artworks.map((a) => ({ params: { slug: a.slug }, props: { artwork: a } }));
-}
-const { artwork: a } = Astro.props as { artwork: Artwork };
-const site = await getSite();
+const site = await getSite(Astro.locals);
+const a = site.artworks.find((x) => x.slug === Astro.params.slug);
+if (!a) return Astro.rewrite('/404');
 const related = relatedArtworks(site, a);
 const siteUrl = Astro.site?.toString() ?? 'https://samridhiagarwal.com';
 const description = a.seoDescription ?? excerpt(`${a.title}, ${formatSize(a)}, ${a.materials}. ${a.note}`);

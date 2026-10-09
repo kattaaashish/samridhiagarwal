@@ -1,7 +1,7 @@
 ---
 import { getSite } from '@/lib/data';
 import { pagePath } from '@/lib/format';
-const { collections, occasions, settings } = await getSite();
+const { collections, occasions, settings } = await getSite(Astro.locals);
 const path = pagePath(Astro.url);
 // Home: the header floats transparently over the full-screen hero until you scroll past it.
 const overlay = path === '/';

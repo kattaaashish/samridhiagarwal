@@ -4,14 +4,10 @@ import Media from '@/components/Media.astro';
 import ArtworkGrid from '@/components/ArtworkGrid.astro';
 import { getSite } from '@/lib/data';
 import { artworksIn } from '@/lib/normalize';
-import type { Collection } from '@/lib/types';
 
-export async function getStaticPaths() {
-  const site = await getSite();
-  return site.collections.map((c) => ({ params: { slug: c.slug }, props: { collection: c } }));
-}
-const { collection } = Astro.props as { collection: Collection };
-const site = await getSite();
+const site = await getSite(Astro.locals);
+const collection = site.collections.find((x) => x.slug === Astro.params.slug);
+if (!collection) return Astro.rewrite('/404');
 const pieces = artworksIn(site, 'collection', collection.id);
 const others = site.collections.filter((c) => c.id !== collection.id);
 ---

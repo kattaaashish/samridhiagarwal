@@ -8,7 +8,7 @@ import JsonLd from '@/components/JsonLd.astro';
 import { getSite } from '@/lib/data';
 import { formatDateRange } from '@/lib/format';
 import { exhibitionJsonLd } from '@/lib/seo';
-const site = await getSite();
+const site = await getSite(Astro.locals);
 const { exhibitions, settings } = site;
 const upcoming = exhibitions.filter((e) => e.upcoming);
 const past = exhibitions.filter((e) => !e.upcoming);

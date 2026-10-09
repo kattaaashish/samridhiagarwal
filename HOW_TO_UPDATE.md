@@ -1,138 +1,109 @@
 # How to update samridhiagarwal.com
 
-This is for Samridhi. No code needed. Everything below happens in the **Studio**, which lives
-at **https://samridhiagarwal.com/studio** (sign in with your Sanity account). The public site
-rebuilds itself a few minutes after you press **Publish**.
+This is for Samridhi. No code needed. Everything happens in the **admin dashboard** at
+**https://samridhiagarwal.com/admin** (until the domain is connected:
+https://samridhiagarwal-com.ak-projects.workers.dev/admin). Log in with the admin password.
 
 ## The golden rule
 
-Nothing is live until you click the green **Publish** button at the bottom right of a document.
-Until then it is a draft only you can see. After publishing, allow **2 to 4 minutes** for the site
-to rebuild, then refresh the page.
+Everything you type is **saved automatically as a draft** ("Draft saved" appears at the top).
+Nothing appears on the website until you press **Publish**. Once you press it, the change is
+live straight away; just refresh the page.
 
-## Adding an artwork
+Every item shows where it stands:
 
-1. Studio → **Artworks** → **+** (top right) → choose *Artwork*.
-2. Fill in the **Piece** tab:
-   - **Title**, then click **Generate** next to *URL slug*.
-   - **The moment behind the piece**: two or three sentences in your voice. This is the text that
-     sits right beside the images, so make it count.
-   - **Status**: Available, Sold, or Made to order.
-   - **Price (INR)**, **Width**, **Height**, **Depth** in cm, **Materials**.
-   - **Feature on home page**: on for your best available pieces (the home page shows up to six).
-   - **Etsy listing URL**: paste the Etsy link if the piece is listed there. This shows a
-     "Buy on Etsy" button for international buyers.
-3. **Photos & video** tab → **Add item**. For each:
-   - **Image**: drag a photo in. The **first item is the main image**. Add a close-up of the
-     texture and a shot of the piece on a wall. Drag the handles to reorder.
-   - **Alt text**: describe the picture in one sentence (for screen readers and Google).
-   - **Cloudflare Stream video ID**: optional, see *Adding videos* below.
-4. **Collections & occasions** tab: tick any number of each. A piece can be in several.
-5. **Publish**.
+- **Draft**: only you can see it.
+- **Live**: on the website.
+- **Live · unpublished changes**: the website shows the older version. Press **Publish
+  changes** to update it, or **Discard changes** to go back to what is live.
 
-You can drag many photos at once into the Studio's media area; each becomes an item.
+## Adding many artworks at once
+
+1. **Artworks** → drag a **folder of photos** (or several photos, or videos) onto the box at
+   the top. You can also press **Choose files** or **Choose a folder**.
+2. Each photo becomes its **own artwork draft**, named from the file name. They are resized
+   and compressed automatically, so you can use the original photos from your camera or phone.
+3. Open each draft, add more photos and the details (below), then **Publish**.
+
+iPhone photos in HEIC format can't be read by every browser. If one fails, export it as JPEG
+first (Photos → Share → Save as JPEG, or set Camera → Formats → Most Compatible).
+
+## Artwork details
+
+- **Piece** tab: title, the moment behind the piece (two or three sentences in your own words,
+  shown right beside the images), status (Available / Sold / Made to order), price in INR,
+  width, height and depth in cm, materials, **Feature on home page**, and the Etsy link.
+- **Photos & video** tab: drop more photos or videos in. The **first one is the main image**.
+  Drag the dotted handle to reorder. For each picture you can:
+  - write a short **description** (for people using screen readers, and for Google);
+  - set its **Focus point**: click the part that must always stay visible. The site crops
+    pictures to fit different screens and keeps this point in view. The preview shows how
+    wide, phone and square crops will look.
+- **Collections & occasions** tab: tick as many collections and gifting occasions as you like.
+
+**Publish** checks the essentials first (the moment behind the piece, price, size and at least
+one photo) and highlights anything missing.
 
 ## Marking a piece as sold
 
-Open the artwork → **Status** → *Sold* → **Publish**. The site shows a "Sold" badge, hides the
-price and enquiry form, and offers "Commission a similar piece" instead. Sold pieces stay
-visible in collections so people can see your range. To hide a piece entirely, delete it or
-remove all its collections and occasions (it will still be at its own URL).
+Open it → **Status** → *Sold* → **Publish changes**. The site shows a "Sold" badge, hides the
+price and enquiry form, and offers "Commission a similar piece" instead.
 
-## Adding videos (the looping clips)
+To take a piece off the site but keep it, press **Unpublish**. **Delete** removes it for good.
 
-Videos live in **Cloudflare Stream**, not in the Studio, because it handles compression and
-mobile delivery for you.
+## Collections and gifting occasions
 
-1. Trim your clip to **3 to 4 seconds**, silent, ideally landscape for hero shots and portrait
-   (4:5) for artworks. Phone footage is fine.
-2. Go to Cloudflare Dashboard → **Stream** → **Upload**. Wait for "Ready".
-3. Open the video → **Settings** → turn on **"Allow MP4 downloads"** (needed once per video).
-4. Copy the **Video ID** (32 letters and numbers).
-5. In the Studio, open the media slot (artwork photo, collection cover, hero video, etc.) and
-   paste it into **Cloudflare Stream video ID**. Keep an image in the same slot: it is the
-   poster shown before the video plays and on slow connections.
-6. **Publish**.
-
-Every visual slot on the site (hero, tiles, artwork galleries, collection and occasion covers,
-journal covers, testimonials, about page footage) works this way: image required, video optional.
-
-### Hero videos on the home page
-
-Studio → **Site settings** → **Home page** → **Hero videos**. Up to three. The first plays
-immediately; the others crossfade in. Reorder by dragging.
-
-## Collections
-
-Studio → **Collections (drag to reorder)**.
-
-- **Create**: **+** → name, **Generate** slug, short intro, cover media → **Publish**. It appears
-  in the *Work* menu, the footer, the *Browse by collection* row and the filters straight away.
-- **Rename**: change **Name**. If you also want the web address to change, click **Generate**
-  next to the slug (old links to the previous address will stop working, so do this sparingly).
-- **Reorder**: drag the rows in the list. The order is used everywhere on the site.
-- **Hide**: turn **Visible on site** off → **Publish**. The collection disappears from menus,
-  filters and artwork pages, but nothing is deleted and its artworks stay live.
-- **Delete**: open it → the **⋮** menu → **Delete**. The Studio will warn that artworks reference
-  it. That is fine: **artworks are never deleted or unpublished** when a collection is deleted.
-  They just lose that grouping.
-
-## Gifting occasions
-
-Studio → **Gifting occasions (drag to reorder)**. Same as collections, plus:
-
-- **Season starts / Season ends**: optional dates. From **6 weeks before** *Season starts* until
-  *Season ends*, the occasion is automatically featured on the home page with a "This season"
-  badge. Update the dates each year (Diwali, Raksha Bandhan move every year). Leave them blank
-  for occasions without a season (birthdays, anniversaries).
+- **Create**: **+ New collection**, give it a name, a short intro and a cover, then **Publish**.
+  It appears in the menu, footer, filters and the *Browse by collection* row straight away.
+- **Rename**: change the name and publish. The web address stays the same unless you press
+  **Make from name** (old links would then stop working, so do this sparingly).
+- **Reorder**: on the list, drag the dotted handle. The new order is live as soon as you let go.
+- **Hide**: turn off **Show on site** and publish. It disappears from the site but nothing is
+  deleted, and its artworks stay live.
+- **Delete**: open it → **Delete**. Its **artworks stay on the site**; they just lose that
+  grouping.
+- **Seasonal occasions** (e.g. Diwali): set **Season starts** and **Season ends**. From 6 weeks
+  before the start until the end, the occasion is featured on the home page with a "This
+  season" badge. Update the dates each year.
 
 ## Exhibitions
 
-Studio → **Exhibitions** → **+**. Name, venue, city, start and end dates, short description, and
-a photo gallery (installation shots, opening night). Whether a show appears under **Upcoming** or
-**Past** is worked out from the end date. Upcoming shows get a "notify me" sign-up automatically.
+**Exhibitions** → **+ New exhibition**: name, venue, city, start and end dates, description and
+a photo gallery. Upcoming or past is worked out from the end date automatically, and upcoming
+shows get a "notify me" sign-up.
 
-## Journal posts ("the story behind the piece")
+## Journal posts
 
-Studio → **Journal** → **+**. Title, date, one-line summary, cover media, then:
-
-- **The piece(s) this story is about**: pick the artwork(s). The post links to them and the
-  artwork page links back to the story.
-- **Story**: write freely. Use *Heading* for section titles and the image button to drop in
-  pictures.
-
-The newest post is featured on the home page under "Story behind the piece" unless you pick a
-different one in **Site settings → Home page**.
+**Journal** → **+ New journal post**: title, date, one-line summary, cover, the artwork(s) the
+story is about, then the **Story**: add paragraphs, headings and quotes with the buttons, drop
+images into the box, and drag the handles to put everything in order.
 
 ## Testimonials
 
-Studio → **Testimonials** → **+**. Name, city, quote, and a photo of the art in their home.
+**Testimonials** → **+ New testimonial**: name, city, quote, and a photo of the art in their
+home.
 
 ## Site settings
 
-Studio → **Site settings**.
+- **Home page**: tagline, artist statement (two lines), **hero videos** (up to 3; set a focus
+  point on each so the artwork isn't cut off on phones), the **new collection teaser**, the
+  **scrolling strip** phrases, and which journal post is featured.
+- **Contact & social**: WhatsApp number (country code + number, digits only), email,
+  Instagram, Etsy.
+- **Footer FAQs**: care, framing, shipping and returns.
+- **SEO**: site name, default page title and description, social share image.
 
-- **Home page**: tagline, the two-line artist statement, hero videos, the *New collection
-  teaser* (title, launch date, copy, on/off switch).
-- **Contact & social**: WhatsApp number (country code + number, digits only, e.g.
-  919876543210), email, Instagram, Etsy.
-- **Footer FAQs**: care, framing, shipping and returns answers.
-- **SEO**: default page title, description and social share image.
+The **About page** and **Commissions page** have their own entries under *Pages & settings*.
 
-The **About page** and **Commissions page** have their own entries at the bottom of the list.
+## Videos
 
-## Publishing changes
+Short silent loops of 3 to 4 seconds work best (landscape for the home page, portrait 4:5 for
+artworks). Phone footage is fine; MP4 is the safest format. The limit is 95 MB per video, but
+a short loop should be well under 10 MB, which also keeps the site fast.
 
-Click **Publish**. Within about 2 to 4 minutes the site rebuilds. If you don't see a change:
+## Where enquiries and sign-ups go
 
-1. Refresh with **Shift + reload**.
-2. Check the document is really published (no "Publish" button lit up, no "draft" chip).
-3. Check GitHub → **Actions** for a red "Deploy" run, and forward the link to whoever maintains
-   the site.
-
-## Where enquiries go
-
-Both forms (contact/artwork enquiry and commission) email **the address set in NOTIFY_EMAIL**
-(currently hello@samridhiagarwal.com) with a readable summary. Commission photos are stored in
-the **Cloudflare R2** bucket `samridhiagarwal-uploads` and linked from the email. Email sign-ups
-are stored in Cloudflare KV under `SUBSCRIBERS` and also emailed to you.
+Both forms (contact/artwork enquiry and commission) email **hello@samridhiagarwal.com** once
+email sending is set up. Commission photos are stored in Cloudflare R2
+(`samridhiagarwal-uploads`). Email sign-ups ("Notify me") are saved in Cloudflare KV under
+`SUBSCRIBERS`.

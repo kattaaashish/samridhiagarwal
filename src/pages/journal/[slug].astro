@@ -6,14 +6,10 @@ import JsonLd from '@/components/JsonLd.astro';
 import { getSite } from '@/lib/data';
 import { formatDate } from '@/lib/format';
 import { renderPortableText } from '@/lib/portable-text';
-import type { Post } from '@/lib/types';
 
-export async function getStaticPaths() {
-  const site = await getSite();
-  return site.posts.map((p) => ({ params: { slug: p.slug }, props: { post: p } }));
-}
-const { post } = Astro.props as { post: Post };
-const site = await getSite();
+const site = await getSite(Astro.locals);
+const post = site.posts.find((x) => x.slug === Astro.params.slug);
+if (!post) return Astro.rewrite('/404');
 const siteUrl = Astro.site?.toString() ?? 'https://samridhiagarwal.com';
 const cover = post.cover ?? post.artworks[0]?.media[0];
 const html = renderPortableText(post.body);

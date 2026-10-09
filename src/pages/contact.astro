@@ -4,7 +4,7 @@ import EnquiryForm from '@/components/EnquiryForm.astro';
 import Media from '@/components/Media.astro';
 import { getSite } from '@/lib/data';
 import { whatsappLink } from '@/lib/format';
-const site = await getSite();
+const site = await getSite(Astro.locals);
 const { settings, about } = site;
 ---
 <Base title="Contact" description={`Get in touch with ${settings.siteName} about a piece, a gift or a commission. WhatsApp, email or the enquiry form.`}>

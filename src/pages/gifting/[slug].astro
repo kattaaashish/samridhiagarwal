@@ -6,14 +6,10 @@ import EnquiryForm from '@/components/EnquiryForm.astro';
 import { getSite } from '@/lib/data';
 import { artworksIn, seasonalOccasions } from '@/lib/normalize';
 import { formatDate } from '@/lib/format';
-import type { Occasion } from '@/lib/types';
 
-export async function getStaticPaths() {
-  const site = await getSite();
-  return site.occasions.map((o) => ({ params: { slug: o.slug }, props: { occasion: o } }));
-}
-const { occasion } = Astro.props as { occasion: Occasion };
-const site = await getSite();
+const site = await getSite(Astro.locals);
+const occasion = site.occasions.find((x) => x.slug === Astro.params.slug);
+if (!occasion) return Astro.rewrite('/404');
 const pieces = artworksIn(site, 'occasion', occasion.id);
 const inSeason = seasonalOccasions(site).some((o) => o.id === occasion.id);
 const others = site.occasions.filter((o) => o.id !== occasion.id);

@@ -1,5 +1,6 @@
 # Cloudflare Workers config for samridhiagarwal.com
-# Static pages are served from ./dist as assets; API routes run in the Worker.
+# Pages are rendered on request by the Worker from content in D1; built assets (CSS, JS,
+# fonts, placeholder media) are served from ./dist. Uploaded media is served from R2 via /files/*.
 name = "samridhiagarwal-com"
 main = "./dist/_worker.js/index.js"
 compatibility_date = "2026-09-01"
@@ -10,10 +11,7 @@ preview_urls = true
 [assets]
 directory = "./dist"
 binding = "ASSETS"
-# Serve the prerendered 404 page for unknown paths that aren't handled by the Worker.
-not_found_handling = "404-page"
-# API routes and the /sent page must always reach the Worker, even for browser navigations (form posts).
-run_worker_first = ["/api/*", "/sent"]
+# Anything that isn't a built asset falls through to the Worker (pages, /api/*, /files/*, /admin).
 
 [observability]
 enabled = true
@@ -43,6 +41,18 @@ id = "1e77844c5c1a48d69c4a6bae8311f2b7"
 binding = "UPLOADS"
 bucket_name = "samridhiagarwal-uploads"
 
+# Site content (artworks, collections, settings, …) edited in /admin. Schema in ./migrations.
+[[d1_databases]]
+binding = "DB"
+database_name = "samridhiagarwal"
+database_id = "24e91279-ff6b-48e2-ad9f-0492d7c82251"
+migrations_dir = "migrations"
+
+# Images and videos uploaded in /admin, served publicly via /files/<key>.
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "samridhiagarwal-media"
+
 # --- Production custom domain (DNS is managed automatically when the zone is on Cloudflare) ---
 # Uncomment once samridhiagarwal.com is added as a zone on this Cloudflare account
 # (nameservers pointed at Cloudflare at the registrar). Until then the site is served
@@ -56,6 +66,7 @@ bucket_name = "samridhiagarwal-uploads"
 # custom_domain = true
 
 # Secrets to set (wrangler secret put NAME):
+#   ADMIN_PASSWORD         password for /admin
+#   SESSION_SECRET         random string used to sign admin login cookies
 #   TURNSTILE_SECRET_KEY   Turnstile widget secret
 #   RESEND_API_KEY         Resend API key (domain verified for FROM_EMAIL)
-#   SANITY_READ_TOKEN      only if the Sanity dataset is private

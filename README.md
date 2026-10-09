@@ -1,7 +1,7 @@
 # samridhiagarwal.com
 
 Video-first portfolio and enquiry site for contemporary artist Samridhi Agarwal.
-Astro 5 · Tailwind v4 · Sanity Studio at `/studio` · Cloudflare Workers, Stream, Turnstile, R2, KV · Resend.
+Astro 5 · Tailwind v4 · own admin dashboard at `/admin` · Cloudflare Workers, D1, R2, KV, Turnstile · Resend.
 
 - `PROJECT_BRIEF.md` — the brief, verbatim.
 - `CLAUDE.md` — locked decisions and conventions (read before changing code).
@@ -11,60 +11,60 @@ Astro 5 · Tailwind v4 · Sanity Studio at `/studio` · Cloudflare Workers, Stre
 
 ```bash
 pnpm install
-pnpm media:gen        # generate placeholder loops/posters into public/media (needs ffmpeg)
-cp .env.example .env  # optional; with no Sanity project the site runs on seed/content.json
-pnpm dev              # http://localhost:4321
+pnpm media:gen          # placeholder loops/posters for the seed content into public/media (needs ffmpeg)
+pnpm db:migrate:local   # create the local D1 table
+pnpm db:seed:local      # load seed/content.json into local D1
+printf 'ADMIN_PASSWORD=local\nSESSION_SECRET=%s\n' "$(openssl rand -hex 32)" > .dev.vars
+pnpm preview            # build + wrangler dev → http://localhost:8787 (admin: /admin)
 ```
 
-Production-like preview (Worker + assets + KV/R2 emulation):
-
-```bash
-pnpm build && pnpm preview   # http://localhost:8787
-```
+`pnpm dev` (http://localhost:4321) also works and reads the same local D1 through the
+Cloudflare platform proxy.
 
 Checks:
 
 ```bash
 pnpm check                          # astro check (types)
-pnpm test                           # vitest: normaliser / CMS behaviour
+pnpm test                           # vitest: normaliser, admin back end, media URLs
 pnpm screenshots                    # 375/768/1440 full-page screenshots against the preview
 node scripts/interaction-check.mjs  # media rules, filters, lightbox, menu, forms, page weight
 ```
 
 ## Content
 
-`src/lib/data.ts` loads all content from Sanity when `PUBLIC_SANITY_PROJECT_ID` is set, otherwise
-from `seed/content.json`. Both go through `src/lib/normalize.ts`, which resolves references by id
-so deleted or hidden collections/occasions drop out without breaking anything.
+All content lives in Cloudflare **D1** (`documents` table, `migrations/`) and is edited at
+**`/admin`**. Each row holds the published JSON the site renders and, separately, the draft
+being edited. Pages render on request (`output: 'server'`), so Publish is live immediately.
+`src/lib/data.ts` → `getSite(Astro.locals)` reads published rows once per request and runs them
+through `src/lib/normalize.ts`. Without a `DB` binding (unit tests) it falls back to
+`seed/content.json`.
 
-Seed a fresh Sanity dataset (uploads the placeholder images as assets):
-
-```bash
-PUBLIC_SANITY_PROJECT_ID=xxxx pnpm seed:import
-```
+Uploaded images are resized and compressed in the browser (480/960/1440/2048 px, WebP or JPEG)
+and stored with videos in the R2 bucket `samridhiagarwal-media`, served from `/files/*`.
 
 ## Deploy
 
-GitHub Actions (`.github/workflows/deploy.yml`) builds and runs `wrangler deploy` on push to
-`main` and on `repository_dispatch` (type `sanity-publish`) from the Sanity webhook.
-Manual: `pnpm deploy`.
+All deploys run from a maintainer's machine with Wrangler (no CI deploy):
 
-Set once (see `wrangler.toml` for bindings):
+```bash
+pnpm build && npx wrangler versions upload   # preview URL to test
+npx wrangler versions deploy <version-id>@100% -y   # make it live
+```
+
+First-time set-up of a fresh account (bindings are in `wrangler.toml`):
 
 ```bash
 wrangler kv namespace create RATE_LIMIT      # paste id into wrangler.toml
 wrangler kv namespace create SUBSCRIBERS     # paste id into wrangler.toml
 wrangler r2 bucket create samridhiagarwal-uploads
+wrangler r2 bucket create samridhiagarwal-media
+wrangler d1 create samridhiagarwal           # paste id into wrangler.toml
+pnpm db:migrate:remote && pnpm db:seed:remote
+wrangler secret put ADMIN_PASSWORD
+wrangler secret put SESSION_SECRET           # long random string
 wrangler secret put TURNSTILE_SECRET_KEY
 wrangler secret put RESEND_API_KEY
-wrangler secret put SANITY_READ_TOKEN        # only for a private dataset
 ```
-
-Sanity → rebuild webhook: Sanity project → API → Webhooks → URL
-`https://api.github.com/repos/OWNER/REPO/dispatches`, method POST, header
-`Authorization: Bearer <GitHub fine-grained token with "Contents: read & write">`,
-`Accept: application/vnd.github+json`, body `{"event_type":"sanity-publish"}`, trigger on
-create/update/delete, projection left empty.
 
 ## Redirects
 

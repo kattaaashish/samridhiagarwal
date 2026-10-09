@@ -22,7 +22,7 @@ interface Props {
   bodyClass?: string;
 }
 
-const site = await getSite();
+const site = await getSite(Astro.locals);
 const { settings } = site;
 const siteUrl = (Astro.site ?? new URL('https://samridhiagarwal.com')).toString();
 const { title, description, image, imageAlt, canonical, type = 'website', noindex = false, bodyClass = '' } = Astro.props;

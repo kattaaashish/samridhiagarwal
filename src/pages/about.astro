@@ -5,7 +5,7 @@ import ArtworkCard from '@/components/ArtworkCard.astro';
 import JsonLd from '@/components/JsonLd.astro';
 import { getSite } from '@/lib/data';
 import { personJsonLd } from '@/lib/seo';
-const site = await getSite();
+const site = await getSite(Astro.locals);
 const { about, settings } = site;
 const siteUrl = Astro.site?.toString() ?? 'https://samridhiagarwal.com';
 const stages = ['Raw material', 'Building the surface', 'Laying the leaf', 'Finished piece'];

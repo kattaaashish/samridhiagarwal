@@ -1,7 +1,7 @@
 ---
 import { getSite } from '@/lib/data';
 import { whatsappLink } from '@/lib/format';
-const { settings, collections, occasions } = await getSite();
+const { settings, collections, occasions } = await getSite(Astro.locals);
 const year = new Date().getFullYear();
 ---
 <footer class="mt-24 border-t border-line bg-surface">

@@ -1,7 +1,7 @@
 ---
 import { getSite } from '@/lib/data';
 import { whatsappLink } from '@/lib/format';
-const { settings } = await getSite();
+const { settings } = await getSite(Astro.locals);
 const href = settings.whatsappNumber ? whatsappLink(settings.whatsappNumber, 'Hi Samridhi, I found your website and would like to ask about a piece.') : undefined;
 ---
 {href && (

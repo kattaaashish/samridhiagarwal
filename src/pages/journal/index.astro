@@ -4,7 +4,7 @@ import Media from '@/components/Media.astro';
 import SectionHeading from '@/components/SectionHeading.astro';
 import { getSite } from '@/lib/data';
 import { formatDate } from '@/lib/format';
-const { posts, settings } = await getSite();
+const { posts, settings } = await getSite(Astro.locals);
 ---
 <Base title="Journal" description={`The story behind each piece: short reflections by ${settings.siteName} pairing a moment from life with the artwork it became.`}>
   <section class="container-x pt-10 md:pt-16">

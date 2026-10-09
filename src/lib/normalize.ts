@@ -1,5 +1,5 @@
 /**
- * Turns an array of raw Sanity-shaped documents (from the API or seed/content.json)
+ * Turns an array of raw content documents (from D1 or seed/content.json)
  * into the typed Site model. All references are resolved here by id, so weak/dangling
  * references (deleted collections or occasions) simply drop out and never break a build.
  */
