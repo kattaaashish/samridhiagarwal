@@ -70,7 +70,7 @@ export const TYPES: Record<ContentType, TypeDef> = {
       { name: 'height', label: 'Height (cm)', type: 'number', min: 0, required: true, group: 'Piece' },
       { name: 'depth', label: 'Depth (cm)', type: 'number', min: 0, group: 'Piece' },
       { name: 'materials', label: 'Materials', type: 'string', group: 'Piece', help: 'e.g. Acrylic and gold leaf on canvas' },
-      { name: 'featured', label: 'Feature on home page', type: 'boolean', group: 'Piece', help: 'The home page shows up to six featured pieces that are not sold.' },
+      { name: 'featured', label: 'Feature on home page', type: 'boolean', group: 'Piece', help: 'The home page shows up to four featured pieces that are not sold, in one row.' },
       { name: 'etsyUrl', label: 'Etsy link', type: 'url', group: 'Piece', help: 'Optional. Shows a "Buy on Etsy" button for international buyers.' },
       { name: 'media', label: 'Photos & video', type: 'mediaList', min: 1, required: true, group: 'Photos & video', help: 'The first one is the main image. Add close-ups and a photo on a wall. Drag to reorder.' },
       { name: 'collections', label: 'Collections', type: 'refs', to: 'collection', group: 'Collections & occasions', help: 'Tick as many as you like.' },

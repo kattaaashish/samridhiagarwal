@@ -17,7 +17,7 @@ const site = await getSite(Astro.locals);
 const { settings, artworks, testimonials, exhibitions, occasions } = site;
 const siteUrl = Astro.site?.toString() ?? 'https://samridhiagarwal.com';
 const hero = settings.heroVideos;
-const featured = artworks.filter((a) => a.featured && a.status !== 'sold').slice(0, 6);
+const featured = artworks.filter((a) => a.featured && a.status !== 'sold').slice(0, 4);
 const seasonal = seasonalOccasions(site, new Date());
 const upcoming = exhibitions.find((e) => e.upcoming);
 const story = settings.storyPost;
@@ -115,8 +115,8 @@ const tiles = [
         <SectionHeading eyebrow="Available now" title="Pieces looking for a wall" />
         <a href="/work" class="link reveal">All originals</a>
       </div>
-      <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3" data-stagger>
-        {featured.map((a) => <ArtworkCard artwork={a} />)}
+      <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4" data-stagger>
+        {featured.map((a) => <ArtworkCard artwork={a} sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 92vw" />)}
       </div>
     </section>
   )}
