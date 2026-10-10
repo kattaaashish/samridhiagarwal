@@ -139,6 +139,28 @@ A checkout would be added there and only there. No payment code anywhere.
 - Deploys are manual with Wrangler (`wrangler versions upload` → preview URL → `wrangler versions
   deploy`). There is no CI deploy.
 
+## Change workflow
+
+Samridhi requests changes in plain words; ask her when a requirement is unclear, and check with
+Aashish for anything risky, paid, or architectural.
+
+1. Local set-up once: `pnpm media:gen`, `pnpm db:migrate:local`, `pnpm db:seed:local`, and a
+   `.dev.vars` with `ADMIN_PASSWORD` + `SESSION_SECRET` (git-ignored). If ffmpeg lacks libwebp,
+   make the placeholder WebPs with `cwebp` instead.
+2. Make the change, then `pnpm check && pnpm test && pnpm build`.
+3. `wrangler dev` on :8787, then Playwright (`playwright-core` with local Chrome):
+   `node scripts/interaction-check.mjs`, `pnpm screenshots`, plus targeted checks and
+   viewport screenshots at 375 / 768 / 1440 of whatever changed. Look at the screenshots
+   (full-page shots are too tall to judge). Check keyboard use, reduced motion, no horizontal
+   scroll, and no console errors. For admin changes, exercise the flow end to end on local D1.
+   Form tests hit the KV rate limit (5 per 10 min); clear `.wrangler/state/v3/kv` with the dev
+   server stopped.
+4. `wrangler versions upload` → send Samridhi the preview URL. **Preview versions share the
+   production D1 and R2**: never create test content there; smoke-test read-only.
+5. On approval: `wrangler versions deploy <id>@100% -y`, then commit and push to `main`.
+   Schema changes go in a new `migrations/000N_*.sql`, applied with `pnpm db:migrate:remote`
+   before deploying.
+
 ## Decisions log
 
 - 2026-09-25: Astro pinned to 5.x even though 7.x exists, per brief; adapter 12.6.x matches.
