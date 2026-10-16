@@ -34,7 +34,7 @@ describe('admin session', () => {
 describe('content types', () => {
   it('blocks publishing an artwork until the essentials are filled in', () => {
     const draft = { ...emptyDoc('artwork'), title: 'Golden hour', media: [] };
-    expect(missingRequired('artwork', draft)).toEqual(['The moment behind the piece', 'Price (INR)', 'Width (cm)', 'Height (cm)', 'Photos & video']);
+    expect(missingRequired('artwork', draft)).toEqual(['The moment behind the piece', 'Price (INR)', 'Width (inches)', 'Height (inches)', 'Photos & video']);
     const done = { ...draft, note: 'Light.', price: 0, width: 30, height: 40, media: [{}] };
     expect(missingRequired('artwork', done)).toEqual([]);
   });
@@ -63,5 +63,20 @@ describe('uploaded media', () => {
     const m = toMediaRef({ image: { ...image, hotspot: { x: 0.25, y: 0.3 } }, video: { r2: 'site/v.mp4' }, alt: 'x' })!;
     expect(m.focus).toBe('25% 30%');
     expect(m.video?.mp4).toBe('/files/site/v.mp4');
+  });
+});
+
+describe('artwork sizes in inches', () => {
+  it('converts older cm documents and keeps inch documents as they are', async () => {
+    const { sizeInInches, withInches } = await import('../src/lib/size');
+    expect(sizeInInches({ width: 60.96, height: 91.44 })).toEqual({ width: 24, height: 36, depth: undefined });
+    expect(sizeInInches({ sizeUnit: 'in', width: 24, height: 36, depth: 2 })).toEqual({ width: 24, height: 36, depth: 2 });
+    expect(withInches({ title: 'x', width: 50.8, height: 76.2 })).toEqual({ title: 'x', sizeUnit: 'in', width: 20, height: 30 });
+    expect(emptyDoc('artwork').sizeUnit).toBe('in');
+  });
+  it('formats inches with cm after', async () => {
+    const { formatSize } = await import('../src/lib/format');
+    expect(formatSize({ width: 24, height: 36 })).toBe('24 × 36 in (61 × 91 cm)');
+    expect(formatSize({ width: 11.5, height: 15, depth: 1 })).toBe('11.5 × 15 × 1 in (29 × 38 × 3 cm)');
   });
 });

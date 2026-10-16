@@ -1,12 +1,16 @@
 import type { Artwork } from './types';
+import { inToCm } from './size';
 
 export const formatINR = (n: number) =>
   new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(n);
 
-export const formatSize = (a: Pick<Artwork, 'width' | 'height' | 'depth'>) =>
-  `${trim(a.width)} × ${trim(a.height)}${a.depth ? ` × ${trim(a.depth)}` : ''} cm`;
+/** Sizes are stored in inches; shown as "24 × 36 in (61 × 91 cm)". */
+export const formatSize = (a: Pick<Artwork, 'width' | 'height' | 'depth'>) => {
+  const dims = [a.width, a.height, ...(a.depth ? [a.depth] : [])];
+  return `${dims.map(trim).join(' × ')} in (${dims.map((n) => Math.round(inToCm(n))).join(' × ')} cm)`;
+};
 
-const trim = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
+export const trim = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
 
 export const formatDate = (iso: string, opts: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' }) =>
   iso ? new Intl.DateTimeFormat('en-IN', { timeZone: 'Asia/Kolkata', ...opts }).format(new Date(iso)) : '';

@@ -6,13 +6,16 @@ import { Sortable } from './Sortable';
 import { TYPES, emptyDoc, type ContentType } from './schema';
 import { thumbUrl, titleFromFile, uploadMedia } from './media';
 import { StateBadge, useToast } from './ui';
+import { sizeInInches } from '@/lib/size';
+import { trim } from '@/lib/format';
 
+const sizeLabel = (d: Record<string, any>) => { const s = sizeInInches(d); return s.width && s.height ? `${trim(s.width)} × ${trim(s.height)} in` : ''; };
 const inr = (n: unknown) => (typeof n === 'number' ? `₹${n.toLocaleString('en-IN')}` : '');
 const STATUS: Record<string, string> = { available: 'Available', sold: 'Sold', 'made-to-order': 'Made to order' };
 
 function subtitle(type: ContentType, d: Record<string, any>): string {
   switch (type) {
-    case 'artwork': return [STATUS[d.status] ?? 'Available', inr(d.price), d.width && d.height ? `${d.width} × ${d.height} cm` : ''].filter(Boolean).join(' · ');
+    case 'artwork': return [STATUS[d.status] ?? 'Available', inr(d.price), sizeLabel(d)].filter(Boolean).join(' · ');
     case 'collection': return d.visible === false ? 'Hidden from the site' : '';
     case 'occasion': return [d.visible === false ? 'Hidden from the site' : '', d.seasonStart ? `Season ${d.seasonStart} to ${d.seasonEnd ?? '…'}` : ''].filter(Boolean).join(' · ');
     case 'exhibition': {

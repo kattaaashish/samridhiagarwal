@@ -12,8 +12,8 @@ export function artworkJsonLd(a: Artwork, settings: SiteSettings, siteUrl: strin
     description: a.seoDescription ?? a.note,
     artform: 'Painting',
     artMedium: a.materials,
-    width: { '@type': 'Distance', name: `${a.width} cm` },
-    height: { '@type': 'Distance', name: `${a.height} cm` },
+    width: { '@type': 'Distance', name: `${a.width} in` },
+    height: { '@type': 'Distance', name: `${a.height} in` },
     creator: personJsonLd(settings, siteUrl),
     offers: {
       '@type': 'Offer',

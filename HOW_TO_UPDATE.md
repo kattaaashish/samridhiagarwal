@@ -32,7 +32,7 @@ first (Photos → Share → Save as JPEG, or set Camera → Formats → Most Com
 
 - **Piece** tab: title, the moment behind the piece (two or three sentences in your own words,
   shown right beside the images), status (Available / Sold / Made to order), price in INR,
-  width, height and depth in cm, materials, **Feature on home page**, and the Etsy link.
+  width, height and depth in **inches** (the site also shows the cm), materials, **Feature on home page**, and the Etsy link.
 - **Photos & video** tab: drop more photos or videos in. The **first one is the main image**.
   Drag the dotted handle to reorder. For each picture you can:
   - write a short **description** (for people using screen readers, and for Google);

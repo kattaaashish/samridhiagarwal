@@ -66,9 +66,9 @@ export const TYPES: Record<ContentType, TypeDef> = {
       { name: 'note', label: 'The moment behind the piece', type: 'text', rows: 4, max: 600, required: true, group: 'Piece', help: 'The moment, thought or feeling that became this piece. Two or three sentences, in your own words. Shown right beside the images.' },
       { name: 'status', label: 'Status', type: 'select', initial: 'available', group: 'Piece', options: [{ value: 'available', label: 'Available' }, { value: 'sold', label: 'Sold' }, { value: 'made-to-order', label: 'Made to order' }] },
       { name: 'price', label: 'Price (INR)', type: 'number', min: 0, required: true, group: 'Piece' },
-      { name: 'width', label: 'Width (cm)', type: 'number', min: 0, required: true, group: 'Piece' },
-      { name: 'height', label: 'Height (cm)', type: 'number', min: 0, required: true, group: 'Piece' },
-      { name: 'depth', label: 'Depth (cm)', type: 'number', min: 0, group: 'Piece' },
+      { name: 'width', label: 'Width (inches)', type: 'number', min: 0, required: true, group: 'Piece' },
+      { name: 'height', label: 'Height (inches)', type: 'number', min: 0, required: true, group: 'Piece' },
+      { name: 'depth', label: 'Depth (inches)', type: 'number', min: 0, group: 'Piece' },
       { name: 'materials', label: 'Materials', type: 'string', group: 'Piece', help: 'e.g. Acrylic and gold leaf on canvas' },
       { name: 'featured', label: 'Feature on home page', type: 'boolean', group: 'Piece', help: 'The home page shows up to four featured pieces that are not sold, in one row.' },
       { name: 'etsyUrl', label: 'Etsy link', type: 'url', group: 'Piece', help: 'Optional. Shows a "Buy on Etsy" button for international buyers.' },
@@ -240,5 +240,6 @@ export function emptyDoc(type: ContentType): Record<string, any> {
     if (f.type === 'select' && f.initial) doc[f.name] = f.initial;
     if (f.name === 'visible') doc.visible = true;
   }
+  if (type === 'artwork') doc.sizeUnit = 'in';
   return doc;
 }

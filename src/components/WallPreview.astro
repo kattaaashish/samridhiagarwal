@@ -1,21 +1,25 @@
 ---
 /**
  * "See it on a wall": CSS-drawn room with the piece scaled from its real dimensions.
- * The wall is WALL_CM wide; the artwork's width in cm maps to a percentage of it.
+ * The wall is WALL_CM wide; the artwork's width (stored in inches) maps to a percentage of it.
  */
 import Media from './Media.astro';
 import type { Artwork } from '@/lib/types';
+import { inToCm } from '@/lib/size';
+import { trim } from '@/lib/format';
 interface Props { artwork: Artwork }
 const { artwork: a } = Astro.props;
 const WALL_CM = 360;
-const widthPct = Math.min(90, Math.max(6, (a.width / WALL_CM) * 100));
+const widthCm = inToCm(a.width);
+const heightCm = inToCm(a.height);
+const widthPct = Math.min(90, Math.max(6, (widthCm / WALL_CM) * 100));
 // Hang centre at ~150 cm from floor; wall shown is 270 cm tall → position from top.
 const WALL_H_CM = 270;
 const centreFromTopCm = WALL_H_CM - 150;
-const topPct = ((centreFromTopCm - a.height / 2) / WALL_H_CM) * 100;
+const topPct = ((centreFromTopCm - heightCm / 2) / WALL_H_CM) * 100;
 const sofaWidthPct = (200 / WALL_CM) * 100; // 2 m sofa for scale
 ---
-<figure class="wall" aria-label={`${a.title} shown to scale on a 3.6 metre wall above a 2 metre sofa`}>
+<figure class="wall" aria-label={`${a.title} shown to scale on a 12 foot wall above a 6½ foot sofa`}>
   <div class="wall-room" style={`aspect-ratio:${WALL_CM}/${WALL_H_CM}`}>
     <div class="wall-piece shimmer" style={`width:${widthPct.toFixed(2)}%; top:${Math.max(4, topPct).toFixed(2)}%`}>
       <Media media={a.media[0]} aspect={a.width / a.height} sizes="(min-width: 1024px) 30vw, 60vw" still />
@@ -26,7 +30,7 @@ const sofaWidthPct = (200 / WALL_CM) * 100; // 2 m sofa for scale
     <div class="wall-plant" aria-hidden="true"><span class="pot"></span><span class="leaf a"></span><span class="leaf b"></span><span class="leaf c"></span></div>
     <div class="wall-floor"></div>
   </div>
-  <figcaption class="mt-2 text-sm text-muted">To scale: {a.width} cm wide on a 3.6 m wall, above a 2 m sofa.</figcaption>
+  <figcaption class="mt-2 text-sm text-muted">To scale: {trim(a.width)} in wide on a 12 ft wall, above a 6½ ft sofa.</figcaption>
 </figure>
 
 <style>

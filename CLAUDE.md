@@ -131,7 +131,9 @@ A checkout would be added there and only there. No payment code anywhere.
 - Files: components `PascalCase.astro`, scripts/libs `kebab-case.ts`. One component per file.
 - Copy tone: warm, first person from Samridhi where it's her voice, short sentences.
 - Prices are INR integers, formatted by `formatINR()` in `src/lib/format.ts`.
-- Sizes are stored in cm (`width`, `height`, optional `depth`); `formatSize()` renders them.
+- Sizes are entered and stored in **inches** (`width`, `height`, optional `depth`, plus
+  `sizeUnit: 'in'`). Documents without `sizeUnit` (seed, pre-2026-10-16) hold cm and are converted
+  on read by `src/lib/size.ts`; never rewrite them in D1. `formatSize()` renders "24 × 36 in (61 × 91 cm)".
 - Status enum: `available | sold | made-to-order`.
 - Every page passes `title`, `description`, `image` to `Base.astro` for SEO/OG; JSON-LD via
   `<JsonLd>`.
@@ -168,8 +170,8 @@ Aashish for anything risky, paid, or architectural.
 - 2026-09-25: (superseded 2026-10-09) GitHub Actions rebuild-on-publish from a Sanity webhook.
 - 2026-09-25: Newsletter sign-ups are stored in KV (`SUBSCRIBERS`) and emailed to Samridhi;
   no third-party list provider yet.
-- 2026-09-25: Wall preview assumes a 3.6 m wide wall in a CSS-drawn room; artwork width in
-  cm maps to a percentage of that wall.
+- 2026-09-25: Wall preview assumes a 3.6 m (12 ft) wide wall in a CSS-drawn room; artwork width
+  (converted to cm) maps to a percentage of that wall.
 - 2026-09-25: `<video poster>` uses the smallest (480w) poster variant; the full-size poster is
   shown by the `<picture>` underneath. Avoids downloading two large stills per slot.
 - 2026-09-25: Smooth scrolling is scoped to `html:focus-within` (keyboard/anchor use) rather
@@ -181,3 +183,5 @@ Aashish for anything risky, paid, or architectural.
   a paid image service. Push-to-deploy CI removed; deploys are run with Wrangler.
 - 2026-10-09: Home hero is full screen with the header overlaid (transparent until the hero
   text would pass under it); ticker phrases come from Site settings → Scrolling strip.
+- 2026-10-16: Sizes switched to inches at Samridhi's request, shown with cm in brackets. Old cm
+  documents are converted on read (no D1 migration), so preview versions on shared D1 stay correct.

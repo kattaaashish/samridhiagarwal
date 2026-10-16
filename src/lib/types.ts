@@ -52,6 +52,7 @@ export interface Artwork {
   title: string;
   slug: string;
   note: string;
+  /** inches */
   width: number;
   height: number;
   depth?: number;

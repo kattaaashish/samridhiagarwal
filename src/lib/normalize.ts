@@ -4,6 +4,7 @@
  * references (deleted collections or occasions) simply drop out and never break a build.
  */
 import { toImageSource, toMediaRef } from './media';
+import { sizeInInches } from './size';
 import type { Artwork, Collection, Exhibition, MediaRef, Occasion, Post, Site, Taxon, Testimonial } from './types';
 
 type Doc = Record<string, any> & { _id: string; _type: string };
@@ -48,14 +49,15 @@ export function normalize(docs: Doc[], opts: { today?: Date } = {}): Site {
       .filter((x): x is T => !!x);
 
   const artworks: Artwork[] = byType('artwork')
-    .map((d) => ({
+    .map((d) => ({ d, size: sizeInInches(d) }))
+    .map(({ d, size }) => ({
       id: d._id,
       title: d.title ?? 'Untitled',
       slug: slugOf(d) || d._id,
       note: d.note ?? '',
-      width: Number(d.width) || 0,
-      height: Number(d.height) || 0,
-      depth: d.depth != null ? Number(d.depth) : undefined,
+      width: size.width ?? 0,
+      height: size.height ?? 0,
+      depth: size.depth || undefined,
       materials: d.materials ?? '',
       price: Number(d.price) || 0,
       status: (['available', 'sold', 'made-to-order'].includes(d.status) ? d.status : 'available') as Artwork['status'],
@@ -185,9 +187,9 @@ export function relatedArtworks(site: Site, art: Artwork, limit = 4): Artwork[] 
 }
 
 export const SIZE_BUCKETS = [
-  { id: 'small', label: 'Small (under 50 cm)', test: (a: Artwork) => Math.max(a.width, a.height) < 50 },
-  { id: 'medium', label: 'Medium (50 to 90 cm)', test: (a: Artwork) => Math.max(a.width, a.height) >= 50 && Math.max(a.width, a.height) < 90 },
-  { id: 'large', label: 'Large (90 cm and up)', test: (a: Artwork) => Math.max(a.width, a.height) >= 90 },
+  { id: 'small', label: 'Small (under 20 in)', test: (a: Artwork) => Math.max(a.width, a.height) < 20 },
+  { id: 'medium', label: 'Medium (20 to 36 in)', test: (a: Artwork) => Math.max(a.width, a.height) >= 20 && Math.max(a.width, a.height) < 36 },
+  { id: 'large', label: 'Large (36 in and up)', test: (a: Artwork) => Math.max(a.width, a.height) >= 36 },
 ];
 
 export const PRICE_BUCKETS = [

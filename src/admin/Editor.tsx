@@ -4,6 +4,7 @@ import { api, current, docState, type DocRow } from './api';
 import { FieldRow } from './Fields';
 import { SINGLETONS, TYPES, missingRequired, type ContentType } from './schema';
 import { StateBadge, useToast } from './ui';
+import { withInches } from '@/lib/size';
 
 export function sitePath(type: ContentType, doc: Record<string, any>): string | undefined {
   const slug = doc.slug?.current;
@@ -18,6 +19,9 @@ export function sitePath(type: ContentType, doc: Record<string, any>): string | 
     default: return '/';
   }
 }
+
+/** Older artworks hold cm; show them in inches. Saved as inches on the next edit. */
+const forEditing = (type: ContentType, d: Record<string, any>) => (type === 'artwork' ? withInches(d) : d);
 
 type SaveState = 'idle' | 'saving' | 'saved' | 'error';
 
@@ -36,7 +40,7 @@ export function Editor({ type, id }: { type: ContentType; id: string }) {
 
   useEffect(() => {
     setRow(null);
-    api.get(id).then((r) => { setRow(r); setDoc(current(r)); docRef.current = current(r); }).catch((e) => toast.error(e.message));
+    api.get(id).then((r) => { setRow(r); const d = forEditing(type, current(r)); setDoc(d); docRef.current = d; }).catch((e) => toast.error(e.message));
   }, [id]);
 
   const flush = useCallback(async () => {
@@ -92,8 +96,9 @@ export function Editor({ type, id }: { type: ContentType; id: string }) {
       const r = await api.action(id, action);
       setSave('idle');
       setRow(r);
-      setDoc(current(r));
-      docRef.current = current(r);
+      const d = forEditing(type, current(r));
+      setDoc(d);
+      docRef.current = d;
       toast.success(action === 'publish' ? 'Published. It is live on the site now.' : action === 'unpublish' ? 'Taken off the site. Saved as a draft.' : 'Changes discarded.');
     } catch (e) {
       toast.error((e as Error).message);
