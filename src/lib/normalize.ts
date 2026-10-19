@@ -187,9 +187,9 @@ export function relatedArtworks(site: Site, art: Artwork, limit = 4): Artwork[] 
 }
 
 export const SIZE_BUCKETS = [
-  { id: 'small', label: 'Small (under 20 in)', test: (a: Artwork) => Math.max(a.width, a.height) < 20 },
-  { id: 'medium', label: 'Medium (20 to 36 in)', test: (a: Artwork) => Math.max(a.width, a.height) >= 20 && Math.max(a.width, a.height) < 36 },
-  { id: 'large', label: 'Large (36 in and up)', test: (a: Artwork) => Math.max(a.width, a.height) >= 36 },
+  { id: 'small', label: 'Small (under 20 in / 50 cm)', test: (a: Artwork) => Math.max(a.width, a.height) < 20 },
+  { id: 'medium', label: 'Medium (20 to 36 in / 50 to 90 cm)', test: (a: Artwork) => Math.max(a.width, a.height) >= 20 && Math.max(a.width, a.height) < 36 },
+  { id: 'large', label: 'Large (36 in / 90 cm and up)', test: (a: Artwork) => Math.max(a.width, a.height) >= 36 },
 ];
 
 export const PRICE_BUCKETS = [
