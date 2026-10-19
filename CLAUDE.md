@@ -170,8 +170,7 @@ Aashish for anything risky, paid, or architectural.
 - 2026-09-25: (superseded 2026-10-09) GitHub Actions rebuild-on-publish from a Sanity webhook.
 - 2026-09-25: Newsletter sign-ups are stored in KV (`SUBSCRIBERS`) and emailed to Samridhi;
   no third-party list provider yet.
-- 2026-09-25: Wall preview assumes a 3.6 m (12 ft) wide wall in a CSS-drawn room; artwork width
-  (converted to cm) maps to a percentage of that wall.
+- 2026-09-25: (removed 2026-10-19 at Samridhi's request) "See it on a wall" scaled preview on artwork pages.
 - 2026-09-25: `<video poster>` uses the smallest (480w) poster variant; the full-size poster is
   shown by the `<picture>` underneath. Avoids downloading two large stills per slot.
 - 2026-09-25: Smooth scrolling is scoped to `html:focus-within` (keyboard/anchor use) rather

@@ -2,7 +2,6 @@
 import Base from '@/layouts/Base.astro';
 import Gallery from '@/components/Gallery.astro';
 import Lightbox from '@/components/Lightbox.astro';
-import WallPreview from '@/components/WallPreview.astro';
 import BuyActions from '@/components/BuyActions.astro';
 import EnquiryForm from '@/components/EnquiryForm.astro';
 import ArtworkCard from '@/components/ArtworkCard.astro';
@@ -66,16 +65,6 @@ const posts = site.posts.filter((p) => p.artworks.some((x) => x.id === a.id));
         </div>
       </div>
     </div>
-
-    <section class="mt-20 grid gap-10 lg:grid-cols-2 lg:items-start" aria-labelledby="wall-heading">
-      <div class="reveal">
-        <p class="eyebrow">See it on a wall</p>
-        <h2 id="wall-heading" class="mt-2 text-3xl">Scaled from its real size</h2>
-        <p class="mt-3 max-w-md text-muted">A rough sense of presence in a room. Every piece arrives ready to hang, with painted edges and hanging hardware fitted.</p>
-        <p class="mt-3 max-w-md text-sm text-muted">Send me a photo of your wall and I'll mock it up properly.</p>
-      </div>
-      <WallPreview artwork={a} />
-    </section>
 
     {posts.length > 0 && (
       <section class="mt-16 rounded-xl bg-surface p-6 md:p-8">

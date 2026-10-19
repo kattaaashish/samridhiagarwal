@@ -83,9 +83,6 @@ const check = (name, cond, detail = '') => { out[name] = (cond ? 'PASS' : 'FAIL'
   await page.keyboard.press('Escape'); await page.waitForTimeout(200);
   check('lightbox_escape_closes', await page.locator('dialog[open]').count() === 0);
   check('lightbox_focus_returns', await page.evaluate(() => document.activeElement?.hasAttribute('data-lightbox')));
-  // Wall preview scaled
-  const w = await page.locator('.wall-piece').evaluate((el) => el.style.width);
-  check('wall_preview_scaled', w === '16.67%', w);
   // JSON-LD present
   const ld = await page.evaluate(() => JSON.parse(document.querySelector('script[type="application/ld+json"]').textContent)['@type']);
   check('artwork_jsonld', ld === 'VisualArtwork', ld);
