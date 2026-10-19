@@ -3,8 +3,8 @@ import Media from './Media.astro';
 import { formatINR, formatSize } from '@/lib/format';
 import type { Artwork } from '@/lib/types';
 import { SIZE_BUCKETS, PRICE_BUCKETS } from '@/lib/normalize';
-interface Props { artwork: Artwork; sizes?: string; priority?: boolean; class?: string }
-const { artwork: a, sizes = '(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw', priority = false, class: className = '' } = Astro.props;
+interface Props { artwork: Artwork; sizes?: string; priority?: boolean; class?: string; /** Home page hides prices. */ showPrice?: boolean }
+const { artwork: a, sizes = '(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw', priority = false, class: className = '', showPrice = true } = Astro.props;
 const size = SIZE_BUCKETS.find((b) => b.test(a))?.id ?? '';
 const price = PRICE_BUCKETS.find((b) => b.test(a))?.id ?? '';
 ---
@@ -26,7 +26,7 @@ const price = PRICE_BUCKETS.find((b) => b.test(a))?.id ?? '';
     </div>
     <div class="mt-3 flex items-baseline justify-between gap-3">
       <h3 class="text-xl leading-snug">{a.title}</h3>
-      <p class="shrink-0 text-sm text-muted">{a.status === 'sold' ? 'Sold' : formatINR(a.price)}</p>
+      {(showPrice || a.status === 'sold') && <p class="shrink-0 text-sm text-muted">{a.status === 'sold' ? 'Sold' : formatINR(a.price)}</p>}
     </div>
     <p class="mt-1 text-sm text-muted">{formatSize(a)}</p>
   </a>

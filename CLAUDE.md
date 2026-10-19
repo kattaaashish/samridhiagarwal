@@ -101,7 +101,8 @@ Motion: CSS only. `<ClientRouter />` view transitions; `.reveal` elements animat
 `/commissions` · `/exhibitions` · `/about` · `/journal` · `/journal/[slug]` · `/contact` ·
 `/admin` · `/404` · `/sitemap-index.xml` (built from live content) · `/robots.txt`
 API: `POST /api/enquiry` · `POST /api/commission` · `POST /api/subscribe` · `/api/admin/*` ·
-`GET /files/*` · `GET /sent` (no-JS form confirmation).
+`GET /files/*` · `GET /sent` (no-JS form confirmation) · `GET /whatsapp` (302 to the number in
+Site settings; never hard-code it in `public/_redirects`).
 
 Slug pages look the item up in `getSite()` and `return Astro.rewrite('/404')` when missing.
 `trailingSlash: 'never'`. Use `pagePath(Astro.url)` from `src/lib/format.ts` for links,
@@ -184,3 +185,5 @@ Aashish for anything risky, paid, or architectural.
   text would pass under it); ticker phrases come from Site settings → Scrolling strip.
 - 2026-10-16: Sizes switched to inches at Samridhi's request, shown with cm in brackets. Old cm
   documents are converted on read (no D1 migration), so preview versions on shared D1 stay correct.
+- 2026-10-19: Home page artwork cards hide prices (`ArtworkCard showPrice={false}`); prices stay on
+  /work, collections and artwork pages.
