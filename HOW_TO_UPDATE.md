@@ -63,8 +63,8 @@ To take a piece off the site but keep it, press **Unpublish**. **Delete** remove
 - **Delete**: open it → **Delete**. Its **artworks stay on the site**; they just lose that
   grouping.
 - **Seasonal occasions** (e.g. Diwali): set **Season starts** and **Season ends**. From 6 weeks
-  before the start until the end, the occasion is featured on the home page with a "This
-  season" badge. Update the dates each year.
+  before the start until the end, the occasion gets a "This season" badge on the Gifting pages.
+  Update the dates each year.
 
 ## Exhibitions
 

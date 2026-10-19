@@ -106,8 +106,8 @@ export const TYPES: Record<ContentType, TypeDef> = {
       { name: 'intro', label: 'Short intro', type: 'text', rows: 3 },
       { name: 'cover', label: 'Cover image or video', type: 'media' },
       visible,
-      { name: 'seasonStart', label: 'Season starts', type: 'date', help: 'Optional. Featured on the home page from 6 weeks before this date, e.g. Diwali.' },
-      { name: 'seasonEnd', label: 'Season ends', type: 'date', help: 'Optional. Featuring stops after this date. Update both dates each year.' },
+      { name: 'seasonStart', label: 'Season starts', type: 'date', help: 'Optional. Shows a "This season" badge on the Gifting pages from 6 weeks before this date, e.g. Diwali.' },
+      { name: 'seasonEnd', label: 'Season ends', type: 'date', help: 'Optional. The badge goes after this date. Update both dates each year.' },
     ],
   },
   exhibition: {

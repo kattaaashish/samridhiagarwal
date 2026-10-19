@@ -187,3 +187,5 @@ Aashish for anything risky, paid, or architectural.
   documents are converted on read (no D1 migration), so preview versions on shared D1 stay correct.
 - 2026-10-19: Home page artwork cards hide prices (`ArtworkCard showPrice={false}`); prices stay on
   /work, collections and artwork pages.
+- 2026-10-19: Seasonal "Gifts for <occasion>" sections removed from the home page at Samridhi's
+  request; season dates now only drive the "This season" badge on /gifting pages.

@@ -9,7 +9,6 @@ import Ticker from '@/components/Ticker.astro';
 import SectionHeading from '@/components/SectionHeading.astro';
 import JsonLd from '@/components/JsonLd.astro';
 import { getSite } from '@/lib/data';
-import { seasonalOccasions, artworksIn } from '@/lib/normalize';
 import { formatDate } from '@/lib/format';
 import { personJsonLd } from '@/lib/seo';
 
@@ -18,7 +17,6 @@ const { settings, artworks, testimonials, exhibitions, occasions } = site;
 const siteUrl = Astro.site?.toString() ?? 'https://samridhiagarwal.com';
 const hero = settings.heroVideos;
 const featured = artworks.filter((a) => a.featured && a.status !== 'sold').slice(0, 4);
-const seasonal = seasonalOccasions(site, new Date());
 const upcoming = exhibitions.find((e) => e.upcoming);
 const story = settings.storyPost;
 const statementLines = settings.statement.split('\n').filter(Boolean);
@@ -87,26 +85,6 @@ const tiles = [
       <a href="/about" class="link mt-6 inline-block">Meet Samridhi</a>
     </div>
   </section>
-
-  <!-- Seasonal occasion (auto) -->
-  {seasonal.map((o) => {
-    const pieces = artworksIn(site, 'occasion', o.id).filter((a) => a.status !== 'sold').slice(0, 3);
-    return (
-      <section class="container-x mt-24 md:mt-32" aria-labelledby={`season-${o.slug}`}>
-        <div class="grid gap-8 lg:grid-cols-[1fr_2fr] lg:items-end">
-          <Tile href={`/gifting/${o.slug}`} title={`${o.name} gifting`} cta="See the pieces" media={o.cover} badge="This season" class="reveal" aspect={4 / 5} sizes="(min-width: 1024px) 33vw, 100vw" />
-          <div>
-            <SectionHeading eyebrow="Coming up" title={`Gifts for ${o.name}`} text={o.intro} />
-            {pieces.length > 0 && (
-              <div class="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3" data-stagger>
-                {pieces.map((a) => <ArtworkCard artwork={a} showPrice={false} sizes="(min-width: 1024px) 20vw, 45vw" />)}
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-    );
-  })}
 
   <!-- Featured pieces -->
   {featured.length > 0 && (
