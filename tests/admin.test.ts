@@ -78,5 +78,6 @@ describe('artwork sizes in inches', () => {
     const { formatSize } = await import('../src/lib/format');
     expect(formatSize({ width: 24, height: 36 })).toBe('24 × 36 in (61 × 91 cm)');
     expect(formatSize({ width: 11.5, height: 15, depth: 1 })).toBe('11.5 × 15 × 1 in (29 × 38 × 3 cm)');
+    expect(formatSize({ width: 61 / 2.54, height: 60.96 / 2.54 })).toBe('24 × 24 in (61 × 61 cm)');
   });
 });

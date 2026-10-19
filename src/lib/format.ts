@@ -10,7 +10,7 @@ export const formatSize = (a: Pick<Artwork, 'width' | 'height' | 'depth'>) => {
   return `${dims.map(trim).join(' × ')} in (${dims.map((n) => Math.round(inToCm(n))).join(' × ')} cm)`;
 };
 
-export const trim = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
+export const trim = (n: number) => n.toFixed(1).replace(/\.0$/, '');
 
 export const formatDate = (iso: string, opts: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' }) =>
   iso ? new Intl.DateTimeFormat('en-IN', { timeZone: 'Asia/Kolkata', ...opts }).format(new Date(iso)) : '';
