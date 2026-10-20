@@ -106,7 +106,7 @@ const check = (name, cond, detail = '') => { out[name] = (cond ? 'PASS' : 'FAIL'
   check('mobile_menu_opens', await page.locator('[data-header][data-open="true"]').count() === 1);
   await page.click('[data-submenu-toggle]'); await page.waitForTimeout(100);
   const links = await page.locator('#submenu-work a').allTextContents();
-  check('submenu_lists_collections_and_occasions', links.includes('Everyday Moments') && links.includes('Diwali'), `${links.length} links`);
+  check('submenu_lists_collections_not_gifting', links.includes('Everyday Moments') && !links.includes('Diwali'), `${links.length} links`);
   await page.keyboard.press('Escape'); await page.waitForTimeout(100);
   check('mobile_menu_escape_closes', await page.locator('[data-header][data-open="false"]').count() === 1);
   await ctx.close();

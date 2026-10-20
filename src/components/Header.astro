@@ -1,17 +1,16 @@
 ---
 import { getSite } from '@/lib/data';
 import { pagePath } from '@/lib/format';
-const { collections, occasions, settings } = await getSite(Astro.locals);
+const { collections, settings } = await getSite(Astro.locals);
 const path = pagePath(Astro.url);
 // Home: the header floats transparently over the full-screen hero until you scroll past it.
 const overlay = path === '/';
 const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
 
-// Submenus are generated from content — zero code changes when collections/occasions change.
+// Submenus are generated from content — zero code changes when collections change.
 const workMenu = [
   { label: 'Originals', href: '/work', desc: 'Every available piece' },
   { label: 'Collections', href: '/work#collections', children: collections.map((c) => ({ label: c.name, href: `/collections/${c.slug}` })) },
-  { label: 'Gifting', href: '/gifting', children: occasions.map((o) => ({ label: o.name, href: `/gifting/${o.slug}` })) },
   { label: 'Commissions', href: '/commissions', desc: 'A piece about your moment' },
 ];
 const topLevel = [
@@ -105,10 +104,10 @@ const topLevel = [
     .menu-link::after { content: ''; position: absolute; left: 0; right: 100%; bottom: .15rem; height: 1px; background: currentColor; transition: right .3s var(--ease-out); }
     .menu-link:hover::after, .menu-link[aria-current='page']::after { right: 0; }
     .submenu {
-      position: absolute; top: 100%; right: -1.5rem; min-width: 44rem; padding: 1.5rem; margin-top: .5rem;
+      position: absolute; top: 100%; right: -1.5rem; min-width: 36rem; padding: 1.5rem; margin-top: .5rem;
       background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 20px 50px -20px rgb(31 27 24 / .3);
     }
-    .submenu-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem; }
+    .submenu-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
     .submenu-heading { font-family: var(--font-display); font-size: 1.15rem; }
     .submenu-link { font-size: .95rem; }
   }

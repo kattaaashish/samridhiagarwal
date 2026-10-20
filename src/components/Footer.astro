@@ -1,11 +1,11 @@
 ---
 import { getSite } from '@/lib/data';
 import { whatsappLink } from '@/lib/format';
-const { settings, collections, occasions } = await getSite(Astro.locals);
+const { settings, collections } = await getSite(Astro.locals);
 const year = new Date().getFullYear();
 ---
 <footer class="mt-24 border-t border-line bg-surface">
-  <div class="container-x grid gap-12 py-14 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+  <div class="container-x grid gap-12 py-14 lg:grid-cols-[1.4fr_1fr_1fr]">
     <div>
       <p class="font-display text-2xl">{settings.siteName}</p>
       <p class="mt-3 max-w-sm text-muted">{settings.shortBio}</p>
@@ -21,13 +21,6 @@ const year = new Date().getFullYear();
         <li><a href="/work" class="hover:text-accent-ink">Originals</a></li>
         {collections.map((c) => <li><a href={`/collections/${c.slug}`} class="hover:text-accent-ink">{c.name}</a></li>)}
         <li><a href="/commissions" class="hover:text-accent-ink">Commissions</a></li>
-      </ul>
-    </nav>
-    <nav aria-label="Gifting">
-      <p class="eyebrow mb-3">Gifting</p>
-      <ul class="grid gap-2">
-        <li><a href="/gifting" class="hover:text-accent-ink">All occasions</a></li>
-        {occasions.map((o) => <li><a href={`/gifting/${o.slug}`} class="hover:text-accent-ink">{o.name}</a></li>)}
       </ul>
     </nav>
     <nav aria-label="More">
