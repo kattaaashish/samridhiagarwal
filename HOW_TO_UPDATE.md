@@ -31,7 +31,7 @@ first (Photos → Share → Save as JPEG, or set Camera → Formats → Most Com
 ## Artwork details
 
 - **Piece** tab: title, the moment behind the piece (two or three sentences in your own words,
-  shown right beside the images), status (Available / Sold / Made to order), price in INR,
+  shown right beside the images), status (Available / Sold / Made to order), price in INR (optional; see *Prices* below),
   width, height and depth in **inches** (the site also shows the cm), materials, **Feature on home page**, and the Etsy link.
 - **Photos & video** tab: drop more photos or videos in. The **first one is the main image**.
   Drag the dotted handle to reorder. For each picture you can:
@@ -41,8 +41,14 @@ first (Photos → Share → Save as JPEG, or set Camera → Formats → Most Com
     wide, phone and square crops will look.
 - **Collections & occasions** tab: tick as many collections and gifting occasions as you like.
 
-**Publish** checks the essentials first (the moment behind the piece, price, size and at least
-one photo) and highlights anything missing.
+**Publish** checks the essentials first (the moment behind the piece, size and at least one
+photo) and highlights anything missing.
+
+## Prices
+
+Prices are **hidden** on the whole site for now. To show them, go to **Site settings → Shop →
+Show prices**, switch it on and press **Publish changes**. Pieces without a price never show
+one. Sold pieces always say "Sold". The home page never shows prices.
 
 ## Marking a piece as sold
 

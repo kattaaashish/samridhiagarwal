@@ -8,13 +8,14 @@ import ArtworkCard from '@/components/ArtworkCard.astro';
 import JsonLd from '@/components/JsonLd.astro';
 import { getSite } from '@/lib/data';
 import { relatedArtworks } from '@/lib/normalize';
-import { formatINR, formatSize, statusLabel, excerpt } from '@/lib/format';
+import { formatSize, priceLabel, statusLabel, excerpt } from '@/lib/format';
 import { artworkJsonLd } from '@/lib/seo';
 
 const site = await getSite(Astro.locals);
 const a = site.artworks.find((x) => x.slug === Astro.params.slug);
 if (!a) return Astro.rewrite('/404');
 const related = relatedArtworks(site, a);
+const price = priceLabel(a, site.settings);
 const siteUrl = Astro.site?.toString() ?? 'https://samridhiagarwal.com';
 const description = a.seoDescription ?? excerpt(`${a.title}, ${formatSize(a)}, ${a.materials}. ${a.note}`);
 const posts = site.posts.filter((p) => p.artworks.some((x) => x.id === a.id));
@@ -48,7 +49,9 @@ const posts = site.posts.filter((p) => p.artworks.some((x) => x.id === a.id));
         <dl class="mt-8 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-[0.95rem]">
           <dt class="text-muted">Size</dt><dd>{formatSize(a)}</dd>
           <dt class="text-muted">Materials</dt><dd>{a.materials}</dd>
-          <dt class="text-muted">Price</dt><dd class="font-medium">{a.status === 'sold' ? 'Sold' : formatINR(a.price)}{a.status === 'made-to-order' && <span class="text-muted"> · made to order, 4 to 6 weeks</span>}</dd>
+          {(price || a.status === 'made-to-order') && (
+            <><dt class="text-muted">{price && price !== 'Sold' ? 'Price' : 'Status'}</dt><dd class="font-medium">{price ?? 'Made to order'}{a.status === 'made-to-order' && <span class="text-muted"> · made to order, 4 to 6 weeks</span>}</dd></>
+          )}
           {(a.collections.length > 0 || a.occasions.length > 0) && (
             <>
               <dt class="text-muted">Part of</dt>

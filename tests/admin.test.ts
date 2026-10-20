@@ -34,7 +34,7 @@ describe('admin session', () => {
 describe('content types', () => {
   it('blocks publishing an artwork until the essentials are filled in', () => {
     const draft = { ...emptyDoc('artwork'), title: 'Golden hour', media: [] };
-    expect(missingRequired('artwork', draft)).toEqual(['The moment behind the piece', 'Price (INR)', 'Width (inches)', 'Height (inches)', 'Photos & video']);
+    expect(missingRequired('artwork', draft)).toEqual(['The moment behind the piece', 'Width (inches)', 'Height (inches)', 'Photos & video']);
     const done = { ...draft, note: 'Light.', price: 0, width: 30, height: 40, media: [{}] };
     expect(missingRequired('artwork', done)).toEqual([]);
   });
@@ -79,5 +79,15 @@ describe('artwork sizes in inches', () => {
     expect(formatSize({ width: 24, height: 36 })).toBe('24 × 36 in (61 × 91 cm)');
     expect(formatSize({ width: 11.5, height: 15, depth: 1 })).toBe('11.5 × 15 × 1 in (29 × 38 × 3 cm)');
     expect(formatSize({ width: 61 / 2.54, height: 60.96 / 2.54 })).toBe('24 × 24 in (61 × 61 cm)');
+  });
+});
+
+describe('prices', () => {
+  it('are hidden unless Show prices is on; sold always says Sold', async () => {
+    const { priceLabel } = await import('../src/lib/format');
+    expect(priceLabel({ price: 50000, status: 'available' }, { showPrices: false })).toBeUndefined();
+    expect(priceLabel({ price: 0, status: 'available' }, { showPrices: true })).toBeUndefined();
+    expect(priceLabel({ price: 50000, status: 'available' }, { showPrices: true })).toBe('₹50,000');
+    expect(priceLabel({ price: 50000, status: 'sold' }, { showPrices: false })).toBe('Sold');
   });
 });

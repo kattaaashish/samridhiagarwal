@@ -1,4 +1,4 @@
-import type { Artwork } from './types';
+import type { Artwork, SiteSettings } from './types';
 import { inToCm } from './size';
 
 export const formatINR = (n: number) =>
@@ -11,6 +11,10 @@ export const formatSize = (a: Pick<Artwork, 'width' | 'height' | 'depth'>) => {
 };
 
 export const trim = (n: number) => n.toFixed(1).replace(/\.0$/, '');
+
+/** What to show in a price slot: "Sold", the price (only when prices are switched on), or nothing. */
+export const priceLabel = (a: Pick<Artwork, 'price' | 'status'>, settings: Pick<SiteSettings, 'showPrices'>) =>
+  a.status === 'sold' ? 'Sold' : settings.showPrices && a.price > 0 ? formatINR(a.price) : undefined;
 
 export const formatDate = (iso: string, opts: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' }) =>
   iso ? new Intl.DateTimeFormat('en-IN', { timeZone: 'Asia/Kolkata', ...opts }).format(new Date(iso)) : '';

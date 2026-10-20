@@ -3,11 +3,11 @@
  * The single buying seam. Enquire (form), WhatsApp, and Etsy where a link exists.
  * A checkout button would be added here and only here.
  */
-import { whatsappLink, formatINR, formatSize } from '@/lib/format';
+import { whatsappLink, formatSize } from '@/lib/format';
 import type { Artwork } from '@/lib/types';
 interface Props { artwork: Artwork; whatsappNumber: string; etsyShop?: string }
 const { artwork: a, whatsappNumber, etsyShop } = Astro.props;
-const msg = `Hi Samridhi, I'm interested in "${a.title}" (${formatSize(a)}, ${formatINR(a.price)}). Is it ${a.status === 'made-to-order' ? 'possible to order one' : 'still available'}?`;
+const msg = `Hi Samridhi, I'm interested in "${a.title}" (${formatSize(a)}). Is it ${a.status === 'made-to-order' ? 'possible to order one' : 'still available'}?`;
 const etsy = a.etsyUrl ?? etsyShop;
 ---
 <div class="grid gap-3" id="buy">

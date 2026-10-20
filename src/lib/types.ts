@@ -111,6 +111,8 @@ export interface SiteSettings {
   /** Phrases in the scrolling strip under the home teaser; empty hides it */
   ticker: string[];
   storyPost?: Post;
+  /** Off by default: artwork prices are hidden everywhere on the site. */
+  showPrices: boolean;
   whatsappNumber: string;
   email: string;
   instagram?: string;

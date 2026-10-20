@@ -17,8 +17,7 @@ export function artworkJsonLd(a: Artwork, settings: SiteSettings, siteUrl: strin
     creator: personJsonLd(settings, siteUrl),
     offers: {
       '@type': 'Offer',
-      price: a.price,
-      priceCurrency: 'INR',
+      ...(settings.showPrices && a.price > 0 ? { price: a.price, priceCurrency: 'INR' } : {}),
       availability: a.status === 'sold' ? 'https://schema.org/SoldOut' : a.status === 'made-to-order' ? 'https://schema.org/PreOrder' : 'https://schema.org/InStock',
       url,
     },

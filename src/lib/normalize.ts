@@ -122,6 +122,7 @@ export function normalize(docs: Doc[], opts: { today?: Date } = {}): Site {
     teaser: s.teaser ? { title: s.teaser.title ?? '', launchDate: s.teaser.launchDate, copy: s.teaser.copy, enabled: s.teaser.enabled !== false } : undefined,
     ticker: list(s.ticker).map((t: any) => String(t ?? '').trim()).filter(Boolean),
     storyPost: s.storyPost?._ref ? postById.get(s.storyPost._ref) : posts[0],
+    showPrices: s.showPrices === true,
     whatsappNumber: String(s.whatsappNumber ?? '').replace(/\D/g, ''),
     email: s.email ?? '',
     instagram: s.instagram,
@@ -190,11 +191,4 @@ export const SIZE_BUCKETS = [
   { id: 'small', label: 'Small (under 20 in / 50 cm)', test: (a: Artwork) => Math.max(a.width, a.height) < 20 },
   { id: 'medium', label: 'Medium (20 to 36 in / 50 to 90 cm)', test: (a: Artwork) => Math.max(a.width, a.height) >= 20 && Math.max(a.width, a.height) < 36 },
   { id: 'large', label: 'Large (36 in / 90 cm and up)', test: (a: Artwork) => Math.max(a.width, a.height) >= 36 },
-];
-
-export const PRICE_BUCKETS = [
-  { id: 'p1', label: 'Under ₹25,000', test: (a: Artwork) => a.price < 25000 },
-  { id: 'p2', label: '₹25,000 to ₹50,000', test: (a: Artwork) => a.price >= 25000 && a.price < 50000 },
-  { id: 'p3', label: '₹50,000 to ₹1,00,000', test: (a: Artwork) => a.price >= 50000 && a.price < 100000 },
-  { id: 'p4', label: 'Over ₹1,00,000', test: (a: Artwork) => a.price >= 100000 },
 ];

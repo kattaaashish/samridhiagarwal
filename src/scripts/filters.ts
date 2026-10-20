@@ -8,7 +8,7 @@ function init() {
     const count = form.querySelector<HTMLElement>('[data-count]');
     const clear = form.querySelector<HTMLElement>('[data-clear]');
     const empty = root.querySelector<HTMLElement>('[data-empty]');
-    const attr: Record<string, string> = { collections: 'collections', occasions: 'occasions', size: 'size', price: 'price' };
+    const attr: Record<string, string> = { collections: 'collections', size: 'size' };
 
     const apply = (push = true) => {
       const fd = new FormData(form);

@@ -191,3 +191,5 @@ Aashish for anything risky, paid, or architectural.
   request; season dates now only drive the "This season" badge on /gifting pages.
 - 2026-10-19: Artwork filters are Collection and Size only (Occasion and Price removed at Samridhi's
   request).
+- 2026-10-20: Prices hidden site-wide behind Site settings → Shop → `showPrices` (default off).
+  Use `priceLabel(a, settings)` for any price slot; price is no longer required to publish.
