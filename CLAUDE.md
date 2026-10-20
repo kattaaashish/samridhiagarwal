@@ -193,3 +193,7 @@ Aashish for anything risky, paid, or architectural.
   request).
 - 2026-10-20: Prices hidden site-wide behind Site settings → Shop → `showPrices` (default off).
   Use `priceLabel(a, settings)` for any price slot; price is no longer required to publish.
+- 2026-10-20: Real artworks imported from Samridhi's Saatchi Art profile (account 2396097) through the
+  admin API (available pieces only; sold ones skipped at her request). Production now holds real
+  content: **never run `pnpm db:seed:remote` again** (it would re-add the sample pieces). D1 backups
+  go in `backups/` (git-ignored) via `wrangler d1 export samridhiagarwal --remote`.
