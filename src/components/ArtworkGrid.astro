@@ -1,25 +1,22 @@
 ---
 /** Grid of artwork cards with optional generated filters. Handles 0…N taxonomy options. */
 import ArtworkCard from './ArtworkCard.astro';
-import type { Artwork, Collection, Occasion } from '@/lib/types';
-import { SIZE_BUCKETS, PRICE_BUCKETS } from '@/lib/normalize';
+import type { Artwork, Collection } from '@/lib/types';
+import { SIZE_BUCKETS } from '@/lib/normalize';
 interface Props {
   artworks: Artwork[];
   filters?: boolean;
   collections?: Collection[];
-  occasions?: Occasion[];
   /** Hide a group because the page already implies it (e.g. a collection page) */
-  hide?: Array<'collection' | 'occasion'>;
+  hide?: Array<'collection'>;
   emptyText?: string;
 }
-const { artworks, filters = false, collections = [], occasions = [], hide = [], emptyText = 'Nothing here just yet. New pieces are on the way.' } = Astro.props;
+const { artworks, filters = false, collections = [], hide = [], emptyText = 'Nothing here just yet. New pieces are on the way.' } = Astro.props;
 
 const groups = filters
   ? [
       !hide.includes('collection') && collections.length > 0 && { key: 'collections', label: 'Collection', options: collections.map((c) => ({ value: c.id, label: c.name })) },
-      !hide.includes('occasion') && occasions.length > 0 && { key: 'occasions', label: 'Occasion', options: occasions.map((o) => ({ value: o.id, label: o.name })) },
       { key: 'size', label: 'Size', options: SIZE_BUCKETS.filter((b) => artworks.some(b.test)).map((b) => ({ value: b.id, label: b.label })) },
-      { key: 'price', label: 'Price', options: PRICE_BUCKETS.filter((b) => artworks.some(b.test)).map((b) => ({ value: b.id, label: b.label })) },
     ].filter((g): g is { key: string; label: string; options: { value: string; label: string }[] } => !!g && g.options.length > 0)
   : [];
 ---

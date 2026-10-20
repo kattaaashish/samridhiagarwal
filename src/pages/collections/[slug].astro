@@ -22,7 +22,7 @@ const others = site.collections.filter((c) => c.id !== collection.id);
     </div>
   </section>
   <section class="container-x mt-14">
-    <ArtworkGrid artworks={pieces} filters collections={site.collections} occasions={site.occasions} hide={['collection']} emptyText="This collection is between pieces right now. Have a look at the other collections below." />
+    <ArtworkGrid artworks={pieces} filters collections={site.collections} hide={['collection']} emptyText="This collection is between pieces right now. Have a look at the other collections below." />
   </section>
   {others.length > 0 && (
     <section class="container-x mt-20">

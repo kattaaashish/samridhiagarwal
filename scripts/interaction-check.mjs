@@ -43,11 +43,11 @@ const check = (name, cond, detail = '') => { out[name] = (cond ? 'PASS' : 'FAIL'
   // Filters
   const before = await page.locator('[data-artwork]:visible').count();
   await page.getByLabel('Sold').count(); // no-op
-  await page.locator('form[data-filters] input[name=occasions]').first().check({ force: true });
+  await page.locator('form[data-filters] input[name=collections]').first().check({ force: true });
   await page.waitForTimeout(200);
   const after = await page.locator('[data-artwork]:visible').count();
   check('filter_reduces_grid', after < before && after > 0, `${before} → ${after}`);
-  check('filter_syncs_url', page.url().includes('occasions='), page.url());
+  check('filter_syncs_url', page.url().includes('collections='), page.url());
   await page.locator('form[data-filters] button[type=reset]').click();
   await page.waitForTimeout(200);
   check('filter_clear_restores', (await page.locator('[data-artwork]:visible').count()) === before);

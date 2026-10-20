@@ -189,3 +189,5 @@ Aashish for anything risky, paid, or architectural.
   /work, collections and artwork pages.
 - 2026-10-19: Seasonal "Gifts for <occasion>" sections removed from the home page at Samridhi's
   request; season dates now only drive the "This season" badge on /gifting pages.
+- 2026-10-19: Artwork filters are Collection and Size only (Occasion and Price removed at Samridhi's
+  request).
