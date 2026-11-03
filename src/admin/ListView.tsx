@@ -1,4 +1,4 @@
-/** List of one content type: create, open, filter, drag to reorder, bulk-create artwork drafts. */
+/** List of one content type: create, open, filter, drag to reorder, bulk-create artwork drafts, bulk publish/unpublish/delete. */
 import { useEffect, useMemo, useState } from 'react';
 import { api, current, docState, type DocRow } from './api';
 import { DropZone, UploadProgress, useUploads } from './MediaFields';
@@ -36,6 +36,19 @@ function thumb(type: ContentType, d: Record<string, any>) {
 }
 
 type Filter = 'all' | 'draft' | 'live';
+type BulkAction = 'publish' | 'unpublish' | 'delete';
+
+/** Run fn over items, a few at a time, collecting failures instead of stopping. */
+async function each<T>(items: T[], fn: (x: T) => Promise<unknown>, limit = 4) {
+  const failed: { item: T; error: string }[] = [];
+  const queue = [...items];
+  await Promise.all(Array.from({ length: Math.min(limit, queue.length) }, async () => {
+    for (let x = queue.shift(); x !== undefined; x = queue.shift()) {
+      try { await fn(x); } catch (e) { failed.push({ item: x, error: (e as Error).message }); }
+    }
+  }));
+  return failed;
+}
 
 export function ListView({ type }: { type: ContentType }) {
   const def = TYPES[type];
@@ -43,10 +56,12 @@ export function ListView({ type }: { type: ContentType }) {
   const [rows, setRows] = useState<DocRow[] | null>(null);
   const [filter, setFilter] = useState<Filter>('all');
   const [q, setQ] = useState('');
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [bulkBusy, setBulkBusy] = useState(false);
   const { jobs, run, clearErrors } = useUploads();
 
-  const load = () => api.list(type).then(setRows).catch((e) => toast.error(e.message));
-  useEffect(() => { setRows(null); setFilter('all'); setQ(''); load(); }, [type]);
+  const load = () => api.list(type).then((r) => { setRows(r); setSelected((s) => new Set(r.filter((x) => s.has(x.id)).map((x) => x.id))); }).catch((e) => toast.error(e.message));
+  useEffect(() => { setRows(null); setFilter('all'); setQ(''); setSelected(new Set()); load(); }, [type]);
 
   const sorted = useMemo(() => {
     if (!rows) return [];
@@ -97,14 +112,50 @@ export function ListView({ type }: { type: ContentType }) {
     }
   };
 
+  const toggle = (id: string) => setSelected((s) => { const n = new Set(s); n.has(id) ? n.delete(id) : n.add(id); return n; });
+  const allShown = shown.length > 0 && shown.every((r) => selected.has(r.id));
+  const toggleAll = () => setSelected((s) => { const n = new Set(s); shown.forEach((r) => (allShown ? n.delete(r.id) : n.add(r.id))); return n; });
+  const picked = (rows ?? []).filter((r) => selected.has(r.id));
+  const name = (r: DocRow) => String(current(r)[def.titleField] || `Untitled ${def.label.toLowerCase()}`);
+  const plural = (n: number) => `${n} ${n === 1 ? def.label.toLowerCase() : def.plural.toLowerCase()}`;
+
+  const bulk = async (action: BulkAction) => {
+    // Only act where it changes something: publishing live items without edits, or unpublishing drafts, is a no-op.
+    const targets = action === 'publish' ? picked.filter((r) => docState(r) !== 'published')
+      : action === 'unpublish' ? picked.filter((r) => docState(r) !== 'draft') : picked;
+    const skipped = picked.length - targets.length;
+    if (!targets.length) {
+      toast.success(action === 'publish' ? 'All selected items are already live.' : 'All selected items are already drafts.');
+      return;
+    }
+    if (action === 'delete') {
+      const extra = type === 'collection' || type === 'occasion' ? ' Their artworks stay on the site; they just lose this grouping.' : '';
+      if (!confirm(`Delete ${plural(targets.length)} for good? This cannot be undone.${extra}`)) return;
+    }
+    if (action === 'unpublish' && !confirm(`Take ${plural(targets.length)} off the website? They stay here as drafts.`)) return;
+    setBulkBusy(true);
+    const failed = await each(targets, (r) => (action === 'delete' ? api.remove(r.id) : api.action(r.id, action)));
+    setBulkBusy(false);
+    const done = targets.length - failed.length;
+    const verb = action === 'publish' ? 'Published' : action === 'unpublish' ? 'Taken off the site' : 'Deleted';
+    if (done) toast.success(`${verb}: ${plural(done)}.${skipped ? ` ${skipped} already ${action === 'publish' ? 'live' : 'drafts'}.` : ''}`);
+    if (failed.length) toast.error(`${failed.length} not ${action === 'delete' ? 'deleted' : action === 'publish' ? 'published' : 'unpublished'}: ${failed.slice(0, 3).map((f) => `"${name(f.item)}" (${f.error})`).join('; ')}${failed.length > 3 ? '; …' : ''}. They are still selected.`);
+    setSelected(new Set(failed.map((f) => f.item.id)));
+    load();
+  };
+
   const counts = rows ? { draft: rows.filter((r) => docState(r) === 'draft').length, live: rows.filter((r) => docState(r) !== 'draft').length } : { draft: 0, live: 0 };
   const canDrag = def.orderable && filter === 'all' && !q;
 
   const rowView = (r: DocRow, handle?: React.ReactNode) => {
     const d = current(r);
     const src = thumb(type, d);
+    const on = selected.has(r.id);
     return (
-      <div className="admin-row">
+      <div className={`admin-row${on ? ' is-selected' : ''}`}>
+        <label className="admin-check" title="Select">
+          <input type="checkbox" checked={on} onChange={() => toggle(r.id)} aria-label={`Select ${name(r)}`} />
+        </label>
         {handle}
         <a href={`#/${type}/${r.id}`} className="admin-row-link">
           <span className="admin-thumb">{src ? <img src={src} alt="" loading="lazy" /> : null}</span>
@@ -142,6 +193,11 @@ export function ListView({ type }: { type: ContentType }) {
               {f === 'all' ? `All (${rows.length})` : f === 'draft' ? `Drafts (${counts.draft})` : `Live (${counts.live})`}
             </button>
           ))}
+          <label className="chip ml-auto !pr-3">
+            <input type="checkbox" className="admin-check-all" checked={allShown} onChange={toggleAll} disabled={!shown.length} />
+            <span aria-hidden="true" className="admin-check-box">{allShown ? '✓' : ''}</span>
+            Select all{filter !== 'all' || q ? ' shown' : ''}
+          </label>
           {rows.length > 8 && <input type="search" className="input !min-h-10 max-w-xs !py-2" placeholder="Search" aria-label={`Search ${def.plural.toLowerCase()}`} value={q} onChange={(e) => setQ(e.target.value)} />}
         </div>
       )}
@@ -156,6 +212,19 @@ export function ListView({ type }: { type: ContentType }) {
         )}
         {def.orderable && !canDrag && rows && rows.length > 1 && <p className="mt-3 text-sm text-muted">Clear the filter to drag items into a new order.</p>}
       </div>
+
+      {picked.length > 0 && (
+        <div className="admin-bulkbar" role="region" aria-label="Bulk actions">
+          <span className="font-medium">{picked.length} selected</span>
+          <div className="flex flex-wrap gap-2">
+            <button type="button" className="btn btn-primary !min-h-10 !py-2" disabled={bulkBusy} onClick={() => bulk('publish')}>Publish</button>
+            <button type="button" className="btn btn-ghost !min-h-10 !py-2" disabled={bulkBusy} onClick={() => bulk('unpublish')}>Unpublish</button>
+            <button type="button" className="btn btn-secondary !min-h-10 !py-2 !border-accent-ink !text-accent-ink hover:!bg-accent-ink hover:!text-bg" disabled={bulkBusy} onClick={() => bulk('delete')}>Delete</button>
+            <button type="button" className="btn btn-ghost !min-h-10 !py-2" disabled={bulkBusy} onClick={() => setSelected(new Set())}>Clear</button>
+          </div>
+          {bulkBusy && <span className="text-sm text-muted">Working…</span>}
+        </div>
+      )}
     </div>
   );
 }
