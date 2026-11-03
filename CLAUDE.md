@@ -197,3 +197,8 @@ Aashish for anything risky, paid, or architectural.
   admin API (available pieces only; sold ones skipped at her request). Production now holds real
   content: **never run `pnpm db:seed:remote` again** (it would re-add the sample pieces). D1 backups
   go in `backups/` (git-ignored) via `wrangler d1 export samridhiagarwal --remote`.
+- 2026-11-03: Admin lists support multi-select with bulk publish / unpublish / delete (client loops over the
+  per-doc endpoints, 4 at a time; failures stay selected). Samridhi deleted the 11 sample artworks with it.
+- 2026-11-03: Samridhi rarely uses gold leaf, so all "gold / silver leaf" wording was removed from site copy
+  (code) and from production content (D1, edited in place). Don't reintroduce it in copy or alt text.
+  `seed/content.json` still mentions leaf; it is sample data only and must not be re-seeded.
