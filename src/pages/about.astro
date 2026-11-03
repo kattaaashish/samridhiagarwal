@@ -8,9 +8,9 @@ import { personJsonLd } from '@/lib/seo';
 const site = await getSite(Astro.locals);
 const { about, settings } = site;
 const siteUrl = Astro.site?.toString() ?? 'https://samridhiagarwal.com';
-const stages = ['Raw material', 'Building the surface', 'Laying the leaf', 'Finished piece'];
+const stages = ['Raw material', 'Building the surface', 'Adding the details', 'Finished piece'];
 ---
-<Base title="About" description={`${settings.siteName} turns everyday moments, thoughts and feelings into handmade art with gold and silver leaf. How the work happens, from a note on her phone to a finished canvas.`} image={about.portrait?.poster} imageAlt={about.portrait?.alt}>
+<Base title="About" description={`${settings.siteName} turns everyday moments, thoughts and feelings into handmade art. How the work happens, from a note on her phone to a finished canvas.`} image={about.portrait?.poster} imageAlt={about.portrait?.alt}>
   <JsonLd data={personJsonLd(settings, siteUrl)} />
   <section class="container-x grid gap-8 pt-8 md:grid-cols-[1fr_1.2fr] md:items-center md:pt-14">
     <Media media={about.portrait} aspect={4 / 5} sizes="(min-width: 768px) 45vw, 100vw" priority class="rounded-xl" />

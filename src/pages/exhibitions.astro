@@ -17,7 +17,7 @@ const siteUrl = Astro.site?.toString() ?? 'https://samridhiagarwal.com';
 <Base title="Exhibitions" description={`Upcoming and past exhibitions by ${settings.siteName}: dates, venues and installation photographs.`}>
   {exhibitions.map((e) => <JsonLd data={exhibitionJsonLd(e, settings, siteUrl)} />)}
   <section class="container-x pt-10 md:pt-16">
-    <SectionHeading eyebrow="Exhibitions" title="Come and see the leaf in real light" text="Photos never quite catch it. If you're in town for a show, come say hello." />
+    <SectionHeading eyebrow="Exhibitions" title="Come and see the work in real light" text="Photos never quite catch it. If you're in town for a show, come say hello." />
   </section>
 
   <section class="container-x mt-12" id="upcoming" aria-labelledby="upcoming-heading">

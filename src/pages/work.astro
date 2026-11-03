@@ -7,7 +7,7 @@ import { getSite } from '@/lib/data';
 const site = await getSite(Astro.locals);
 const { artworks, collections, settings } = site;
 ---
-<Base title="Original artworks" description={`Every available original by ${settings.siteName}: hand-painted pieces with gold and silver leaf, drawn from everyday moments. Filter by collection and size.`}>
+<Base title="Original artworks" description={`Every available original by ${settings.siteName}: hand-painted pieces drawn from everyday moments. Filter by collection and size.`}>
   <section class="container-x pt-10 md:pt-16">
     <SectionHeading eyebrow="Originals" title="Every piece, one of a kind" text="Handmade, signed, and shipped insured across India and worldwide. Filter to find the one that fits your wall." />
   </section>
