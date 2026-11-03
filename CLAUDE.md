@@ -202,3 +202,6 @@ Aashish for anything risky, paid, or architectural.
 - 2026-11-03: Samridhi rarely uses gold leaf, so all "gold / silver leaf" wording was removed from site copy
   (code) and from production content (D1, edited in place). Don't reintroduce it in copy or alt text.
   `seed/content.json` still mentions leaf; it is sample data only and must not be re-seeded.
+- 2026-11-03: At Samridhi's request the seeded sample journal posts (3), exhibitions (2) and testimonials (4)
+  were deleted from production. Home hides the story and testimonial sections when empty; /journal and
+  /exhibitions show their empty states. Backup: backups/d1-2026-11-03-before-sample-content-delete.sql.
